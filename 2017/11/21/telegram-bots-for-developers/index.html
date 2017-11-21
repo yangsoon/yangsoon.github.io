@@ -1,0 +1,21 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> telegram-bots for developers · yangsoon</title><meta name="description" content="telegram-bots for developers - yangs"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yangsoon.github.io/atom.xml" title="yangsoon"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/yangsoon" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">telegram-bots for developers</h1><div class="post-info">Nov 21, 2017</div><div class="post-content"><h4 id="写给开发者的telegram-bots介绍文档"><a href="#写给开发者的telegram-bots介绍文档" class="headerlink" title="写给开发者的telegram-bots介绍文档"></a>写给开发者的telegram-bots介绍文档</h4><p>bots是运行在telegram内部的第三方应用。用户可以通过发送消息，命令或者<a href="#inline-mode">内联请求</a>和bots进行交互。开发者可以通过向<a href="https://core.telegram.org/bots/api" target="_blank" rel="external">bot API</a>发送HTTPS请求来控制自己的bot。<br><a id="more"></a></p>
+<h2 id="我能用bots做什么？"><a href="#我能用bots做什么？" class="headerlink" title="我能用bots做什么？"></a>我能用bots做什么？</h2><p>下面举几个例子，你可以用bot来：</p>
+<ul>
+<li>获得自定义的新闻和通知。一个机器人可以扮演一个智能新闻的角色，发送你需要的新闻。 如：<a href="https://t.me/TechCrunchBot" target="_blank" rel="external">TechCrunch Bot</a></li>
+<li>和其他服务集成。一个机器人可以通过联系其他的服务来丰富聊天 如:<a href="https://t.me/gmailbot" target="_blank" rel="external">Gmail Bot</a></li>
+<li>接受来自telegram用户的付款</li>
+<li>创建自定义工具 一个机器人可以为你提供预警，天气预报，格式化文本，翻译，或者其他服务.如: <a href="https://t.me/Bold" target="_blank" rel="external">Markdown</a></li>
+<li>创建单人多人游戏 一个机器人可以提供丰富的HTML5体验，从简单的街机和解谜游戏到3D射击和实时策略游戏。如:  <a href="https://t.me/gamebot" target="_blank" rel="external">GameBot</a></li>
+<li>建立社交服务 一个机器人能够将一些寻找共同兴趣爱好的人联系在一起。如:<a href="https://t.me/hotorbot" target="_blank" rel="external">HotOrBot</a></li>
+<li>或者做一些其他的事情 除了做菜–机器人做的菜非常糟糕(官方吐槽)</li>
+</ul>
+<h2 id="bots是如何工作的"><a href="#bots是如何工作的" class="headerlink" title="bots是如何工作的?"></a>bots是如何工作的?</h2><p>Telegram Bots是一个特别的账号并不需要另外的手机号码去创建，用户可以通过下面两种方式和机器人交互。</p>
+<ol>
+<li>创建和bots的聊天并发送消息和命令或者将机器人加入聊天群。这对聊天机器人和官方新闻机器人很有用。</li>
+<li>直接在输入框中键入<code>@username query</code>来发送请求。这允许从内联机器人发送内容直接到任何的聊天，群或者频道。</li>
+</ol>
+<p>用户发送的消息，命令，和请求被传递给运行在你服务上的应用。我们的中介服务器帮你处理消息的加密和telegram api的通讯。你可以通过简单的HTTPS接口(他提供了Telegram API的简化版本)和服务通讯。我们把这个接口称为Bot API。</p>
+<blockquote>
+<p>有关Bot API的详细说明，请参阅 <a href="https://core.telegram.org/bots/api" target="_blank" rel="external">bots api</a></p>
+</blockquote>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/11/11/mpi读书笔记-2/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2017 <a href="https://yangsoon.github.io">yangs</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
