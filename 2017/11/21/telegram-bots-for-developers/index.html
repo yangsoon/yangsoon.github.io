@@ -6,7 +6,7 @@
 <h2 id="我能用bots做什么？"><a href="#我能用bots做什么？" class="headerlink" title="我能用bots做什么？"></a>我能用bots做什么？</h2><p>下面举几个例子，你可以用bot来：</p>
 <ul>
 <li>获得自定义的新闻和通知。一个机器人可以扮演一个智能新闻的角色，发送你需要的新闻。 如：<a href="https://t.me/TechCrunchBot" target="_blank" rel="noopener">TechCrunch Bot</a></li>
-<li>和其他服务集成。一个机器人可以通过联系其他的服务来丰富聊天 如:<a href="https://t.me/gmailbot" target="_blank" rel="noopener">Gmail Bot</a></li>
+<li>和其他服务集成。一个机器人可以通过绑定其他的服务来丰富聊天 如:<a href="https://t.me/gmailbot" target="_blank" rel="noopener">Gmail Bot</a></li>
 <li>接受来自telegram用户的付款</li>
 <li>创建自定义工具 一个机器人可以为你提供预警，天气预报，格式化文本，翻译，或者其他服务.如: <a href="https://t.me/Bold" target="_blank" rel="noopener">Markdown</a></li>
 <li>创建单人多人游戏 一个机器人可以提供丰富的HTML5体验，从简单的街机和解谜游戏到3D射击和实时策略游戏。如:  <a href="https://t.me/gamebot" target="_blank" rel="noopener">GameBot</a></li>
@@ -15,31 +15,31 @@
 </ul>
 <h2 id="bots是如何工作的"><a href="#bots是如何工作的" class="headerlink" title="bots是如何工作的?"></a>bots是如何工作的?</h2><p>Telegram Bots是一个特别的账号并不需要另外的手机号码去创建，用户可以通过下面两种方式和机器人交互。</p>
 <ol>
-<li>创建和bots的聊天并发送消息和命令或者将机器人加入聊天群。这对聊天机器人和官方新闻机器人很有用。</li>
-<li>直接在输入框中键入<code>@username query</code>来发送请求。这样可以通过内联机器人直接发送内容到任何的聊天，群或者频道。</li>
+<li>创建和bots的聊天并发送消息和命令或者将机器人加入聊天群。这一特性对聊天机器人和官方新闻机器人很有用。</li>
+<li>直接在输入框中键入<code>@username query</code>来发送请求。这样可以通过<a href="https://core.telegram.org/bots/inline" target="_blank" rel="noopener">inline bots</a>直接发送内容到任何聊天，群或者频道。</li>
 </ol>
-<p>用户发送的消息，命令，和请求被转发给运行在你服务上的应用。我们的中介服务器帮你处理消息的加密和telegram api的通讯。你可以通过简单的HTTPS接口(我们提供了Telegram API的简化版本)和服务通讯。我们把这个接口称为Bot API。</p>
+<p>用户发送的消息，命令，和请求被转发给运行在你服务上的应用。我们的中介服务器帮你处理消息的加密和telegram api的通讯。你可以通过简单的HTTPS接口(Telegram API的简化版本)和服务通讯,我们把这个接口称为Bot API。</p>
 <blockquote>
 <p>有关Bot API的详细说明，请参阅 <a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">bots api</a></p>
 </blockquote>
-<h2 id="我怎么创建一个bot"><a href="#我怎么创建一个bot" class="headerlink" title="我怎么创建一个bot?"></a>我怎么创建一个bot?</h2><p>我们提供一个bot来帮助你创建bot，你可以直接和<a href="https://telegram.me/botfather" target="_blank" rel="noopener">BotFather</a>交谈，并按照几个简单的步骤就可以创建一个属于自己的bot。一旦你创建了一个bot并获取到你的authorization token，那就直接去查看<a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">Bot API</a>手册看看你能操作机器人做什么事情</p>
+<h2 id="我怎么创建一个bot"><a href="#我怎么创建一个bot" class="headerlink" title="我怎么创建一个bot?"></a>我怎么创建一个bot?</h2><p>我们提供一个bot来帮助你创建bot，你可以直接和<a href="https://telegram.me/botfather" target="_blank" rel="noopener">BotFather</a>交谈，并按照几个简单的步骤就可以创建一个属于自己的bot。一旦你创建了一个bot并获取到你的authorization token，那就直接去查看<a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">Bot API</a>手册看看你能操作机器人做什么事情。</p>
 <blockquote>
 <p>你也可以查看一些 <strong> <a href="https://core.telegram.org/bots/samples" target="_blank" rel="noopener">示例代码</a> </strong></p>
 </blockquote>
 <h2 id="bot和普通账号有什么不同"><a href="#bot和普通账号有什么不同" class="headerlink" title="bot和普通账号有什么不同?"></a>bot和普通账号有什么不同?</h2><ul>
 <li>Bots没有在线状态和last seen时间戳，界面只显示bot标签</li>
-<li>Bots有云存储限制-较旧的消息可能在服务器处理后不久被删除</li>
+<li>Bots有云存储限制，所以较旧的消息可能在服务器处理后不久被删除</li>
 <li>Bots无法主动与用户交流。用户必须将bot添加到群组中或者先给bot发送消息。其他人可以使用<code>telegram.me/&lt;bot_username&gt;</code>链接或者username来找到你的bot。</li>
 <li>Bot的username总是以’bot’结尾。</li>
 <li>当bot被加入群中，它默认不会接受所有消息。</li>
 <li>机器人不需要吃饭，睡觉或者抱怨(除非程序中有设定) <strong> 又是官方吐槽 </strong></li>
 </ul>
 <h2 id="与众不同的Bot"><a href="#与众不同的Bot" class="headerlink" title="与众不同的Bot"></a>与众不同的Bot</h2><p>Telegram bots在很多方面都与众不同 – 我们提供两种样式的键盘以及提供对默认指令、深层链接以及文本格式等的额外接口。</p>
-<h4 id="内联模式"><a href="#内联模式" class="headerlink" title="内联模式"></a>内联模式</h4><p>用户可以在任意聊天的输入框中通过输入内联请求和你的bot进行交互。只需在输入框中以你的bot命开头并输入请求即可。<br>收到查询后，您的机器人可以返回一些结果。一旦用户点击其中一个，它就发送到用户当前打开的聊天。通过这种方式，人们可以通过任何聊天，小组或频道向您的机器人请求内容。<br>你可以使用<a href="https://telegram.me/sticker" target="_blank" rel="noopener">@sticker</a>来体验一下。</p>
+<h4 id="内联模式"><a href="#内联模式" class="headerlink" title="内联模式"></a>内联模式</h4><p>用户可以在任意聊天的输入框中通过输入内联请求和你的bot进行交互。只需在输入框中以你的bot命开头并输入请求即可。<br>收到查询后，您的机器人可以返回一些结果。一旦用户点击其中一个，它就发送到用户当前打开的聊天。通过这种方式，人们可以通过任何聊天，小组或频道和您的bot进行互动。你可以使用<a href="https://telegram.me/sticker" target="_blank" rel="noopener">@sticker</a>来体验一下。</p>
 <blockquote>
 <p>关于<a href="https://core.telegram.org/bots/inline" target="_blank" rel="noopener">内联模式</a>的更多信息</p>
 </blockquote>
-<h4 id="付款平台"><a href="#付款平台" class="headerlink" title="付款平台"></a><a href="https://core.telegram.org/bots#payments-platform" target="_blank" rel="noopener">付款平台</a></h4><h4 id="游戏平台"><a href="#游戏平台" class="headerlink" title="游戏平台"></a><a href="https://core.telegram.org/bots#gaming-platform" target="_blank" rel="noopener">游戏平台</a></h4><h4 id="键盘"><a href="#键盘" class="headerlink" title="键盘"></a>键盘</h4><p>传统的机器人当然可以被教会理解人类的语言。但是有时候你想从用户那里获得更加正式的输入–因此我们提供了自定义键盘。</p>
+<h4 id="付款平台"><a href="#付款平台" class="headerlink" title="付款平台"></a><a href="https://core.telegram.org/bots#payments-platform" target="_blank" rel="noopener">付款平台</a></h4><h4 id="游戏平台"><a href="#游戏平台" class="headerlink" title="游戏平台"></a><a href="https://core.telegram.org/bots#gaming-platform" target="_blank" rel="noopener">游戏平台</a></h4><h4 id="键盘"><a href="#键盘" class="headerlink" title="键盘"></a>键盘</h4><p>传统的机器人当然可以被教会理解人类的语言。但是有时候你想从用户那里获得更加规范化的输入，为此我们提供了自定义键盘。</p>
 <p>每当你的机器人发送一条消息，它会传递一个特定的键盘与预定义的答复选项(请参阅<a href="https://core.telegram.org/bots/api/#replykeyboardmarkup" target="_blank" rel="noopener">ReplyKeyboardMarkup</a>)，telegram会接收到消息并将你设定的键盘展示给用户。点击任何按钮将立即发送相应的命令。这样你可以大大简化用户与你的机器人交互。</p>
 <blockquote>
 <p>有关自定义键盘的更多信息，请查阅<a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">Bot API</a>的<a href="https://core.telegram.org/bots/api#sendmessage" target="_blank" rel="noopener">sendMessage</a>部分。</p>
@@ -63,10 +63,10 @@
 <ul>
 <li><strong> / start </strong>  - bots开始和用户交互，例如发送一个欢迎的消息。这个指令同样可以传递几个额外的参数给bot。</li>
 <li><strong> / help </strong> - 返回一个帮助消息。</li>
-<li><strong> / setting </strong> - (如果适用的话)将会返回给用户机器人设定，显示可以编辑设置的指令。</li>
+<li><strong> / setting </strong> - 将会返回给用户一些机器人的功能设定，显示可以编辑设置的指令。</li>
 </ul>
 <p>用户在第一次打开与您的机器人的对话时将看到一个start按钮。在机器人的配置菜单中有help和setting的链接。</p>
-<h4 id="隐私模式"><a href="#隐私模式" class="headerlink" title="隐私模式"></a>隐私模式</h4><p>bots经常被加入到组中来加强人与人之间的沟通。例如通过提供新闻，来自外部服务的通知或其他搜索功能。特别是那些工作聊天组。现在当你与bot共享一个组时，你会问问自己，我怎么能够保证这个小流氓(bot)不会将我的历史记录泄露给竞争对手呢？答案就是-隐私模式。<br>运行在隐私模式下的bot不会收到所有发送给该组的消息。相反，它只会收到：</p>
+<h4 id="隐私模式"><a href="#隐私模式" class="headerlink" title="隐私模式"></a>隐私模式</h4><p>bots经常被加入到组中来加强人与人之间的沟通。例如通过提供新闻，来自外部服务的通知或其他搜索功能。特别是那些工作聊天组。现在当你与bot共享一个组时，你会问问自己，我怎么能够保证这个小流氓(bot)不会将我的历史记录泄露给竞争对手呢？答案就是-隐私模式。运行在隐私模式下的bot不会收到所有发送给该组的消息。相反，它只会收到：</p>
 <ul>
 <li>命令</li>
 <li>回复机器人自己的消息</li>
@@ -90,9 +90,9 @@
 <h4 id="深层链接示例"><a href="#深层链接示例" class="headerlink" title="深层链接示例"></a>深层链接示例</h4><p>假设网站example.com希望通过bot向用户发送通知。以下是他们为ID<code>123</code>用户开启通知进行的操作。</p>
 <ol>
 <li>创建一个有合适名字的bot，例如 @ExampleComBot</li>
-<li>为传入消息设置<a href="https://core.telegram.org/bots/api#setwebhook" target="_blank" rel="noopener">webhook</a></li>
+<li>为传入的消息设置<a href="https://core.telegram.org/bots/api#setwebhook" target="_blank" rel="noopener">webhook</a></li>
 <li>生成足够长度的随机字符串。比如<code>$memcache_key = &quot;vCH1vGWJxfSeofSAs0K5PA&quot;</code></li>
-<li>将值123和<code>$memcache_key</code>放在内存缓存一小时。</li>
+<li>将值123和<code>$memcache_key</code>放在内存里缓存一小时。</li>
 <li>向用户显示按钮<code>https://telegram.me/ExampleComBot?start=vCH1vGWJxfSeofSAs0K5PA</code>(START按钮会附带参数)</li>
 <li>webhook使用来自start传来的参数(key)去查询内存，如果key存在，将传递给webhook的chat_id记录为用户123的telegram_chat_id。从内存中移除key。</li>
 <li>现在，当我们想发送通知给用户123时，检查他们是否具有telegram_chat_id字段。如果有，那么就使用Bot API中的sendMessage发送消息。</li>
@@ -118,14 +118,18 @@
 <li><strong> Mute for 8h/1w </strong> 如果您目前无法修复您的机器人，请使用此功能。这将在指定的时间段内禁用问题机器人的所有警报。我们不建议使用此选项，因为您的用户可能会迁移到更稳定的机器人。您可以通过Botfather取消您的机器人设置中的警报静音。</li>
 </ul>
 <h4 id="Monitored-issues-监控"><a href="#Monitored-issues-监控" class="headerlink" title="Monitored issues(监控)"></a>Monitored issues(监控)</h4><ol>
-<li><code>Too few **private messages** are sent compared to previous weeks: **{value}**</code> 你的机器人发送的信息要少于前几周,这对通讯类型的机器人很有用。</li>
-<li><code>Too few replies to incoming **private messages**. Conversion rate: **{value}**</code> 您的机器人不会回复发送给它的所有消息(您的机器人的请求/响应转换率在过去的三个5分钟内至少有两次是太低)。为了提供良好的用户体验，请回复发送给您的机器人的所有消息。</li>
-<li><code>Too few answers to **inline queries**. Conversion rate: **{value}**</code> 您的机器人不会回复正在发送给它的所有内嵌查询，其计算方式与上述相同。</li>
-<li><code>Too few answers to **callback queries**. Conversion rate: **{value}**</code><br><code>Too few answers to **callback game queries**. Conversion rate: **{value}**</code><br>你的机器人没有回复正在发送给它的所有回调查询,其计算方式与上述相同。</li>
+<li><p><code>Too few **private messages** are sent compared to previous weeks: **{value}**</code><br>你的机器人发送的信息要少于前几周,这对通讯类型的机器人很有用。</p>
+</li>
+<li><p><code>Too few replies to incoming **private messages**. Conversion rate: **{value}**</code><br>您的机器人不会回复发送给它的所有消息(您的机器人的请求/响应转换率在过去的三个5分钟内至少有两次是太低)。为了提供良好的用户体验，请回复发送给您的机器人的所有消息。</p>
+</li>
+<li><p><code>Too few answers to **inline queries**. Conversion rate: **{value}**</code><br>您的机器人不会回复正在发送给它的所有内嵌查询，其计算方式与上述相同。</p>
+</li>
+<li><p><code>Too few answers to **callback queries**. Conversion rate: **{value}**</code><br><code>Too few answers to **callback game queries**. Conversion rate: **{value}**</code><br>你的机器人没有回复正在发送给它的所有回调查询,其计算方式与上述相同。</p>
+</li>
 </ol>
 <blockquote>
 <p>请注意，状态提醒功能仍在测试中，将来会有所改进。</p>
 </blockquote>
 <p>以上就是介绍。阅读完此部分说明您现在已经准备好进入<a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">BOT API</a>手册。</p>
 <p>如果您有任何问题，请查看我们的<a href="https://core.telegram.org/bots/faq" target="_blank" rel="noopener">Bot FAQ »</a></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2017/12/16/杂记/" class="prev">PREV</a><a href="/2017/11/10/MPI读书笔记/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="https://yangsoon.github.io">yangs</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/12/16/杂记/" class="prev">上一篇</a><a href="/2017/11/10/MPI读书笔记/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2017 <a href="https://yangsoon.github.io">yangs</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
