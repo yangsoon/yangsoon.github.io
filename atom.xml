@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yangsoon.github.io/"/>
-  <updated>2017-12-18T10:22:33.000Z</updated>
+  <updated>2017-12-18T10:58:42.000Z</updated>
   <id>https://yangsoon.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://yangsoon.github.io/2017/12/18/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84telegram-bot/"/>
     <id>https://yangsoon.github.io/2017/12/18/一个简单的telegram-bot/</id>
     <published>2017-12-18T09:43:08.000Z</published>
-    <updated>2017-12-18T10:22:33.000Z</updated>
+    <updated>2017-12-18T10:58:42.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这篇文章是简单的介绍一下如何创建一个telegram-bot，下面我就以创建一个<a href="http://www.gamersky.com/" target="_blank" rel="noopener">游民星空</a> 囧图查看机器人为例，其中bot是基于<a href="https://github.com/python-telegram-bot/python-telegram-bot" target="_blank" rel="noopener">python-telegram-bot</a>来构建，<a href="https://github.com/yangsoon/funny-bot" target="_blank" rel="noopener">源码地址</a>在这。</p><p><div class="tip"><br>如果对telegram-bot不了解，请先查看 <a href="/2017/11/21/telegram-bots-for-developers/">《写给开发者的telegram-bots介绍文档》</a><br></div><br><a id="more"></a></p><h3 id="开心一刻"><a href="#开心一刻" class="headerlink" title="开心一刻"></a>开心一刻</h3><p>其实之前一直有这样一个想法，感觉平时生活中发生了好多有意思的事情，如果能够把这些事情记录下来，一定是个很宝贵的财富。</p><p>昨天我，阿宾，祥哥去爬了紫金山，松神去参加了徒步50公里的活动。结果今天我们的双腿不出意外的十分酸爽。于是有了下面的对话。</p><p>松神：腿好酸呀！现在腿里都是酒精。</p><p>祥哥：什么酒精，明明是乳糖。</p><p>我和阿宾：….</p><p>是乳酸好不好！！！</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这篇文章是简单的介绍一下如何创建一个telegram-bot，下面我就以创建一个<a href="http://www.gamersky.com/" target="_blank" rel="noopener">游民星空</a> 囧图查看机器人为例，其中bot是基于<a href="https://github.com/python-telegram-bot/python-telegram-bot" target="_blank" rel="noopener">python-telegram-bot</a>来构建，<a href="https://github.com/yangsoon/funny-bot" target="_blank" rel="noopener">源码地址</a>在这。</p><p><div class="tip"><br>如果对telegram-bot不了解，请先查看 <a href="/2017/11/21/telegram-bots-for-developers/">《写给开发者的telegram-bots介绍文档》</a><br></div><br><a id="more"></a></p><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ol><li>首先你需要通过BotFather，新建一个bot，获得唯一的authorization token。</li><li>开始撸代码</li></ol><h3 id="初始化你的bot"><a href="#初始化你的bot" class="headerlink" title="初始化你的bot"></a>初始化你的bot</h3><p>这里我们使用了一个用python写好的库，帮助我们创建bot，你可以查看他的文档来进行其他的骚操作。</p><p><code>main.py</code></p><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding : utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> telegram</div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">import</span> logging</div><div class="line"><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Updater</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">with</span> (open(<span class="string">'token.conf'</span>, <span class="string">'r'</span>)) <span class="keyword">as</span> f:</div><div class="line">    token = json.loads(f.read())[<span class="string">'token'</span>]</div><div class="line">    </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FunnyPhoto</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        logging.basicConfig(</div><div class="line">            format=<span class="string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>, level=logging.INFO)</div><div class="line">        self.updater = Updater(token=token)</div><div class="line">        self.dispatcher = self.updater.dispatcher</div><div class="line">        self.begin()</div><div class="line">        </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    bot = FunnyPhoto()</div><div class="line">    bot.updater.start_polling()</div><div class="line">    bot.updater.idle()</div></pre></td></tr></table></figure><p>首先我们需要之前在botfather里获取的token，然后写在配置文件中。注意千万别写在源码中，配置文件也要记得ignore，之前大疆因为password闹了一个很大的笑话。在这里logging模块是为了格式化输出日志。下面就介绍一下Updater和Dispatcher，Updater类不断从telegram中获取新的更新，并将它们转发给Dispatcher类。如果你创建了一个Updater对象，它将为您创建一个Dispatcher并将它们与一个Queue关联起来。然后你可以在Dispatcher中注册不同类型的处理程序，它将根据您注册的处理程序对Updater获取的更新进行排序，并将它们传递给你定义的回调函数。</p><p>当你在终端输入python3 main.py，回车后，updater就开始监听你的bot获取的消息。</p><h3 id="命令处理"><a href="#命令处理" class="headerlink" title="命令处理"></a>命令处理</h3><h3 id="开心一刻"><a href="#开心一刻" class="headerlink" title="开心一刻"></a>开心一刻</h3><p>其实之前一直有这样一个想法，感觉平时生活中发生了好多有意思的事情，如果能够把这些事情记录下来，一定是个很宝贵的财富。</p><p>昨天我，阿宾，祥哥去爬了紫金山，松神去参加了徒步50公里的活动。结果今天我们的双腿不出意外的十分酸爽。于是有了下面的对话。</p><p>松神：腿好酸呀！现在腿里都是酒精。</p><p>祥哥：什么酒精，明明是乳糖。</p><p>我和阿宾：….</p><p>是乳酸好不好！！！</p>]]></content>
     
     <summary type="html">
     
@@ -73,9 +73,9 @@
     </summary>
     
     
-      <category term="introduction" scheme="https://yangsoon.github.io/tags/introduction/"/>
-    
       <category term="telegram-bots" scheme="https://yangsoon.github.io/tags/telegram-bots/"/>
+    
+      <category term="introduction" scheme="https://yangsoon.github.io/tags/introduction/"/>
     
   </entry>
   
