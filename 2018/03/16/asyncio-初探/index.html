@@ -14,7 +14,7 @@
 <p>在官网中有这样<a href="https://docs.python.org/3/library/asyncio-task.html#coroutines" target="_blank" rel="noopener">一段话</a> 调用协程不会使其中的代码运行，协程对象在被排定执行时间之前都不会进行任何操作。下面有两种基本的方式来启动它的运行:</p>
 <ol>
 <li>在另一个协程中调用 <code>await coroutine</code> 和 <code>yield from coroutine</code> (假定另一个协程已经在执行，即在事件循环中) </li>
-<li>使用 <code>ensure_future</code> 函数或 <code>AbstractEventLoop.create_task</code> 方法计划其执行。 </li>
+<li>使用 <code>ensure_future</code> 函数或 <code>AbstractEventLoop.create_task</code> 方法来排定执行时间。 </li>
 </ol>
 <p>根据上面的函数讲解我们已经知道<code>run_in_executor</code>方法返回一个协程。因此我们在<code>blocked_sleep</code>函数中驱动他的执行。</p>
 <p>在main函数中<code>future = (blocked_sleep(i, i) for i in range(1, 6))</code>我们产生一个生成器表达式，每个元素都是一个协程。我们将future传递给gather函数。</p>
