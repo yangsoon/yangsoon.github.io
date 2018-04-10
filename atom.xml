@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yangsoon.github.io/"/>
-  <updated>2018-03-21T08:50:44.112Z</updated>
+  <updated>2018-04-07T14:33:30.197Z</updated>
   <id>https://yangsoon.github.io/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python Tricks</title>
+    <link href="https://yangsoon.github.io/2018/04/07/Python-Tricks/"/>
+    <id>https://yangsoon.github.io/2018/04/07/Python-Tricks/</id>
+    <published>2018-04-07T14:33:30.000Z</published>
+    <updated>2018-04-07T14:33:30.197Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>tornado异步编程</title>
@@ -164,9 +178,9 @@
     </summary>
     
     
-      <category term="introduction" scheme="https://yangsoon.github.io/tags/introduction/"/>
-    
       <category term="telegram-bots" scheme="https://yangsoon.github.io/tags/telegram-bots/"/>
+    
+      <category term="introduction" scheme="https://yangsoon.github.io/tags/introduction/"/>
     
   </entry>
   
