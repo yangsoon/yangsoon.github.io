@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yangsoon.github.io/"/>
-  <updated>2018-04-14T05:41:01.244Z</updated>
+  <updated>2018-04-17T13:46:42.911Z</updated>
   <id>https://yangsoon.github.io/</id>
   
   <author>
@@ -21,9 +21,13 @@
     <link href="https://yangsoon.github.io/2018/04/14/%E7%94%A8aiotg%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAtelegram%E7%88%AC%E8%99%AB%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
     <id>https://yangsoon.github.io/2018/04/14/用aiotg开发一个telegram爬虫机器人/</id>
     <published>2018-04-14T05:41:01.000Z</published>
-    <updated>2018-04-14T05:41:01.244Z</updated>
+    <updated>2018-04-17T13:46:42.911Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>aiotg是基于asyncio aiohttp开发的python版本的telegram bot机器人，因为决定开发一个爬虫功能的bot，所以网络请求阻塞是比较严重的性能障碍。而asyncio的异步非阻塞特性能够完美的解决这一问题。这篇文章在记录如何使用aiotg进行telegram开发的同时，也会说明一些aiohttp的使用方法。</p><a id="more"></a><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>之前一直说要保证每周都要写文章，可是发现自己的毕设是一个大坑，连续的写了一个多月，github上的commit都绿了一片，但是不能光把精力都放在毕设上，还是要抽空学学别的东西，比如，英语是吧，唉。</p>]]></content>
     
     <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;aiotg是基于asyncio aiohttp开发的python版本的telegram bot机器人，因为决定开发一个爬虫功能的bot，所以网络请求阻塞是比较严重的性能障碍。而asyncio的异步非阻塞特性能够完美的解决这一问题。这篇文章在记录如何使用aiotg进行telegram开发的同时，也会说明一些aiohttp的使用方法。&lt;/p&gt;
     
     </summary>
     
