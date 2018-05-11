@@ -1,8 +1,10 @@
 <!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> telegram-bots for developers · yangsoon</title><meta name="description" content="telegram-bots for developers - yangs"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yangsoon.github.io/atom.xml" title="yangsoon"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/yangsoon" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="https://www.zhihu.com/people/song-yang-91-69/activities" target="_blank" class="nav-list-link">ZHIHU</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">telegram-bots for developers</h1><div class="post-info">2017年11月21日</div><div class="post-content"><h4 id="写给开发者的telegram-bots介绍文档"><a href="#写给开发者的telegram-bots介绍文档" class="headerlink" title="写给开发者的telegram-bots介绍文档"></a>写给开发者的telegram-bots介绍文档</h4><p>bots是运行在telegram内部的第三方应用。用户可以通过发送消息，命令或者<a href="#inline-mode">内联请求</a>和bots进行交互。开发者可以通过向<a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">bot API</a>发送HTTPS请求来控制自己的bot。</p>
 <a id="more"></a>
 <blockquote>
-<p>因为最近对telegram bot产生了兴趣，想创建一个bot试一试，因为网上没有找到相关的中文文档，所以就自己跟着自己的理解和Google Translate翻译了介绍文档，文中一定有表述不对的地方，我会在之后编写bot的时候进行修改，建议大家阅读的时候参照<a href="https://core.telegram.org/bots" target="_blank" rel="noopener">原文档</a>一起阅读。</p>
+<p>因为最近对telegram bot产生了兴趣，想创建一个bot试一试，因为网上没有找到相关的中文文档，所以就自己跟着自己的理解和Google Translate翻译了部分的介绍文档(只有bot的基本功能，付款和游戏平台部分没有翻译)，文中一定有表述不对的地方，我会在之后编写bot的时候进行修改，建议大家阅读的时候参照<a href="https://core.telegram.org/bots" target="_blank" rel="noopener">原文档</a>一起阅读。你也可以在下面的评论中提出建议和我一起修改。</p>
 </blockquote>
+<div class="tip"><br>如果你已经熟悉bot的操作模式，那还等什么看这篇 <a href="/2018/04/14/用aiotg开发一个telegram爬虫机器人/">基于aiotg的telegram机器人</a><br></div>
+
 <h2 id="我能用bots做什么？"><a href="#我能用bots做什么？" class="headerlink" title="我能用bots做什么？"></a>我能用bots做什么？</h2><p>下面举几个例子，你可以用bot来：</p>
 <ul>
 <li>获得自定义的新闻和通知。一个机器人可以扮演一个智能新闻的角色，发送你需要的新闻。 如：<a href="https://t.me/TechCrunchBot" target="_blank" rel="noopener">TechCrunch Bot</a></li>
@@ -35,17 +37,23 @@
 <li>机器人不需要吃饭，睡觉或者抱怨(除非程序中有设定) <strong> 又是官方吐槽 </strong></li>
 </ul>
 <h2 id="与众不同的Bot"><a href="#与众不同的Bot" class="headerlink" title="与众不同的Bot"></a>与众不同的Bot</h2><p>Telegram bots在很多方面都与众不同 – 我们提供两种样式的键盘以及提供对默认指令、深层链接以及文本格式等的额外接口。</p>
-<h4 id="内联模式"><a href="#内联模式" class="headerlink" title="内联模式"></a>内联模式</h4><p>用户可以在任意聊天的输入框中通过输入内联请求和你的bot进行交互。只需在输入框中以你的bot命开头并输入请求即可。<br>收到查询后，您的机器人可以返回一些结果。一旦用户点击其中一个，它就发送到用户当前打开的聊天。通过这种方式，人们可以通过任何聊天，小组或频道和您的bot进行互动。你可以使用<a href="https://telegram.me/sticker" target="_blank" rel="noopener">@sticker</a>来体验一下。</p>
+<h4 id="内联请求模式"><a href="#内联请求模式" class="headerlink" title="内联请求模式"></a><a id="inlinemode" style="color: black">内联请求模式</a></h4><p>用户可以在任意聊天的输入框中通过输入内联请求和你的bot进行交互。只需在输入框中以你的bot命开头并输入请求即可。<br>收到查询后，您的机器人可以返回一些结果。一旦用户点击其中一个，它就发送到用户当前打开的聊天。通过这种方式，人们可以通过任何聊天，小组或频道和您的bot进行互动。你可以使用<a href="https://telegram.me/sticker" target="_blank" rel="noopener">@sticker</a>来体验一下。</p>
+<div class="tip"><br><a href="/2018/04/14/用aiotg开发一个telegram爬虫机器人/#inlinemode">这里</a>是一个简单的bot基于aiotg的内联模式的代码实现以及图片演示。<br></div>
+
 <blockquote>
 <p>关于<a href="https://core.telegram.org/bots/inline" target="_blank" rel="noopener">内联模式</a>的更多信息</p>
 </blockquote>
-<h4 id="付款平台"><a href="#付款平台" class="headerlink" title="付款平台"></a><a href="https://core.telegram.org/bots#payments-platform" target="_blank" rel="noopener">付款平台</a></h4><h4 id="游戏平台"><a href="#游戏平台" class="headerlink" title="游戏平台"></a><a href="https://core.telegram.org/bots#gaming-platform" target="_blank" rel="noopener">游戏平台</a></h4><h4 id="键盘"><a href="#键盘" class="headerlink" title="键盘"></a>键盘</h4><p>传统的机器人当然可以被教会理解人类的语言。但是有时候你想从用户那里获得更加规范化的输入，为此我们提供了自定义键盘。</p>
+<h4 id="付款平台"><a href="#付款平台" class="headerlink" title="付款平台"></a><a href="https://core.telegram.org/bots#payments-platform" target="_blank" rel="noopener">付款平台</a></h4><h4 id="游戏平台"><a href="#游戏平台" class="headerlink" title="游戏平台"></a><a href="https://core.telegram.org/bots#gaming-platform" target="_blank" rel="noopener">游戏平台</a></h4><h4 id="键盘"><a href="#键盘" class="headerlink" title="键盘"></a><a id="keyboards" style="color: black">键盘</a></h4><p>传统的机器人当然可以被教会理解人类的语言。但是有时候你想从用户那里获得更加规范化的输入，为此我们提供了自定义键盘。</p>
+<div class="tip"><br><a href="/2018/04/14/用aiotg开发一个telegram爬虫机器人/#keyboards">这里</a>是一个简单的bot基于aiotg的自定义键盘代码实现以及图片演示。<br></div>
+
 <p>每当你的机器人发送一条消息，它会传递一个特定的键盘与预定义的答复选项(请参阅<a href="https://core.telegram.org/bots/api/#replykeyboardmarkup" target="_blank" rel="noopener">ReplyKeyboardMarkup</a>)，telegram会接收到消息并将你设定的键盘展示给用户。点击任何按钮将立即发送相应的命令。这样你可以大大简化用户与你的机器人交互。</p>
 <blockquote>
 <p>有关自定义键盘的更多信息，请查阅<a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">Bot API</a>的<a href="https://core.telegram.org/bots/api#sendmessage" target="_blank" rel="noopener">sendMessage</a>部分。</p>
 </blockquote>
-<h4 id="内联键盘和即时更新"><a href="#内联键盘和即时更新" class="headerlink" title="内联键盘和即时更新"></a>内联键盘和即时更新</h4><p>有时候用户更喜欢可以不发送消息也能做一些事情。比如，当你的用户正在改变设置或翻阅搜索结果，在这种情况，你可以直接将内联键盘附加到所属的消息中。与自定义回复键盘不同，点击内联键盘上的按钮不会发送消息到当前聊天中。内联键盘支持按钮在后台工作，比如：callback buttons, URL buttons 和switch to inline buttons。</p>
+<h4 id="内联键盘和消息更新"><a href="#内联键盘和消息更新" class="headerlink" title=" 内联键盘和消息更新 "></a><a id="inlinekeyboards" style="color: black"> 内联键盘和消息更新 </a></h4><p>有时候用户更喜欢可以不发送消息也能做一些事情。比如，当你的用户正在改变设置或翻阅搜索结果，在这种情况，你可以直接将内联键盘附加到所属的消息中。与自定义回复键盘不同，点击内联键盘上的按钮不会发送消息到当前聊天中。内联键盘支持按钮在后台工作，比如：callback buttons, URL buttons 和switch to inline buttons。</p>
 <p>当使用回调按钮时，你的bot可以更新已经存在的消息(或者只是这些消息附加的键盘)所以这样能够保持聊天界面的整洁。你可以查看这些机器人的内联键盘的功能:<a href="https://telegram.me/music" target="_blank" rel="noopener">@music</a>、<a href="https://telegram.me/vote" target="_blank" rel="noopener">@vote</a>。</p>
+<div class="tip"><br><a href="/2018/04/14/用aiotg开发一个telegram爬虫机器人/#inlinekeyboards">这里</a>是一个简单的bot基于aiotg内联键盘和消息更新的代码实现以及图片演示。<br></div>
+
 <blockquote>
 <p><a href="https://core.telegram.org/bots/2-0-intro#new-inline-keyboards" target="_blank" rel="noopener">了解更多关于内联键盘和即时编辑的信息 &gt;&gt;</a></p>
 </blockquote>
@@ -101,7 +109,7 @@
 <p>bot可以使用特殊按钮询问用户的位置和电话号码。请注意，电话号码和位置请求按钮只能用于私人聊天。</p>
 <p>当按钮被按下后，telegram将显示一个确认提醒，告诉用户即将发生的事情。</p>
 <h2 id="BotFather"><a href="#BotFather" class="headerlink" title="BotFather"></a>BotFather</h2><p>BotFather是管理所有bot的机器人。它将帮助您创建新的机器人和更改现有机器人的设置。</p>
-<h4 id="创建一个新的bot"><a href="#创建一个新的bot" class="headerlink" title="创建一个新的bot"></a>创建一个新的bot</h4><p>使用 <strong> / newbot </strong> 命令来创建一个新的机器人。 BotFather会要求你提供一个名字和用户名，然后为你的新机器人生成一个授权令牌。</p>
+<h4 id="创建一个新的bot"><a href="#创建一个新的bot" class="headerlink" title="创建一个新的bot"></a><a id="newbot" style="color: black">创建一个新的bot</a></h4><p>使用 <strong> / newbot </strong> 命令来创建一个新的机器人。 BotFather会要求你提供一个名字和用户名，然后为你的新机器人生成一个授权令牌。</p>
 <p>您的机器人的名称显示在联系方式和其他地方。</p>
 <p><strong> Uername </strong> 是一个简称。用户名长度为532个字符，不区分大小写，但只能包含拉丁字符，数字和下划线。你的机器人的用户名必须以“bot”结尾。</p>
 <p><strong> token </strong> 是一串了类似  <code>110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw</code> 的字符串。<br>用于授权bot并向Bot API发送请求。</p>
