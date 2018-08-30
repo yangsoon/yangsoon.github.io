@@ -57,15 +57,15 @@
 <blockquote>
 <p><a href="https://core.telegram.org/bots/2-0-intro#new-inline-keyboards" target="_blank" rel="noopener">了解更多关于内联键盘和即时编辑的信息 &gt;&gt;</a></p>
 </blockquote>
-<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>命令提供了一个更灵活的方式与您的机器人进行通信。可以使用下面的语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/command [optional] [argument]</div></pre></td></tr></table></figure></p>
-<p>每个命令必须以‘/’开头且不能超过32个字符，命令可以使用拉丁字母，数字和下划线。下面是几个示例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/get_messages_stats</div><div class="line">/set_timer 10min Alarm!</div><div class="line">/get_timezone London, UK</div></pre></td></tr></table></figure></p>
+<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>命令提供了一个更灵活的方式与您的机器人进行通信。可以使用下面的语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/command [optional] [argument]</span><br></pre></td></tr></table></figure></p>
+<p>每个命令必须以‘/’开头且不能超过32个字符，命令可以使用拉丁字母，数字和下划线。下面是几个示例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/get_messages_stats</span><br><span class="line">/set_timer 10min Alarm!</span><br><span class="line">/get_timezone London, UK</span><br></pre></td></tr></table></figure></p>
 <p>以斜线开头的消息总是被发送给机器人。telegram 将会这样处理:</p>
 <ul>
 <li>当用户输入‘/’时，将会出现带有相应描述的命令提示(开发者提供给botFather相应的命令列表)。点击列表中的命令会立即发送命令。</li>
 <li>在和机器人的所有聊天的输入字段中显示一个额外的（/）按钮。点击它键入一个“/”并显示命令列表。</li>
 <li>在消息中将命令高亮显示，当用户点击突出显示的命令时，立即发送该命令。</li>
 </ul>
-<p>如果多个机器人在一个组中，可以将bot用户名添加到命令中以避免混淆:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/start@TriviaBot</div><div class="line">/start@ApocalypseBot</div></pre></td></tr></table></figure></p>
+<p>如果多个机器人在一个组中，可以将bot用户名添加到命令中以避免混淆:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/start@TriviaBot</span><br><span class="line">/start@ApocalypseBot</span><br></pre></td></tr></table></figure></p>
 <p>这是通过建议列表选择命令时自动完成的，请记住你的bot需要能够处理跟在username后的指令。</p>
 <h4 id="全局命令"><a href="#全局命令" class="headerlink" title="全局命令"></a>全局命令</h4><p>为了使所有的用户能够轻松应对各种bots的使用，我们要求开发者必须实现几个基础命令。telegram将会在界面中为这几个基础指令提供相应的快捷键。</p>
 <ul>
@@ -90,10 +90,10 @@
 </blockquote>
 <p>telegram bots有深层链接机制，允许在启动时将其他参数传递给机器人，这可能是一个启动机器人的命令，或者是一个身份验证令牌将用户的telegram帐户连接到某个外部服务上的帐户。</p>
 <p>每个bot都有一个在telegram打开一个对话的链接。<code>https://telegram.me/&lt;bot username&gt;</code>您可以将参数start或startgroup添加到此链接，参数值最多为64个字符。例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://telegram.me/triviabot?startgroup=test</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://telegram.me/triviabot?startgroup=test</span><br></pre></td></tr></table></figure>
 <p><code>A-Z</code>,<code>a-z</code>,<code>0-9</code>,<code>_</code>和<code>-</code>都可以使用。我们建议使用base64url编码参数与二进制和其他类型的内容。</p>
 <p>点击带有启动参数的链接将打开与bot的一对一对话，在输入栏位显示一个START按钮。如果使用startgroup参数，则会提示用户选择要添加机器人的组。一旦用户进行了确认(点击START按钮或者选择了一个组加入bot)，你的机器人将以这种格式接收一个来自该用户的消息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/start PAYLOAD</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/start PAYLOAD</span><br></pre></td></tr></table></figure>
 <p><code>PAYLOAD</code>表示链接中传递的start或startgroup参数的值。</p>
 <h4 id="深层链接示例"><a href="#深层链接示例" class="headerlink" title="深层链接示例"></a>深层链接示例</h4><p>假设网站example.com希望通过bot向用户发送通知。以下是他们为ID<code>123</code>用户开启通知进行的操作。</p>
 <ol>
@@ -133,7 +133,7 @@
 <li><p><code>Too few answers to **inline queries**. Conversion rate: **{value}**</code><br>您的机器人不会回复正在发送给它的所有内嵌查询，其计算方式与上述相同。</p>
 </li>
 <li><p>​</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Too few answers to callback queries. Conversion rate: &#123;value&#125;</div><div class="line"></div><div class="line">Too few answers to callback game queries. Conversion rate: &#123;value&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Too few answers to callback queries. Conversion rate: &#123;value&#125;</span><br><span class="line"></span><br><span class="line">Too few answers to callback game queries. Conversion rate: &#123;value&#125;</span><br></pre></td></tr></table></figure>
 <p>你的机器人没有回复正在发送给它的所有回调查询,其计算方式与上述相同。</p>
 </li>
 </ol>
@@ -151,4 +151,6 @@
         client_secret: 'd2366443245bc5528fc5a73af235d9e23d14e33a',
     },
 })
-gitment.render('container')</script><div class="copyright"><p>© 2015 - 2018 <a href="https://yangsoon.github.io">yangs</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-117274875-1",'auto');ga('send','pageview');</script></body></html>
+gitment.render('container')</script><div class="copyright"><p>© 2015 - 2018 <a href="https://yangsoon.github.io">yangs</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script type="text/x-mathjax-config">MathJax.Hub.Config({
+tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-117274875-1",'auto');ga('send','pageview');</script></body></html>
