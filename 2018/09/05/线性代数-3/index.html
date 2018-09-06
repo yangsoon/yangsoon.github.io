@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 线性代数(三) · yangsoon</title><meta name="description" content="线性代数(三) - yangs"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yangsoon.github.io/atom.xml" title="yangsoon"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/yangsoon" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="https://www.zhihu.com/people/song-yang-91-69/activities" target="_blank" class="nav-list-link">ZHIHU</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">线性代数(三)</h1><div class="post-info">2018年9月5日</div><div class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本部分主要讲解基变换、特征向量和特征值的内容。</p>
+<a id="more"></a>
+<h3 id="点积和对偶性、叉积"><a href="#点积和对偶性、叉积" class="headerlink" title="点积和对偶性、叉积"></a>点积和对偶性、叉积</h3><p>略</p>
+<h3 id="基变换"><a href="#基变换" class="headerlink" title="基变换"></a>基变换</h3><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">标准坐标系的基向量</th>
+<th style="text-align:center">另一组基向量(MJ的基向量)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">基向量表示</td>
+<td style="text-align:center">$ \hat i = \begin{bmatrix}1 \\ 0 \end{bmatrix}  \hat j = \begin{bmatrix}0 \\ 1\end{bmatrix} $</td>
+<td style="text-align:center">$ \hat i_m \Rightarrow \begin{bmatrix}2 \\ 1 \end{bmatrix} \hat j_m \Rightarrow \begin{bmatrix} -1 \\ 1 \end{bmatrix}$ <br>(在标准坐标系中的表示)</td>
+</tr>
+<tr>
+<td style="text-align:center">$\vec v$在不同基向量下的表示</td>
+<td style="text-align:center">$ \vec v = \begin {bmatrix} 3 \\ 2\end{bmatrix} $</td>
+<td style="text-align:center">$  \vec v = \begin{bmatrix} {5}/{3} \\ {1}/{3}\end{bmatrix} (\hat i_m = \begin{bmatrix} 1\\ 0\end{bmatrix} \hat j_m = \begin{bmatrix} 0 \\ 1\end{bmatrix})$</td>
+</tr>
+<tr>
+<td style="text-align:center">MJ下的向量$\rightarrow$标准下的向量</td>
+<td style="text-align:center">$\vec w = \begin{bmatrix} 2 &amp; -1 \\ 1  &amp; 1\end{bmatrix} \begin{bmatrix} -1\\ 2\end{bmatrix} = \begin{bmatrix} -4\\ 1\end{bmatrix}$ <br>将我们对MJ的误解转换为MJ真正想表达的向量</td>
+<td style="text-align:center">$\vec w =  \begin{bmatrix} -1 \\ 2 \end{bmatrix} (\hat i_m = \begin{bmatrix} 1\\ 0\end{bmatrix} \hat j_m = \begin{bmatrix} 0 \\ 1\end{bmatrix}) $</td>
+</tr>
+<tr>
+<td style="text-align:center">MJ下的向量$\leftarrow$标准下的向量</td>
+<td style="text-align:center">$ \vec v = \begin {bmatrix} 3 \\ 2\end{bmatrix} $</td>
+<td style="text-align:center">$\vec w = \begin{bmatrix} 2 &amp; -1 \\ 1  &amp; 1\end{bmatrix}^{-1} \begin{bmatrix} 3\\ 2\end{bmatrix}$</td>
+</tr>
+</tbody>
+</table>
+<p>用我们的坐标系描述MJ的基向量 $A = \begin{bmatrix} 2&amp; -1 \\ 1 &amp; 1\end{bmatrix}$  </p>
+<p>用我们的坐标描述相同的向量 $A \begin{bmatrix} x_j \\ y_j \end{bmatrix} = \begin{bmatrix} x_o \\ y_o \end{bmatrix}$ </p>
+<p>在标准坐标系中我们可以使用 $ M = \begin{bmatrix} 0&amp; -1 \\ 1 &amp; 0\end{bmatrix}$ 来表示一个逆时针选转$90^{\circ}$的线性变换。</p>
+<p>对于MJ的线性变换应该怎么表示? 首先对MJ下的任意一个向量 如 $ \vec v =  \begin{bmatrix} -1 \\ 2\end{bmatrix}$, 首先将该向量转变为使用标准基向量来描述 ，然后将变换结果左乘相应的线性变换矩阵，此时结果为变换后的向量，但是是使用标准基向量来描述，所以再次左乘基变换矩阵的逆，从而得到使用MJ来描述的向量。</p>
+<p>$$ A^{-1}MA\vec v = \begin{bmatrix} 2 &amp; -1 \\ 1  &amp; 1\end{bmatrix}^{-1}  \begin{bmatrix} 0&amp; -1 \\ 1 &amp; 0\end{bmatrix} \begin{bmatrix} 2 &amp; -1 \\ 1  &amp; 1\end{bmatrix} \begin{bmatrix} -1\\ 2\end{bmatrix}$$</p>
+<p>因为 $\vec v$ 可以为任意向量 所以 $ A^{-1}MA = \begin{bmatrix} 2 &amp; -1 \\ 1  &amp; 1\end{bmatrix}^{-1}  \begin{bmatrix} 0&amp; -1 \\ 1 &amp; 0\end{bmatrix} \begin{bmatrix} 2 &amp; -1 \\ 1  &amp; 1\end{bmatrix} $ 表示的就是MJ下基向量描述的逆时针选转$90^{\circ}$的线性变换。</p>
+<h3 id="特征向量与特征值"><a href="#特征向量与特征值" class="headerlink" title="特征向量与特征值"></a>特征向量与特征值</h3><p>首先声明一个线性变换矩阵 $ M = \begin{bmatrix}3&amp;1\\ 0&amp;2 \end{bmatrix}$ 我们关注他对一个特定向量的作用，并且考虑这个向量张成的空间，也就是通过原点和向量尖端的直线。某些特殊的向量在线性变换后留在了他所张成的空间。意味着线性变换对他的影响只是进行了伸长和压缩。在线性变换$M$中$\hat i$就是这样一个特殊的向量，该向量张成的空间就是$x$轴，$x$轴上的向量都被拉长了3倍。同时向量$\begin{bmatrix} -1 \\ 1\end{bmatrix}$ 在变换中也留在了自己张成的空间中。被拉伸为原来的2倍。这两个特殊的向量就被称为变换的<strong>特征向量</strong>，每个特征向量都有一个所属的值，被称为<strong>特征值</strong>。</p>
+<p>特征向量的概念如下：</p>
+<p>$$ A \vec v = \lambda \vec v \Rightarrow A \vec v - (\lambda I)\vec v = \vec 0 \Rightarrow (A-\lambda I)\vec v = \vec 0 $$</p>
+<p>$A$ 代表着某种线性变换的矩阵，$\vec v$是特征向量，$\lambda$ 对应着特征值。因此我们就寻找一个向量使得新矩阵$(A-\lambda I)$与$\vec v$相乘结果为零向量。</p>
+<p>首先不考虑$\vec v$为$\vec 0$的情况。则需要$(A-\lambda I)$ 的行列式为0，即新的矩阵代表的线性变换将空间压缩到更低的维度。即$det(A- \lambda I) = 0$</p>
+<p>以$M$为例 </p>
+<p>$$det(M-\lambda I) = det(\begin{bmatrix} 3-\lambda &amp; 1 \\ 0 &amp; 2-\lambda \end{bmatrix}) = (3-\lambda)(2-\lambda) = 0$$</p>
+<p>可得$\lambda = 3$或者$\lambda = 2$。求解特征值为3的特征向量时，将$\lambda = 3$代入，$\begin{bmatrix} 0&amp;1\\ 0&amp;-1\end{bmatrix} \begin{bmatrix}x \\ y \end{bmatrix} = \begin{bmatrix} 0 \\ 0\end{bmatrix}$,转换为线性方程组求解即可。</p>
+<blockquote>
+<p>特征值出现复数，一般对应变换中的某种旋转。</p>
+</blockquote>
+<h4 id="特征基"><a href="#特征基" class="headerlink" title="特征基"></a>特征基</h4><p>基向量正好是特征向量。$\begin{bmatrix}-1&amp;0 \\ 0 &amp;2 \end{bmatrix}$ ，$\hat i$和$\hat j$ 变换的倍数就是他们所属的特征值。除了对角以外，其他元素都为0的矩阵被称为对角矩阵，对他的解读方法就是所有的基向量都是特征向量，矩阵的对角元就是他们所属的特征值。</p>
+<p>对角矩阵的特点是对角矩阵多次相乘只是进行特征值上的累乘。</p>
+<p>对于非对角矩阵进行多次累乘，可以计算非对角矩阵的特征向量，然后进行坐标系的转换。</p>
+<p>$$\begin{bmatrix} 1&amp; -1 \\ 0&amp; 1\end{bmatrix}^{-1} \begin{bmatrix} 3 &amp; 1 \\ 0&amp; 2\end{bmatrix} \begin{bmatrix} 1&amp; -1 \\ 0&amp; 1\end{bmatrix} = \begin{bmatrix} 3&amp; 0 \\ 0&amp; 2\end{bmatrix}$$ </p>
+<p>转换成对角矩阵后再进行累乘，最后可以再次进行坐标系转换变换结果。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/09/03/线性代数-2/" class="next">下一篇</a></div><div id="container"></div><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script><script>var gitment = new Gitment({
+    id: 'Wed Sep 05 2018 11:20:19 GMT+0800',
+    owner: 'yangsoon',
+    repo: 'yangsoon.github.io',
+    oauth: {
+        client_id: 'c6e81705ee274d631d1d',
+        client_secret: 'd2366443245bc5528fc5a73af235d9e23d14e33a',
+    },
+})
+gitment.render('container')</script><div class="copyright"><p>© 2015 - 2018 <a href="https://yangsoon.github.io">yangs</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><!-- - LaTex--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-117274875-1",'auto');ga('send','pageview');</script></body></html>
