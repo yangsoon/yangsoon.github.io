@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yangsoon.github.io/"/>
-  <updated>2018-09-06T14:20:15.259Z</updated>
+  <updated>2018-10-02T08:14:42.352Z</updated>
   <id>https://yangsoon.github.io/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TODO-LIST</title>
+    <link href="https://yangsoon.github.io/2018/10/02/TODO-LIST/"/>
+    <id>https://yangsoon.github.io/2018/10/02/TODO-LIST/</id>
+    <published>2018-10-02T07:44:22.000Z</published>
+    <updated>2018-10-02T08:14:42.352Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近学习似乎没有目标性，又出现了很久之前的毛病，太看重课程作业(不知道算不算毛病) 研一似乎空余时间多了起来, 但又似乎不是。但不管怎么说，还是要充分利用时间，给自己定一些目标，不要过阵子再感慨浪费掉的时间，所以下面列出一些需要深入学习和理解的知识点，后期关于这些内容的学习将会以<code>jupyter notebook</code>或者一篇博客的形式记录下来，还有一部分是日常会蹦出来的一些idea，争取能够实现吧，每完成一项任务就用 <del>任务/知识点</del>来删掉。(TODO和Project都会不断的更新的)</p><a id="more"></a><h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><ol><li>python编码问题</li><li>pyton源码剖析</li><li>python future模块</li><li>python 元编程</li><li>python风格的对象</li><li>linux/unix IO多路复用</li><li>linux/unix socket编程</li><li>SDN编程 </li><li>深入理解spark</li><li>spark和机器学习 </li></ol><h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3><h4 id="1-豆瓣租房-GITHUB"><a href="#1-豆瓣租房-GITHUB" class="headerlink" title="1. 豆瓣租房  GITHUB"></a>1. 豆瓣租房  <a href="https://github.com/yangsoon/Douban-Rent" target="_blank" rel="noopener">GITHUB</a></h4><p>从豆瓣小组中抓取租房信息，使用NLP或者ES来进行精确的搜索和信息提取。</p><h6 id="TODO-1"><a href="#TODO-1" class="headerlink" title="TODO"></a>TODO</h6><ol><li><del>web<del></del></del></li><li>移动端 ios android</li><li>NLP信息提取</li><li>ES快速搜索</li></ol><h4 id="2-游民星空抓图机器人-GITHUB"><a href="#2-游民星空抓图机器人-GITHUB" class="headerlink" title="2. 游民星空抓图机器人 GITHUB"></a>2. 游民星空抓图机器人 <a href="https://github.com/yangsoon/funny-bot" target="_blank" rel="noopener">GITHUB</a></h4><h6 id="TODO-2"><a href="#TODO-2" class="headerlink" title="TODO"></a>TODO</h6><ol><li>完成动态图的抓取上传</li><li>优化命令提示</li></ol><h4 id="3-生活记录-以时间轴的形式记录生活点滴"><a href="#3-生活记录-以时间轴的形式记录生活点滴" class="headerlink" title="3. 生活记录 (以时间轴的形式记录生活点滴)"></a>3. 生活记录 (以时间轴的形式记录生活点滴)</h4>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近学习似乎没有目标性，又出现了很久之前的毛病，太看重课程作业(不知道算不算毛病) 研一似乎空余时间多了起来, 但又似乎不是。但不管怎么说，还是要充分利用时间，给自己定一些目标，不要过阵子再感慨浪费掉的时间，所以下面列出一些需要深入学习和理解的知识点，后期关于这些内容的学习将会以&lt;code&gt;jupyter notebook&lt;/code&gt;或者一篇博客的形式记录下来，还有一部分是日常会蹦出来的一些idea，争取能够实现吧，每完成一项任务就用 &lt;del&gt;任务/知识点&lt;/del&gt;来删掉。(TODO和Project都会不断的更新的)&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>线性代数(三)</title>
