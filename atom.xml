@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yangsoon.github.io/"/>
-  <updated>2018-12-15T11:58:52.341Z</updated>
+  <updated>2018-12-20T10:49:25.174Z</updated>
   <id>https://yangsoon.github.io/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode解题思路</title>
+    <link href="https://yangsoon.github.io/2018/12/20/LeetCode%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/"/>
+    <id>https://yangsoon.github.io/2018/12/20/LeetCode解题思路/</id>
+    <published>2018-12-20T10:49:25.000Z</published>
+    <updated>2018-12-20T10:49:25.174Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>实用小工具集合</title>
@@ -49,9 +63,9 @@
     <link href="https://yangsoon.github.io/2018/12/12/XGboost/"/>
     <id>https://yangsoon.github.io/2018/12/12/XGboost/</id>
     <published>2018-12-12T11:25:16.000Z</published>
-    <updated>2018-12-16T13:30:56.723Z</updated>
+    <updated>2018-12-17T01:14:05.974Z</updated>
     
-    <content type="html"><![CDATA[<p>因为一些特别的原因，在组会上做了两次XGboost的相关报告(其实就是一周两次组会，因为老师都不一样，为了划水就两次都讲了一样的内容)。在第二次报告准备的时候，发现自己对XGboost并没有真正的了解，第一次做报告的时候，学长问了几个问题我也是xjb回答的。第二次自认为是看懂了，所以索性趁热打铁，来一发热乎乎的blog记录一下。</p><p><strong>本文准备从最基本的内容讲起，而不是直接讲XGboost</strong></p><h3 id="决策树-CART"><a href="#决策树-CART" class="headerlink" title="决策树(CART)"></a>决策树(CART)</h3>]]></content>
+    <content type="html"><![CDATA[<p>因为一些特别的原因，在组会上做了两次XGboost的相关报告(其实就是一周两次组会，因为老师都不一样，为了划水就两次都讲了一样的内容)。在第二次报告准备的时候，发现自己对XGboost并没有真正的了解，第一次做报告的时候，学长问了几个问题我也是xjb回答的。第二次自认为是看懂了，所以索性趁热打铁，来一发热乎乎的blog记录一下。</p><p><strong>本文准备从最基本的内容讲起，而不是直接讲XGboost</strong></p><h3 id="决策树-CART"><a href="#决策树-CART" class="headerlink" title="决策树(CART)"></a>决策树(CART)</h3><p> 决策树是一种基本的分类和回归方法，决策树模型呈树形结构，在分类问题中, 表示基于特征对实例进行分类的过程，他可以认为是 $if-then$规则的集合。</p>]]></content>
     
     <summary type="html">
     
