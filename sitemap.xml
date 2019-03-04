@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yangsoon.github.io/2018/04/07/Python-Tricks/</loc>
+    
+    <lastmod>2019-03-04T12:22:21.615Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yangsoon.github.io/2018/12/12/XGboost/</loc>
+    
+    <lastmod>2019-03-04T11:41:03.166Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yangsoon.github.io/2018/12/13/%E6%88%91%E7%9A%842018/</loc>
     
     <lastmod>2019-02-07T04:00:17.048Z</lastmod>
@@ -44,13 +58,6 @@
   </url>
   
   <url>
-    <loc>https://yangsoon.github.io/2018/12/12/XGboost/</loc>
-    
-    <lastmod>2018-12-17T01:14:05.974Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://yangsoon.github.io/2018/07/16/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</loc>
     
     <lastmod>2018-12-16T13:28:58.316Z</lastmod>
@@ -68,13 +75,6 @@
     <loc>https://yangsoon.github.io/2017/11/21/telegram-bots-for-developers/</loc>
     
     <lastmod>2018-05-12T11:22:04.112Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://yangsoon.github.io/2018/04/07/Python-Tricks/</loc>
-    
-    <lastmod>2018-04-13T00:58:46.715Z</lastmod>
     
   </url>
   
