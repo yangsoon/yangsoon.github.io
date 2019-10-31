@@ -1,5 +1,7 @@
 # Blog
 
+[https://yangsoon.github.io/](https://yangsoon.github.io/)
+
 记录自己的学习过程和一些开脑洞的事情
 
 #### [IO多路复用](https://github.com/yangsoon/yangsoon.github.io/issues/34)
