@@ -1,0 +1,1274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>开篇词-学好网络编程，需要掌握哪些核心问题？</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+        html {
+            color: #333;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-rendering: optimizelegibility;
+            font-family: Helvetica Neue, PingFang SC, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+        }
+
+        html.borderbox *,
+        html.borderbox :after,
+        html.borderbox :before {
+            box-sizing: border-box
+        }
+
+        article,
+        aside,
+        blockquote,
+        body,
+        button,
+        code,
+        dd,
+        details,
+        dl,
+        dt,
+        fieldset,
+        figcaption,
+        figure,
+        footer,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        header,
+        hr,
+        input,
+        legend,
+        li,
+        menu,
+        nav,
+        ol,
+        p,
+        pre,
+        section,
+        td,
+        textarea,
+        th,
+        ul {
+            margin: 0;
+            padding: 0
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        menu,
+        nav,
+        section {
+            display: block
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, Helvetica, sans-serif
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            padding: 0;
+            border: 0
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        fieldset,
+        img {
+            border: 0
+        }
+
+        blockquote {
+            position: relative;
+            color: #999;
+            font-weight: 400;
+            border-left: 1px solid #1abc9c;
+            padding-left: 1em;
+            margin: 1em 3em 1em 2em
+        }
+
+        @media only screen and (max-width: 640px) {
+            blockquote {
+                margin: 1em 0
+            }
+        }
+
+        abbr,
+        acronym {
+            border-bottom: 1px dotted;
+            font-variant: normal
+        }
+
+        abbr {
+            cursor: help
+        }
+
+        del {
+            text-decoration: line-through
+        }
+
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        th,
+        var {
+            font-style: normal;
+            font-weight: 400
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        caption,
+        th {
+            text-align: left
+        }
+
+        q:after,
+        q:before {
+            content: ""
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative
+        }
+
+        :root sub,
+        :root sup {
+            vertical-align: baseline
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        a {
+            color: #1abc9c
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .typo a {
+            border-bottom: 1px solid #1abc9c
+        }
+
+        .typo a:hover {
+            border-bottom-color: #555;
+            color: #555
+        }
+
+        .typo a:hover,
+        a,
+        ins {
+            text-decoration: none
+        }
+
+        .typo-u,
+        u {
+            text-decoration: underline
+        }
+
+        mark {
+            background: #fffdd1;
+            border-bottom: 1px solid #ffedce;
+            padding: 2px;
+            margin: 0 5px
+        }
+
+        code,
+        pre,
+        pre tt {
+            font-family: Courier, Courier New, monospace
+        }
+
+        pre {
+            background: hsla(0, 0%, 97%, .7);
+            border: 1px solid #ddd;
+            padding: 1em 1.5em;
+            display: block;
+            -webkit-overflow-scrolling: touch
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #cfcfcf;
+            margin-bottom: .8em;
+            height: 10px
+        }
+
+        .typo-small,
+        figcaption,
+        small {
+            font-size: .9em;
+            color: #888
+        }
+
+        b,
+        strong {
+            font-weight: 700;
+            color: #000
+        }
+
+        [draggable] {
+            cursor: move
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        .textwrap,
+        .textwrap td,
+        .textwrap th {
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        .textwrap-table {
+            table-layout: fixed
+        }
+
+        .serif {
+            font-family: Palatino, Optima, Georgia, serif
+        }
+
+        .typo-dl,
+        .typo-form,
+        .typo-hr,
+        .typo-ol,
+        .typo-p,
+        .typo-pre,
+        .typo-table,
+        .typo-ul,
+        .typo dl,
+        .typo form,
+        .typo hr,
+        .typo ol,
+        .typo p,
+        .typo pre,
+        .typo table,
+        .typo ul,
+        blockquote {
+            margin-bottom: 1rem
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: PingFang SC, Helvetica Neue, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+            color: #000;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo-h2,
+        .typo-h3,
+        .typo-h4,
+        .typo-h5,
+        .typo-h6,
+        .typo h1,
+        .typo h2,
+        .typo h3,
+        .typo h4,
+        .typo h5,
+        .typo h6 {
+            margin-top: 1.2em;
+            margin-bottom: .6em;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo h1 {
+            font-size: 2em
+        }
+
+        .typo-h2,
+        .typo h2 {
+            font-size: 1.8em
+        }
+
+        .typo-h3,
+        .typo h3 {
+            font-size: 1.6em
+        }
+
+        .typo-h4,
+        .typo h4 {
+            font-size: 1.4em
+        }
+
+        .typo-h5,
+        .typo-h6,
+        .typo h5,
+        .typo h6 {
+            font-size: 1.2em
+        }
+
+        .typo-ul,
+        .typo ul {
+            margin-left: 1.3em;
+            list-style: disc
+        }
+
+        .typo-ol,
+        .typo ol {
+            list-style: decimal;
+            margin-left: 1.9em
+        }
+
+        .typo-ol ol,
+        .typo-ol ul,
+        .typo-ul ol,
+        .typo-ul ul,
+        .typo li ol,
+        .typo li ul {
+            margin-bottom: .8em;
+            margin-left: 2em
+        }
+
+        .typo-ol ul,
+        .typo-ul ul,
+        .typo li ul {
+            list-style: circle
+        }
+
+        .typo-table td,
+        .typo-table th,
+        .typo table caption,
+        .typo table td,
+        .typo table th {
+            border: 1px solid #ddd;
+            padding: .5em 1em;
+            color: #666
+        }
+
+        .typo-table th,
+        .typo table th {
+            background: #fbfbfb
+        }
+
+        .typo-table thead th,
+        .typo table thead th {
+            background: hsla(0, 0%, 95%, .7)
+        }
+
+        .typo table caption {
+            border-bottom: none
+        }
+
+        .typo-input,
+        .typo-textarea {
+            -webkit-appearance: none;
+            border-radius: 0
+        }
+
+        .typo-em,
+        .typo em,
+        caption,
+        legend {
+            color: #000;
+            font-weight: inherit
+        }
+
+        .typo-em {
+            position: relative
+        }
+
+        .typo-em:after {
+            position: absolute;
+            top: .65em;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            content: "\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB"
+        }
+
+        .typo img {
+            max-width: 100%
+        }
+
+        .common-content {
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.75rem;
+            white-space: normal;
+            word-break: normal;
+            font-size: 1rem
+        }
+
+        .common-content img {
+            display: block;
+            max-width: 100%;
+            background-color: #eee
+        }
+
+        .common-content audio,
+        .common-content video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        .common-content center,
+        .common-content font {
+            margin-top: 1rem;
+            display: inline-block
+        }
+
+        .common-content center {
+            width: 100%
+        }
+
+        .common-content pre {
+            margin-top: 1rem;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            overflow: hidden
+        }
+
+        .common-content pre code {
+            font-size: .8rem;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            overflow-x: auto
+        }
+
+        .common-content hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        .common-content b,
+        .common-content h1,
+        .common-content h2,
+        .common-content h3,
+        .common-content h4,
+        .common-content h5,
+        .common-content strong {
+            font-weight: 700
+        }
+
+        .common-content h1,
+        .common-content h2 {
+            font-size: 1.125rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content h3,
+        .common-content h4,
+        .common-content h5 {
+            font-size: 1rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: .15rem
+        }
+
+        .common-content .orange {
+            color: #ff5a05
+        }
+
+        .common-content .reference {
+            font-size: 1rem;
+            color: #888
+        }
+
+        .custom-rich-content h1 {
+            margin-top: 0;
+            font-weight: 400;
+            font-size: 15.25px;
+            border-bottom: 1px solid #eee;
+            line-height: 2.8
+        }
+
+        .custom-rich-content li,
+        .custom-rich-content p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6
+        }
+
+        table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        table.hljs-ln,
+        table.hljs-ln tbody,
+        table.hljs-ln td,
+        table.hljs-ln tr {
+            box-sizing: border-box
+        }
+
+        table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none
+        }
+
+        table.hljs-ln td.hljs-ln-code,
+        table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            font-size: 12px;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            color: #24292e;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+        video::-webkit-media-controls {
+            overflow: hidden !important
+        }
+
+        video::-webkit-media-controls-enclosure {
+            width: calc(100% + 32px);
+            margin-left: auto
+        }
+
+        ._29HP61GA_0 {
+            max-width:800px;
+            margin:0 auto;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.76;
+            white-space: normal;
+            word-break: normal;
+            font-size: 17px;
+            -webkit-transition: background-color .3s ease;
+            transition: background-color .3s ease
+        }
+
+        ._29HP61GA_0 .MathJax_Display {
+            overflow: auto
+        }
+
+        ._29HP61GA_0 .poster {
+            position: fixed;
+            left: -10000px;
+            top: -10000px;
+            overflow: hidden;
+            padding: 1rem;
+            background: #ececec
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy {
+            font-size: 13px;
+            color: #888;
+            position: absolute;
+            right: 1em;
+            top: .5em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy .iconfont {
+            font-size: 12px;
+            margin-right: .2em
+        }
+
+        ._29HP61GA_0 a {
+            color: #fa8919;
+            border-bottom: 1px solid #fa8919
+        }
+
+        ._29HP61GA_0 img {
+            display: block;
+            max-width: 100%;
+            position: relative;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background-color: #eee;
+            vertical-align: top;
+            border-radius: 0
+        }
+
+        ._29HP61GA_0 audio,
+        ._29HP61GA_0 video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        ._29HP61GA_0 pre {
+            margin-top: 16px;
+            padding: 34px 0 0;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 6px;
+            background: rgba(246, 247, 251, .749);
+            border: 0
+        }
+
+        ._29HP61GA_0 pre code {
+            font-size: 12px;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-left: 16px;
+            margin-right: 16px;
+            overflow-x: scroll
+        }
+
+        ._29HP61GA_0 pre code:after {
+            content: "";
+            height: 30px;
+            width: 100%;
+            display: block
+        }
+
+        ._29HP61GA_0 hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        ._29HP61GA_0 h1,
+        ._29HP61GA_0 h2,
+        ._29HP61GA_0 h3,
+        ._29HP61GA_0 h4,
+        ._29HP61GA_0 h5 {
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 b,
+        ._29HP61GA_0 strong {
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 h1 {
+            font-size: 21px
+        }
+
+        ._29HP61GA_0 h2 {
+            font-size: 20px
+        }
+
+        ._29HP61GA_0 h3 {
+            font-size: 19px
+        }
+
+        ._29HP61GA_0 h4 {
+            font-size: 18px
+        }
+
+        ._29HP61GA_0 h5 {
+            font-size: 17px
+        }
+
+        ._29HP61GA_0 center,
+        ._29HP61GA_0 p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: 0;
+            margin-bottom: 30px;
+            word-break: break-word
+        }
+
+        ._29HP61GA_0 center {
+            text-align: center
+        }
+
+        ._29HP61GA_0 blockquote {
+            margin-top: 0;
+            margin-bottom: 34px;
+            border-left: 3px solid #e8e8e8;
+            padding-left: 17px;
+            color: #353535
+        }
+
+        ._29HP61GA_0 blockquote p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol,
+        ._29HP61GA_0 ul {
+            margin-bottom: 30px
+        }
+
+        ._29HP61GA_0 ol p,
+        ._29HP61GA_0 ul p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol {
+            list-style: decimal;
+            margin-left: 20px
+        }
+
+        ._29HP61GA_0 ul li {
+            padding-left: 17px;
+            position: relative;
+            margin-bottom: 10px
+        }
+
+        ._29HP61GA_0 ul li:after {
+            content: "";
+            height: 6px;
+            width: 6px;
+            border-radius: 50%;
+            background: #353535;
+            position: absolute;
+            top: 10px;
+            left: 0
+        }
+
+        ._29HP61GA_0 .orange {
+            color: #fa8919
+        }
+
+        ._29HP61GA_0 .reference {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-right {
+            text-align: right
+        }
+
+        ._29HP61GA_0 .m-center {
+            text-align: center;
+            display: block
+        }
+
+        ._29HP61GA_0 .m-gray {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-small {
+            font-size: 15px
+        }
+
+        ._29HP61GA_0 table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        ._29HP61GA_0 table.hljs-ln,
+        ._29HP61GA_0 table.hljs-ln tbody,
+        ._29HP61GA_0 table.hljs-ln td,
+        ._29HP61GA_0 table.hljs-ln tr {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        ._29HP61GA_0 table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            font-size: 12px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code,
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            font-size: 13px;
+            color: #666;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+    </style>
+</head>
+<body>
+<div class="_29HP61GA_0">
+<h1>开篇词-学好网络编程，需要掌握哪些核心问题？</h1>
+<p>你好，我是盛延敏，欢迎你的加入。在接下来的几个月时间里，我会和你一起深入学习网络编程。网络编程是一个高度重视实战的内容模块，工作这么多年，我一直都在近距离与它打交道。</p><p>我博士毕业于中科大，毕业之后就加入了IBM，在IBM从事WebSphere应用服务器、PaaS平台Bluemix等系统的开发工作，后来又在大众点评担任云平台首席架构师，推动了以Docker为核心的私有云的建设和落地。现在我在蚂蚁金服专注于云计算的架构和开发等方面的事情。正是这些工作经历让我对网络编程有了更为深入的理解。</p><p>2000年初，我就开始使用网络编程框架ACE、CORBA等技术从事电信网管系统的开发，后来又开始接触ICE，写分布式控制系统，再之后转向Java，使用JDK从事Web Service和应用服务器的网络开发和研究，使用Netty从事Java高性能网络编程的开发。作为一个网络程序设计和开发的老兵，我目前继续在云计算领域深度耕耘，更是少不了和各种网络设计和开发打交道。</p><p>得益于这么多年的深耕，在工作过程中，我也接触了不少同学，面试过很多候选人，令我惊讶的是，很多工作很久的同学对网络协议和网络编程一知半解，仅仅停留在一个很粗浅的水平。</p><!-- [[[read_end]]] --><p>事实上，无论是在面试中，还是在工作中，掌握网络编程领域的知识都是一个非常重要的基本功。这在互联网蓬勃发展的今天，更是如此。</p><p>如果我问你一些关于网络编程方面的问题，你会怎样回答呢？</p><ul>
+<li>大家经常说的四层、七层，分别指的是什么？</li>
+<li>TCP三次握手是什么，TIME_WAIT是怎么发生的？CLOSE_WAIT又是什么状态？</li>
+<li>Linux下的epoll解决的是什么问题？如何使用epoll写出高性能的网络程序？</li>
+<li>什么是网络事件驱动模型？Reactor模式又是什么？</li>
+</ul><p>这些问题看似简单，但想做到完全理解可并不容易。很多人可能停留在“是这样”的状态，对于“为什么”缺乏深入和了解。</p><p>我在学网络编程的时候，也面临着这种窘境。我发现很多情况下，我们都希望尽可能详尽地学习网络编程，面面俱到，但奈何头绪太多，对于初学者来说很容易深陷其中，钻牛角尖，也就难以去理清脉络了。</p><p>这样导致的后果就是过分关注知识点本身，片面地斩断了它们与实际工作的联系。比如流量控制和拥塞控制这一部分的内容。我记得我在学这部分知识的时候，纯粹是把这些当做考试的知识点来学习，很难将书本的知识和实际经验，尤其是和代码结合起来进行理解。为什么会有这些算法，它们究竟解决了哪些问题？这些问题搞不懂，看似无伤大雅，其实已经或多或少地和实际工作产生了断层。</p><p>流量控制和拥塞控制只是网络编程一小部分的内容，进程、线程、多路复用、异步I/O这些概念一摆出来，又会让人一头雾水。从哪里学？怎么学？</p><p>很多人在理论部分折了戟，干脆跑向了另一个极端，转而去学习框架，快速上手。事实上，理论是基石，框架则是站在一个更为抽象的角度来看待网络编程问题。框架的产生或是为了实现跨平台支持，例如  JDK，或是为了屏蔽网络编程的细节，让开发更为方便，例如  libevent。</p><p>没有理论为底，框架也只是空中楼阁。直接学习框架反而会更加摸不着头脑，对网络编程也很难有实打实的收获。</p><p>那么你可能会问，理论学不懂，框架又不行，到底应该怎么学？</p><p>事实上，我认为学习高性能网络编程，掌握两个核心要点就可以了：<strong>第一就是理解网络协议，并在这个基础上和操作系统内核配合，感知各种网络I/O事件；第二就是学会使用线程处理并发</strong>。抓住这两个核心问题，也就抓住了高性能网络编程的“七寸”。我会从实践出发，单刀直入地展开，从问题的角度对这些看似枯燥的知识点进行阐述。</p><p>我会跟你一起在专栏里研究某个理论或者算法，看看它提出来的目的到底是什么，又解决了哪些问题。我还会和代码进行关联，和实验进行关联，循序渐进地引出这个理论或者算法的实际意义。</p><p>我会从最简单的网络套接字开始，一步步带你写出健硕的高性能网络程序。在这个过程里，我会尽我所能，将自己在这个领域中多年的体会和专栏内容融为一体，帮助你理解协议、API和代码。</p><p>在专栏里，我们会重点展开对Linux网络编程的学习。原因也很简单，目前Linux系统已成为互联网数据中心的标配，再加上基于Linux的移动开发平台Android的迅速崛起，Linux的重要性愈发明显。对有志于学习网络编程的你来说，这是一个非常明智的选择。</p><p>我在下面放了一张专栏的目录，专栏将分别从基础篇、提升篇、性能篇和实战篇展开。</p><p><img src="https://static001.geekbang.org/resource/image/d9/b4/d9868ff93c308befe7bb3f06cfc828b4.jpg" alt=""></p><p>在我看来，要学好网络编程，需要达到以下三个层次。</p><p><strong>第一个层次，充分理解TCP/IP网络模型和协议</strong>。在这方面，仅仅做到理论上的理解是远远不够的。在<strong>基础篇</strong>中我们会梳理TCP/IP模型和网络函数接口之间的联系，并通过实例展开对套接字，套接字缓冲区，拥塞控制，数据包和数据流，本地套接字（UNIX域套接字）等的讨论，给你一个全面而具体的知识体系。</p><p><strong>第二个层次，结合对协议的理解，增强对各种异常情况的优雅处理能力</strong>。比如对TCP数据流的处理，半关闭的连接，TCP连接有效性的侦测，处理各种异常情况等，这些问题决定了程序的健壮性。有关这一部分的内容，我们将在<strong>提升篇</strong>详细展开。</p><p><strong>第三个层次，写出可以支持大规模高并发的网络处理程序</strong>。在这个阶段，我将带你一起深入研究C10K问题，引入进程、线程、多路复用、非阻塞、异步、事件驱动等现代高性能网络编程所需要的技术。我们将在<strong>性能篇</strong>深入讨论这些技术，并在<strong>实战篇</strong>结合实例，一步步教你写出高性能的网络程序。</p><p>“不闻不若闻之，闻之不若见之，见之不若知之，知之不若行之。”几千年前荀子的这段话，告诉了我们学习计算机编程技术的最佳方法，我想用在这里再合适不过了。</p><p>所以，无论是哪个层次，都需要你和我一起坚持下去。你可以对专栏里的代码进行修改和调试，从而增强你对网络编程的理解。</p><p>最后，请你留言说一说自己的情况。你在什么岗位？工作几年啦？在日常工作中是怎么使用网络编程的？开张圣听，期待跟你碰撞出更多精彩想法。感谢你对我的信任，我一定会竭尽所能，助你成功。</p><p>让我们一起进步。</p><p><img src="https://static001.geekbang.org/resource/image/bf/25/bfc96ae0d8f839919b9d9866cfb8b025.jpg" alt=""></p><h2>精选留言：</h2>
+        <ul>
+        
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            binary  2019-07-30 08:47:07
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            10年Java，决心学习网络系统底层。 [7赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:50:52</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">强，一起学习</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            陈华应  2019-07-29 18:51:23
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            以前看过极客的专栏发布时间表，是很期待的一门课程。今天推了就第一时间看了开篇，没有想过是c版的，对c的了解连皮毛都不算，但还是决定跟，尝试用Java跟下来，双十一的时候回来给自己鼓掌~~~ [6赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-29 19:13:30</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">感谢信任。我是这么理解的，c版的是最接近事实真相的，因为系统内核的API也是c版的，通过c版的学习，对Java的学习会起到事半功倍的效果。放心，c版代码理解起来很容易，我会对代码进行解读，一起加油~</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            C家族铁粉  2019-07-29 17:05:51
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            弱弱问一下，是不是学过java，才能学这门课～我只会点c&#47;c++语法 [5赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">编辑回复2019-07-29 17:16:46</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">专栏内容会涉及到一些底层的东西，有C或者C++语言基础即可～</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-07-30 10:30:47
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            我现在就在学Linux 也在看多路复用 突然来了这个专栏我毫不犹豫的买了,自从学了Linux就知道有个内核那个东东 套接字也是文件 是内核管理的 当某个套接字上有数据达到时 内核就会唤醒套接字对应等待的进程也就是recv的返回 epoll就是为了解决大量套接字的问题 select数量有限，我是进来提高加实战的 [4赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:56:49</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">已经有相当的基础了，总结的不错</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            Skrpy  2019-07-30 09:35:06
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            我现在是大三的暑假，准备考研的复习，我觉得这个专栏能在我复习计算机网络时给我更好的启发，同时我也希望复习的过程不是纸上谈兵，而是将来能在实际实验和工作中践行这些知识。 [4赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:55:59</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">机会总是垂青准备好的人，我觉得你就是这样的人，加油！</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            郭凯强  2019-07-30 09:12:51
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            3年半web developer，最近正好在看罗剑锋老师的《透视HTTP协议》，看到课程目录里的自己写HTTP服务器就果断入了...实践才能出真知。 [3赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:53:36</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">实践出真知+1</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            wang  2019-07-30 07:49:22
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            工作一年，今天刚毕业，找了一份今后会接触这方面很多的工作，不过同事大多用go，主要对并发封装很好，自己一直用Java，没啥特别的目的，学习一直在路上，有则增强，无则开拓 [3赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:50:27</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">语言是工具，原理是基础</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            leesper  2019-07-29 23:02:47
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            中科大学长的课必须要支持一下！我工作五年多了，从第一天工作起就接触高性能网络编程，从C++到Java，自己也用Go写过网络编程框架，但还不是Reactor模式，期望学完本课后将框架改进为真正的one loop per thread模型！ [3赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-29 23:12:31</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">同道中人，一起共勉</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            禾桃  2019-07-29 21:46:39
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            希望能增加一个章节，讲讲 kernel bypass,<br>solarflare 和 exanic的API，多谢！ [3赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-29 22:49:42</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">很前沿，好题材</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            nightmare  2019-07-29 17:22:26
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            java岗位，6年经验，平常在项目中用netty，非常简单快捷的编写网络程序，平常只需要关注handler的业务逻辑，对于reactor   netty就很好的实现了  用eventLoop实现了Reactor 而且用 eventLoopGoup可以快速实现reactor的单线程模型，多线程模型，主从模型 [3赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-29 19:17:48</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">嗯，我希望不仅是会用，还能理解为什么是这么设计的，这样就跟武侠小说里男主一般，打通任督二脉，功力方能大增。</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            tdytaylor  2019-07-30 09:14:51
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师，等了好几个月了，终于等到您的网络编程了 [2赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:54:22</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">感谢信任</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            舍得  2019-07-31 18:51:47
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            终于碰到c&#47;c++了，看到那些java、python课程，虽然基本知道在干啥，但总会问，c&#47;c++哪去了？百度搜知识没发觉java有多火，来极客时间，我知道了，这基本就是java阵营嘛 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-31 21:30:27</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">Java的工程效率更高，c和c++运行效率更高，各有所长</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            linupy  2019-07-31 13:26:21
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            你好，有语言限制吗，特别是后期编写http服务器的时候？ [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-31 21:28:23</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">没有限制，大家都会看懂的</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            贺荣伟  2019-07-30 19:54:41
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            我是一名软件工程专业的研究生，明年就要毕业了，在读研期间，做过一些网络编程相关的项目，在最近找工作的过程中，发现，关于网络编程，IO 多路复用，select，poll，epoll 这一块的知识点，面试问的挺多的，在自己一路学习的过程中，也踩过很多坑，希望通过盛老师的这个专栏，能系统性的提升自己对网络编程知识的认知，加深理解，重要的还是要动手写代码，在实践中学习！大家一起加油吖！ [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 20:51:08</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">动手写起来，一定会有收获</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-07-30 10:33:32
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            而我今年的目标就是弄熟 数据结构和算 linux下的进程控制 线程控制 i&#47;o复用 很期待你的文章 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:57:54</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">路选对了，还怕远吗？</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            常常要奋斗  2019-07-30 09:07:25
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            嵌入式开发两年，之前学过wireshark，抓包了解过网络协议，工作中只是用到只是简单的socket编程，知其然不知其所以然，对这块比较懵 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:52:27</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">帮你系统梳理，坚持下去，必有收获</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            enjoylearning  2019-07-29 23:16:16
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            为何不用python呢？另外总是不知道在linux下用c和c++的区别，什么场景用c，什么场景用c＋＋ [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-30 11:48:46</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">系统API都是C, C++只是多了一层面向对象的封装，python的实现也是调用了系统API</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            飞向云端  2019-07-29 19:55:58
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            我们现在做的云集IM系统也用netty，再深入学习一下网络编程 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-07-29 22:46:53</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">很有必要</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            widy28  2019-08-01 09:05:53
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            请问这个是什么时候开课，写的每周一周三周五开课，找了半天没找到从几月几号开始，昨天一看没有更新课程呢？ 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">编辑回复2019-08-01 09:13:27</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">周五更新。</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            晚枫  2019-07-29 17:13:36
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师，你好，专栏是使用c++语言吗 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">编辑回复2019-07-29 18:43:23</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">需要有C或者C++的基础哈，毕竟涉及到操作系统底层操作，不过你不用特别担心，不难，能看懂语法就行。</div>
+</div>
+            
+    </div>
+</li>
+            </ul>
+</div>
+</body>
+</html>

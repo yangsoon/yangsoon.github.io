@@ -1,0 +1,1187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>05-使用套接字进行读写：开始交流吧</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+        html {
+            color: #333;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-rendering: optimizelegibility;
+            font-family: Helvetica Neue, PingFang SC, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+        }
+
+        html.borderbox *,
+        html.borderbox :after,
+        html.borderbox :before {
+            box-sizing: border-box
+        }
+
+        article,
+        aside,
+        blockquote,
+        body,
+        button,
+        code,
+        dd,
+        details,
+        dl,
+        dt,
+        fieldset,
+        figcaption,
+        figure,
+        footer,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        header,
+        hr,
+        input,
+        legend,
+        li,
+        menu,
+        nav,
+        ol,
+        p,
+        pre,
+        section,
+        td,
+        textarea,
+        th,
+        ul {
+            margin: 0;
+            padding: 0
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        menu,
+        nav,
+        section {
+            display: block
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, Helvetica, sans-serif
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            padding: 0;
+            border: 0
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        fieldset,
+        img {
+            border: 0
+        }
+
+        blockquote {
+            position: relative;
+            color: #999;
+            font-weight: 400;
+            border-left: 1px solid #1abc9c;
+            padding-left: 1em;
+            margin: 1em 3em 1em 2em
+        }
+
+        @media only screen and (max-width: 640px) {
+            blockquote {
+                margin: 1em 0
+            }
+        }
+
+        abbr,
+        acronym {
+            border-bottom: 1px dotted;
+            font-variant: normal
+        }
+
+        abbr {
+            cursor: help
+        }
+
+        del {
+            text-decoration: line-through
+        }
+
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        th,
+        var {
+            font-style: normal;
+            font-weight: 400
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        caption,
+        th {
+            text-align: left
+        }
+
+        q:after,
+        q:before {
+            content: ""
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative
+        }
+
+        :root sub,
+        :root sup {
+            vertical-align: baseline
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        a {
+            color: #1abc9c
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .typo a {
+            border-bottom: 1px solid #1abc9c
+        }
+
+        .typo a:hover {
+            border-bottom-color: #555;
+            color: #555
+        }
+
+        .typo a:hover,
+        a,
+        ins {
+            text-decoration: none
+        }
+
+        .typo-u,
+        u {
+            text-decoration: underline
+        }
+
+        mark {
+            background: #fffdd1;
+            border-bottom: 1px solid #ffedce;
+            padding: 2px;
+            margin: 0 5px
+        }
+
+        code,
+        pre,
+        pre tt {
+            font-family: Courier, Courier New, monospace
+        }
+
+        pre {
+            background: hsla(0, 0%, 97%, .7);
+            border: 1px solid #ddd;
+            padding: 1em 1.5em;
+            display: block;
+            -webkit-overflow-scrolling: touch
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #cfcfcf;
+            margin-bottom: .8em;
+            height: 10px
+        }
+
+        .typo-small,
+        figcaption,
+        small {
+            font-size: .9em;
+            color: #888
+        }
+
+        b,
+        strong {
+            font-weight: 700;
+            color: #000
+        }
+
+        [draggable] {
+            cursor: move
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        .textwrap,
+        .textwrap td,
+        .textwrap th {
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        .textwrap-table {
+            table-layout: fixed
+        }
+
+        .serif {
+            font-family: Palatino, Optima, Georgia, serif
+        }
+
+        .typo-dl,
+        .typo-form,
+        .typo-hr,
+        .typo-ol,
+        .typo-p,
+        .typo-pre,
+        .typo-table,
+        .typo-ul,
+        .typo dl,
+        .typo form,
+        .typo hr,
+        .typo ol,
+        .typo p,
+        .typo pre,
+        .typo table,
+        .typo ul,
+        blockquote {
+            margin-bottom: 1rem
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: PingFang SC, Helvetica Neue, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+            color: #000;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo-h2,
+        .typo-h3,
+        .typo-h4,
+        .typo-h5,
+        .typo-h6,
+        .typo h1,
+        .typo h2,
+        .typo h3,
+        .typo h4,
+        .typo h5,
+        .typo h6 {
+            margin-top: 1.2em;
+            margin-bottom: .6em;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo h1 {
+            font-size: 2em
+        }
+
+        .typo-h2,
+        .typo h2 {
+            font-size: 1.8em
+        }
+
+        .typo-h3,
+        .typo h3 {
+            font-size: 1.6em
+        }
+
+        .typo-h4,
+        .typo h4 {
+            font-size: 1.4em
+        }
+
+        .typo-h5,
+        .typo-h6,
+        .typo h5,
+        .typo h6 {
+            font-size: 1.2em
+        }
+
+        .typo-ul,
+        .typo ul {
+            margin-left: 1.3em;
+            list-style: disc
+        }
+
+        .typo-ol,
+        .typo ol {
+            list-style: decimal;
+            margin-left: 1.9em
+        }
+
+        .typo-ol ol,
+        .typo-ol ul,
+        .typo-ul ol,
+        .typo-ul ul,
+        .typo li ol,
+        .typo li ul {
+            margin-bottom: .8em;
+            margin-left: 2em
+        }
+
+        .typo-ol ul,
+        .typo-ul ul,
+        .typo li ul {
+            list-style: circle
+        }
+
+        .typo-table td,
+        .typo-table th,
+        .typo table caption,
+        .typo table td,
+        .typo table th {
+            border: 1px solid #ddd;
+            padding: .5em 1em;
+            color: #666
+        }
+
+        .typo-table th,
+        .typo table th {
+            background: #fbfbfb
+        }
+
+        .typo-table thead th,
+        .typo table thead th {
+            background: hsla(0, 0%, 95%, .7)
+        }
+
+        .typo table caption {
+            border-bottom: none
+        }
+
+        .typo-input,
+        .typo-textarea {
+            -webkit-appearance: none;
+            border-radius: 0
+        }
+
+        .typo-em,
+        .typo em,
+        caption,
+        legend {
+            color: #000;
+            font-weight: inherit
+        }
+
+        .typo-em {
+            position: relative
+        }
+
+        .typo-em:after {
+            position: absolute;
+            top: .65em;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            content: "\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB"
+        }
+
+        .typo img {
+            max-width: 100%
+        }
+
+        .common-content {
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.75rem;
+            white-space: normal;
+            word-break: normal;
+            font-size: 1rem
+        }
+
+        .common-content img {
+            display: block;
+            max-width: 100%;
+            background-color: #eee
+        }
+
+        .common-content audio,
+        .common-content video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        .common-content center,
+        .common-content font {
+            margin-top: 1rem;
+            display: inline-block
+        }
+
+        .common-content center {
+            width: 100%
+        }
+
+        .common-content pre {
+            margin-top: 1rem;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            overflow: hidden
+        }
+
+        .common-content pre code {
+            font-size: .8rem;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            overflow-x: auto
+        }
+
+        .common-content hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        .common-content b,
+        .common-content h1,
+        .common-content h2,
+        .common-content h3,
+        .common-content h4,
+        .common-content h5,
+        .common-content strong {
+            font-weight: 700
+        }
+
+        .common-content h1,
+        .common-content h2 {
+            font-size: 1.125rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content h3,
+        .common-content h4,
+        .common-content h5 {
+            font-size: 1rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: .15rem
+        }
+
+        .common-content .orange {
+            color: #ff5a05
+        }
+
+        .common-content .reference {
+            font-size: 1rem;
+            color: #888
+        }
+
+        .custom-rich-content h1 {
+            margin-top: 0;
+            font-weight: 400;
+            font-size: 15.25px;
+            border-bottom: 1px solid #eee;
+            line-height: 2.8
+        }
+
+        .custom-rich-content li,
+        .custom-rich-content p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6
+        }
+
+        table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        table.hljs-ln,
+        table.hljs-ln tbody,
+        table.hljs-ln td,
+        table.hljs-ln tr {
+            box-sizing: border-box
+        }
+
+        table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none
+        }
+
+        table.hljs-ln td.hljs-ln-code,
+        table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            font-size: 12px;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            color: #24292e;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+        video::-webkit-media-controls {
+            overflow: hidden !important
+        }
+
+        video::-webkit-media-controls-enclosure {
+            width: calc(100% + 32px);
+            margin-left: auto
+        }
+
+        ._29HP61GA_0 {
+            max-width:800px;
+            margin:0 auto;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.76;
+            white-space: normal;
+            word-break: normal;
+            font-size: 17px;
+            -webkit-transition: background-color .3s ease;
+            transition: background-color .3s ease
+        }
+
+        ._29HP61GA_0 .MathJax_Display {
+            overflow: auto
+        }
+
+        ._29HP61GA_0 .poster {
+            position: fixed;
+            left: -10000px;
+            top: -10000px;
+            overflow: hidden;
+            padding: 1rem;
+            background: #ececec
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy {
+            font-size: 13px;
+            color: #888;
+            position: absolute;
+            right: 1em;
+            top: .5em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy .iconfont {
+            font-size: 12px;
+            margin-right: .2em
+        }
+
+        ._29HP61GA_0 a {
+            color: #fa8919;
+            border-bottom: 1px solid #fa8919
+        }
+
+        ._29HP61GA_0 img {
+            display: block;
+            max-width: 100%;
+            position: relative;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background-color: #eee;
+            vertical-align: top;
+            border-radius: 0
+        }
+
+        ._29HP61GA_0 audio,
+        ._29HP61GA_0 video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        ._29HP61GA_0 pre {
+            margin-top: 16px;
+            padding: 34px 0 0;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 6px;
+            background: rgba(246, 247, 251, .749);
+            border: 0
+        }
+
+        ._29HP61GA_0 pre code {
+            font-size: 12px;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-left: 16px;
+            margin-right: 16px;
+            overflow-x: scroll
+        }
+
+        ._29HP61GA_0 pre code:after {
+            content: "";
+            height: 30px;
+            width: 100%;
+            display: block
+        }
+
+        ._29HP61GA_0 hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        ._29HP61GA_0 h1,
+        ._29HP61GA_0 h2,
+        ._29HP61GA_0 h3,
+        ._29HP61GA_0 h4,
+        ._29HP61GA_0 h5 {
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 b,
+        ._29HP61GA_0 strong {
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 h1 {
+            font-size: 21px
+        }
+
+        ._29HP61GA_0 h2 {
+            font-size: 20px
+        }
+
+        ._29HP61GA_0 h3 {
+            font-size: 19px
+        }
+
+        ._29HP61GA_0 h4 {
+            font-size: 18px
+        }
+
+        ._29HP61GA_0 h5 {
+            font-size: 17px
+        }
+
+        ._29HP61GA_0 center,
+        ._29HP61GA_0 p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: 0;
+            margin-bottom: 30px;
+            word-break: break-word
+        }
+
+        ._29HP61GA_0 center {
+            text-align: center
+        }
+
+        ._29HP61GA_0 blockquote {
+            margin-top: 0;
+            margin-bottom: 34px;
+            border-left: 3px solid #e8e8e8;
+            padding-left: 17px;
+            color: #353535
+        }
+
+        ._29HP61GA_0 blockquote p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol,
+        ._29HP61GA_0 ul {
+            margin-bottom: 30px
+        }
+
+        ._29HP61GA_0 ol p,
+        ._29HP61GA_0 ul p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol {
+            list-style: decimal;
+            margin-left: 20px
+        }
+
+        ._29HP61GA_0 ul li {
+            padding-left: 17px;
+            position: relative;
+            margin-bottom: 10px
+        }
+
+        ._29HP61GA_0 ul li:after {
+            content: "";
+            height: 6px;
+            width: 6px;
+            border-radius: 50%;
+            background: #353535;
+            position: absolute;
+            top: 10px;
+            left: 0
+        }
+
+        ._29HP61GA_0 .orange {
+            color: #fa8919
+        }
+
+        ._29HP61GA_0 .reference {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-right {
+            text-align: right
+        }
+
+        ._29HP61GA_0 .m-center {
+            text-align: center;
+            display: block
+        }
+
+        ._29HP61GA_0 .m-gray {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-small {
+            font-size: 15px
+        }
+
+        ._29HP61GA_0 table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        ._29HP61GA_0 table.hljs-ln,
+        ._29HP61GA_0 table.hljs-ln tbody,
+        ._29HP61GA_0 table.hljs-ln td,
+        ._29HP61GA_0 table.hljs-ln tr {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        ._29HP61GA_0 table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            font-size: 12px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code,
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            font-size: 13px;
+            color: #666;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+    </style>
+</head>
+<body>
+<div class="_29HP61GA_0">
+<h1>05-使用套接字进行读写：开始交流吧</h1>
+<p>你好，我是盛延敏，这里是网络编程实战第5讲，欢迎回来。</p><p>在前面的章节中，我们讲述了套接字相关的知识，包括套接字的格式，套接字的创建以及TCP连接的建立等。在这一讲里，我来讲一下如何使用创建的套接字收发数据。</p><p>连接建立的根本目的是为了数据的收发。拿我们常用的网购场景举例子，我们在浏览商品或者购买货品的时候，并不会察觉到网络连接的存在，但是我们可以真切感觉到数据在客户端和服务器端有效的传送， 比如浏览商品时商品信息的不断刷新，购买货品时显示购买成功的消息等。</p><p>首先我们先来看一下发送数据。</p><h2>发送数据</h2><p>发送数据时常用的有三个函数，分别是write、send和sendmsg。</p><pre><code>ssize_t write (int socketfd, const void *buffer, size_t size)
+ssize_t send (int socketfd, const void *buffer, size_t size, int flags)
+ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags)
+</code></pre><p>每个函数都是单独使用的，使用的场景略有不同：</p><p>第一个函数是常见的文件写函数，如果把socketfd换成文件描述符，就是普通的文件写入。</p><p>如果想指定选项，发送带外数据，就需要使用第二个带flag的函数。所谓带外数据，是一种基于TCP协议的紧急数据，用于客户端-服务器在特定场景下的紧急处理。</p><p>如果想指定多重缓冲区传输数据，就需要使用第三个函数，以结构体msghdr的方式发送数据。</p><p>你看到这里可能会问，既然套接字描述符是一种特殊的描述符，那么在套接字描述符上调用write函数，应该和在普通文件描述符上调用write函数的行为是一致的，都是通过描述符句柄写入指定的数据。</p><!-- [[[read_end]]] --><p>乍一看，两者的表现形式是一样，内在的区别还是很不一样的。</p><p>对于普通文件描述符而言，一个文件描述符代表了打开的一个文件句柄，通过调用write函数，操作系统内核帮我们不断地往文件系统中写入字节流。注意，写入的字节流大小通常和输入参数size的值是相同的，否则表示出错。</p><p>对于套接字描述符而言，它代表了一个双向连接，在套接字描述符上调用write写入的字节数<strong>有可能</strong>比请求的数量少，这在普通文件描述符情况下是不正常的。</p><p>产生这个现象的原因在于操作系统内核为读取和发送数据做了很多我们表面上看不到的工作。接下来我拿write函数举例，重点阐述发送缓冲区的概念。</p><h3>发送缓冲区</h3><p>你一定要建立一个概念，当TCP三次握手成功，TCP连接成功建立后，操作系统内核会为每一个连接创建配套的基础设施，比如<strong>发送缓冲区</strong>。</p><p>发送缓冲区的大小可以通过套接字选项来改变，当我们的应用程序调用write函数时，实际所做的事情是把数据<strong>从应用程序中拷贝到操作系统内核的发送缓冲区中</strong>，并不一定是把数据通过套接字写出去。</p><p>这里有几种情况：</p><p>第一种情况很简单，操作系统内核的发送缓冲区足够大，可以直接容纳这份数据，那么皆大欢喜，我们的程序从write调用中退出，返回写入的字节数就是应用程序的数据大小。</p><p>第二种情况是，操作系统内核的发送缓冲区是够大了，不过还有数据没有发送完，或者数据发送完了，但是操作系统内核的发送缓冲区不足以容纳应用程序数据，在这种情况下，你预料的结果是什么呢？报错？还是直接返回？</p><p>操作系统内核并不会返回，也不会报错，而是应用程序被阻塞，也就是说应用程序在write函数调用处停留，不直接返回。术语“挂起”也表达了相同的意思，不过“挂起”是从操作系统内核角度来说的。</p><p>那么什么时候才会返回呢？</p><p>实际上，每个操作系统内核的处理是不同的。大部分UNIX系统的做法是一直等到可以把应用程序数据完全放到操作系统内核的发送缓冲区中，再从系统调用中返回。怎么理解呢？</p><p>别忘了，我们的操作系统内核是很聪明的，当TCP连接建立之后，它就开始运作起来。你可以把发送缓冲区想象成一条包裹流水线，有个聪明且忙碌的工人不断地从流水线上取出包裹（数据），这个工人会按照TCP/IP的语义，将取出的包裹（数据）封装成TCP的MSS包，以及IP的MTU包，最后走数据链路层将数据发送出去。这样我们的发送缓冲区就又空了一部分，于是又可以继续从应用程序搬一部分数据到发送缓冲区里，这样一直进行下去，到某一个时刻，应用程序的数据可以完全放置到发送缓冲区里。在这个时候，write阻塞调用返回。注意返回的时刻，应用程序数据并没有全部被发送出去，发送缓冲区里还有部分数据，这部分数据会在稍后由操作系统内核通过网络发送出去。</p><p><img src="https://static001.geekbang.org/resource/image/fd/dc/fdcdc766c6a6ebb7fbf15bb2d1e58bdc.png" alt=""></p><h2>读取数据</h2><p>我们可以注意到，套接字描述本身和本地文件描述符并无区别，<strong>在UNIX的世界里万物都是文件</strong>，这就意味着可以将套接字描述符传递给那些原先为处理本地文件而设计的函数。这些函数包括read和write交换数据的函数。</p><h3>read函数</h3><p>让我们先从最简单的read函数开始看起，这个函数的原型如下：</p><pre><code>ssize_t read (int socketfd, void *buffer, size_t size)
+</code></pre><p>read函数要求操作系统内核从套接字描述字socketfd<strong>读取最多多少个字节（size），并将结果存储到buffer中。返回值告诉我们实际读取的字节数目，也有一些特殊情况，如果返回值为0，表示EOF（end-of-file），这在网络中表示对端发送了FIN包，要处理断连的情况</strong>；如果返回值为-1，表示出错。当然，如果是非阻塞I/O，情况会略有不同，在后面的提高篇中我们会重点讲述非阻塞I/O的特点。</p><p>注意这里是最多读取size个字节。如果我们想让应用程序每次都读到size个字节，就需要编写下面的函数，不断地循环读取。</p><pre><code>/* 从socketfd描述字中读取&quot;size&quot;个字节. */
+ssize_t readn(int fd, void *vptr, size_t size)
+{
+    size_t  nleft;
+    ssize_t nread;
+    char    *ptr;
+
+    ptr = vptr;
+    nleft = size;
+    
+    while (nleft &gt; 0) {
+        if ( (nread = read(fd, ptr, nleft)) &lt; 0) {
+            if (errno == EINTR)
+                nread = 0;      /* 这里需要再次调用read */
+            else
+                return(-1);
+        } else if (nread == 0)
+            break;              /* EOF(End of File)表示套接字关闭 */
+
+
+        nleft -= nread;
+        ptr   += nread;
+    }
+    return(n - nleft);      /* 返回的是实际读取的字节数*/
+}
+</code></pre><p>对这个程序稍微解释下：</p><ul>
+<li>11-25行的循环条件表示的是，在没读满size个字节之前，一直都要循环下去。</li>
+<li>13-14行表示的是非阻塞I/O的情况下，没有数据可以读，需要继续调用read。</li>
+<li>17-18行表示读到对方发出的FIN包，表现形式是EOF，此时需要关闭套接字。</li>
+<li>21-22行，需要读取的字符数减少，缓存指针往下移动。</li>
+<li>24行是在读取EOF跳出循环后，返回实际读取的字符数。</li>
+</ul><h2>缓冲区实验</h2><p>我们用一个客户端-服务器的例子来解释一下读取缓冲区和发送缓冲区的概念。在这个例子中客户端不断地发送数据，服务器端每读取一段数据之后进行休眠，以模拟实际业务处理所需要的时间。</p><h3>服务器端读取数据程序</h3><p>下面是服务器端读取数据的程序：</p><pre><code>int main(int argc, char **argv)
+{
+    int                 listenfd, connfd;
+    socklen_t           clilen;
+    struct sockaddr_in  cliaddr, servaddr;
+
+    listenfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    bzero(&amp;servaddr, sizeof(servaddr));
+    servaddr.sin_family      = AF_INET;
+    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servaddr.sin_port        = htons(12345);
+
+    /* bind到本地地址，端口为12345 */ 
+    bind(listenfd, (SA *) &amp;servaddr, sizeof(servaddr));
+    /* listen的backlog为1024 */
+    listen(listenfd, 1024);
+
+    /* 循环处理用户请求 */
+    for ( ; ; ) {
+        clilen = sizeof(cliaddr);
+        connfd = accept(listenfd, (SA *) &amp;cliaddr, &amp;clilen);
+        read_data(connfd);   /* 读取数据 */
+        close(connfd);          /* 关闭连接套接字，注意不是监听套接字*/
+    }
+}
+
+void read_data(int sockfd)
+{
+    ssize_t  n;
+    char buf[1024];
+
+    int time = 0;
+    for ( ; ; ) {
+        fprintf(stdout, &quot;block in read\n&quot;);
+        if ( (n = Readn(sockfd, buf, 1024)) == 0)
+            return;     /* connection closed by other end */
+
+        time ++;
+        fprintf(stdout, &quot;1K read for %d \n&quot;, time);
+        usleep(1000);
+    }
+}
+</code></pre><p>对服务器端程序解释如下：</p><ul>
+<li>6-17行先后创建了socket套接字，bind到对应地址和端口，并开始调用listen接口监听。</li>
+<li>20-25行循环等待连接，通过accept获取实际的连接，并开始读取数据。</li>
+<li>28-42行实际每次读取1K数据，之后休眠1秒，用来模拟服务器端处理时延。</li>
+</ul><h3>客户端发送数据程序</h3><p>下面是客户端发送数据的程序：</p><pre><code>int main(int argc, char **argv)
+{
+    int                 sockfd;
+    struct sockaddr_in  servaddr;
+
+    if (argc != 2)
+        err_quit(&quot;usage: tcpclient &lt;IPaddress&gt;&quot;);
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    bzero(&amp;servaddr, sizeof(servaddr));
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_port = htons(SERV_PORT);
+    inet_pton(AF_INET, argv[1], &amp;servaddr.sin_addr);
+    connect(sockfd, (SA *) &amp;servaddr, sizeof(servaddr));
+    send_data(stdin, sockfd);
+    exit(0);
+}
+
+# define MESSAGE_SIZE 10240000
+void send_data(FILE *fp, int sockfd)
+{
+    char * query;
+    query = malloc(MESSAGE_SIZE+1);
+    for(int i=0; i&lt; MESSAGE_SIZE; i++){
+        query[i] = 'a';
+    }
+    query[MESSAGE_SIZE] = '\0';
+
+    const char *cp;
+    cp = query;
+    remaining = strlen(query);
+    while (remaining) {
+      n_written = send(sockfd, cp, remaining, 0);
+      fprintf(stdout, &quot;send into buffer %ld \n&quot;, n_written);
+      if (n_written &lt;= 0) {
+        perror(&quot;send&quot;);
+        return;
+      }
+      remaining -= n_written;
+      cp += n_written;
+    }
+
+    return;
+}
+</code></pre><p>对客户端程序解释如下：</p><ul>
+<li>9-15行先后创建了socket套接字，调用connect向对应服务器端发起连接请求。</li>
+<li>16行在连接建立成功后，调用send_data发送数据。</li>
+<li>23-28行初始化了一个长度为MESSAGE_SIZE的字符串流。</li>
+<li>33-42行调用send函数将MESSAGE_SIZE长度的字符串流发送出去。</li>
+</ul><h3>实验一: 观察客户端数据发送行为</h3><p>客户端程序发送了一个很大的字节流，程序运行起来之后，我们会看到服务端不断地在屏幕上打印出读取字节流的过程：</p><p><img src="https://static001.geekbang.org/resource/image/ca/58/ca86fcf0254a76e61e68259a79446c58.png" alt=""><br>
+而客户端直到最后所有的字节流发送完毕才打印出下面的一句话，说明在此之前send函数一直都是阻塞的，也就是说<strong>阻塞式套接字最终发送返回的实际写入字节数和请求字节数是相等的。</strong></p><p>而关于非阻塞套接字的操作，我会在后面的文章中讲解。</p><h3>实验二: 服务端处理变慢</h3><p>如果我们把服务端的休眠时间稍微调大，把客户端发送的字节数从从10240000调整为1024000，再次运行刚才的例子，我们会发现，客户端很快打印出一句话：</p><p><img src="https://static001.geekbang.org/resource/image/50/d8/500739df57e9bc668cb4dce392e14bd8.png" alt=""><br>
+但与此同时，服务端读取程序还在屏幕上不断打印读取数据的进度，显示出服务端读取程序还在辛苦地从缓冲区中读取数据。</p><p>通过这个例子我想再次强调一下：</p><p><strong>发送成功仅仅表示的是数据被拷贝到了发送缓冲区中，并不意味着连接对端已经收到所有的数据。至于什么时候发送到对端的接收缓冲区，或者更进一步说，什么时候被对方应用程序缓冲所接收，对我们而言完全都是透明的。</strong></p><h2>总结</h2><p>这一讲重点讲述了通过send和read来收发数据包，你需要牢记以下两点：</p><ul>
+<li>对于send来说，返回成功仅仅表示数据写到发送缓冲区成功，并不表示对端已经成功收到。</li>
+<li>对于read来说，需要循环读取数据，并且需要考虑EOF等异常条件。</li>
+</ul><h2>思考题</h2><p>最后你不妨思考一下，既然缓冲区如此重要，我们可不可以把缓冲区搞得大大的，这样不就可以提高应用程序的吞吐量了么？你可以想一想这个方法可行吗？另外你可以自己总结一下，一段数据流从应用程序发送端，一直到应用程序接收端，总共经过了多少次拷贝？</p><p>欢迎你在评论区与我分享你的答案，如果你理解了套接字读写的过程，也欢迎把这篇文章分享给你的朋友或者同事。</p><p><img src="https://static001.geekbang.org/resource/image/bf/25/bfc96ae0d8f839919b9d9866cfb8b025.jpg" alt=""></p><h2>精选留言：</h2>
+        <ul>
+        
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            业余爱好者  2019-08-12 07:58:10
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            网络程序的性能瓶颈一般在于服务端，所以老师说的增加缓冲区大小应该指的是服务端。如果应用程序的处理速度跟不上，即使缓冲区再大，也不能在整体上提高太多的吞吐率。性能，从来都只能从整体上优化，简单粗暴地提升某一个指标的效果一般。<br><br>首先讲客户端发送的数据拷贝到缓冲区，<br>然后操作系统讲数据从客户端的缓冲区中发往服务端的缓冲区。服务端操作系统最后把数据从缓冲区搬移到应用程序。客户端应用--客户端缓冲区--服务端缓冲区--服务端应用程序。一共3次? [1赞]
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            在路上  2019-08-12 07:37:26
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            个人的想法：<br>单纯的提高缓冲区应该不是可行的方法，以一台计算机思考，内存毕竟是有限的，为每个套接字都开辟一大块内存，那相应可以创建的套接字的就减少了把 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-12 11:11:04</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">相当于让仓库变大，可以存储了更多的货物，如果出货的速度有限，会有更多的货物烂在仓库里。</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            星亦辰  2019-08-12 00:21:28
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            有这么一个问题：<br><br>假如客户端往服务端发送了1025个字节，而只有1024个字节是有用的。<br>我在服务端用read 读取1024个字节，最后一定是返回1024。<br>然后，剩下的没有用了，不打算读了，怎么样抛弃多余的内容呢。 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-12 11:09:27</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">那你为啥要传这第1025个字节呢？如果是消息的边界，例如换行，还是要读到这个字符的，读完以后不拷贝到应用程序的缓冲区就可以认为是丢弃了。</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            Geek_Wison  2019-08-12 11:25:36
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师可以将完整的代码的github地址贴出来吗，我想自己编译调试运行一下。 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-12 11:49:02</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">正在进行中</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            阿西吧  2019-08-12 10:06:50
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            serv.c: In function ‘main’:<br>serv.c:17: warning: incompatible implicit declaration of built-in function ‘bzero’<br>serv.c:24: error: ‘SA’ undeclared (first use in this function)<br>serv.c:24: error: (Each undeclared identifier is reported only once<br>serv.c:24: error: for each function it appears in.)<br>serv.c:24: error: expected expression before ‘)’ token<br>serv.c:24: error: too few arguments to function ‘bind’<br>serv.c:32: error: expected expression before ‘)’ token<br>serv.c:32: error: too few arguments to function ‘accept’<br>serv.c: At top level:<br>serv.c:39: warning: conflicting types for ‘read_data’<br>serv.c:33: note: previous implicit declaration of ‘read_data’ was here<br>编译运行后出现以上错误，是因为还有其它文件未引用吗，可否将完整源码放上github,谢谢 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-12 11:14:11</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">正在准备中......</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            大灰狼  2019-08-12 09:13:28
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            网卡驱动拿到数据，中断后写入收缓冲区<br>从缓冲区到应用一次。<br>所以最少两次。<br>无限大小的缓冲区浪费内存，并不是越大越好。如果缓冲区增大并不能提升收发包效率，可以采取其他方面的优化。 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            破晓^_^  2019-08-12 09:11:59
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            无限增大缓冲区肯定不行，文章中已经说过write函数发送数据只是将数据发送到内核缓冲区，而什么时候发送由内核觉定。内核缓冲区总是充满数据时会产生粘包问题，同时网络的传输大小MTU也会限制每次发送的大小，最后由于数据堵塞需要消耗大量内存资源，资源使用效率不高。<br>用户缓冲区到内核缓冲区<br>内核缓冲区IP报文，一次三拷贝，总共6次。不知对否？ 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-12 11:13:20</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">都是强人😄</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            破晓^_^  2019-08-12 08:58:07
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师你好，文中几处贴代码的位置，个人觉得不管是代码片段还是完整程序，应该保持完整性，文中几处都缺少花括号补齐，完整性。 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-12 09:42:48</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">感谢指出，代码会加强审阅</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            天蝎座的狮子狗  2019-08-12 07:55:06
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            我遇到一个问题，发送函数send函数返回值竟然比我写的时候传入的buff的bufflen大，不知道为什么😳。 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-12 11:11:54</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">出错了.... 代码贴出来看看</div>
+</div>
+            
+    </div>
+</li>
+            </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,1100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>09-答疑篇：学习网络编程前，需要准备哪些东西？</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+        html {
+            color: #333;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-rendering: optimizelegibility;
+            font-family: Helvetica Neue, PingFang SC, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+        }
+
+        html.borderbox *,
+        html.borderbox :after,
+        html.borderbox :before {
+            box-sizing: border-box
+        }
+
+        article,
+        aside,
+        blockquote,
+        body,
+        button,
+        code,
+        dd,
+        details,
+        dl,
+        dt,
+        fieldset,
+        figcaption,
+        figure,
+        footer,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        header,
+        hr,
+        input,
+        legend,
+        li,
+        menu,
+        nav,
+        ol,
+        p,
+        pre,
+        section,
+        td,
+        textarea,
+        th,
+        ul {
+            margin: 0;
+            padding: 0
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        menu,
+        nav,
+        section {
+            display: block
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, Helvetica, sans-serif
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            padding: 0;
+            border: 0
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        fieldset,
+        img {
+            border: 0
+        }
+
+        blockquote {
+            position: relative;
+            color: #999;
+            font-weight: 400;
+            border-left: 1px solid #1abc9c;
+            padding-left: 1em;
+            margin: 1em 3em 1em 2em
+        }
+
+        @media only screen and (max-width: 640px) {
+            blockquote {
+                margin: 1em 0
+            }
+        }
+
+        abbr,
+        acronym {
+            border-bottom: 1px dotted;
+            font-variant: normal
+        }
+
+        abbr {
+            cursor: help
+        }
+
+        del {
+            text-decoration: line-through
+        }
+
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        th,
+        var {
+            font-style: normal;
+            font-weight: 400
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        caption,
+        th {
+            text-align: left
+        }
+
+        q:after,
+        q:before {
+            content: ""
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative
+        }
+
+        :root sub,
+        :root sup {
+            vertical-align: baseline
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        a {
+            color: #1abc9c
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .typo a {
+            border-bottom: 1px solid #1abc9c
+        }
+
+        .typo a:hover {
+            border-bottom-color: #555;
+            color: #555
+        }
+
+        .typo a:hover,
+        a,
+        ins {
+            text-decoration: none
+        }
+
+        .typo-u,
+        u {
+            text-decoration: underline
+        }
+
+        mark {
+            background: #fffdd1;
+            border-bottom: 1px solid #ffedce;
+            padding: 2px;
+            margin: 0 5px
+        }
+
+        code,
+        pre,
+        pre tt {
+            font-family: Courier, Courier New, monospace
+        }
+
+        pre {
+            background: hsla(0, 0%, 97%, .7);
+            border: 1px solid #ddd;
+            padding: 1em 1.5em;
+            display: block;
+            -webkit-overflow-scrolling: touch
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #cfcfcf;
+            margin-bottom: .8em;
+            height: 10px
+        }
+
+        .typo-small,
+        figcaption,
+        small {
+            font-size: .9em;
+            color: #888
+        }
+
+        b,
+        strong {
+            font-weight: 700;
+            color: #000
+        }
+
+        [draggable] {
+            cursor: move
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        .textwrap,
+        .textwrap td,
+        .textwrap th {
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        .textwrap-table {
+            table-layout: fixed
+        }
+
+        .serif {
+            font-family: Palatino, Optima, Georgia, serif
+        }
+
+        .typo-dl,
+        .typo-form,
+        .typo-hr,
+        .typo-ol,
+        .typo-p,
+        .typo-pre,
+        .typo-table,
+        .typo-ul,
+        .typo dl,
+        .typo form,
+        .typo hr,
+        .typo ol,
+        .typo p,
+        .typo pre,
+        .typo table,
+        .typo ul,
+        blockquote {
+            margin-bottom: 1rem
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: PingFang SC, Helvetica Neue, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+            color: #000;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo-h2,
+        .typo-h3,
+        .typo-h4,
+        .typo-h5,
+        .typo-h6,
+        .typo h1,
+        .typo h2,
+        .typo h3,
+        .typo h4,
+        .typo h5,
+        .typo h6 {
+            margin-top: 1.2em;
+            margin-bottom: .6em;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo h1 {
+            font-size: 2em
+        }
+
+        .typo-h2,
+        .typo h2 {
+            font-size: 1.8em
+        }
+
+        .typo-h3,
+        .typo h3 {
+            font-size: 1.6em
+        }
+
+        .typo-h4,
+        .typo h4 {
+            font-size: 1.4em
+        }
+
+        .typo-h5,
+        .typo-h6,
+        .typo h5,
+        .typo h6 {
+            font-size: 1.2em
+        }
+
+        .typo-ul,
+        .typo ul {
+            margin-left: 1.3em;
+            list-style: disc
+        }
+
+        .typo-ol,
+        .typo ol {
+            list-style: decimal;
+            margin-left: 1.9em
+        }
+
+        .typo-ol ol,
+        .typo-ol ul,
+        .typo-ul ol,
+        .typo-ul ul,
+        .typo li ol,
+        .typo li ul {
+            margin-bottom: .8em;
+            margin-left: 2em
+        }
+
+        .typo-ol ul,
+        .typo-ul ul,
+        .typo li ul {
+            list-style: circle
+        }
+
+        .typo-table td,
+        .typo-table th,
+        .typo table caption,
+        .typo table td,
+        .typo table th {
+            border: 1px solid #ddd;
+            padding: .5em 1em;
+            color: #666
+        }
+
+        .typo-table th,
+        .typo table th {
+            background: #fbfbfb
+        }
+
+        .typo-table thead th,
+        .typo table thead th {
+            background: hsla(0, 0%, 95%, .7)
+        }
+
+        .typo table caption {
+            border-bottom: none
+        }
+
+        .typo-input,
+        .typo-textarea {
+            -webkit-appearance: none;
+            border-radius: 0
+        }
+
+        .typo-em,
+        .typo em,
+        caption,
+        legend {
+            color: #000;
+            font-weight: inherit
+        }
+
+        .typo-em {
+            position: relative
+        }
+
+        .typo-em:after {
+            position: absolute;
+            top: .65em;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            content: "\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB"
+        }
+
+        .typo img {
+            max-width: 100%
+        }
+
+        .common-content {
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.75rem;
+            white-space: normal;
+            word-break: normal;
+            font-size: 1rem
+        }
+
+        .common-content img {
+            display: block;
+            max-width: 100%;
+            background-color: #eee
+        }
+
+        .common-content audio,
+        .common-content video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        .common-content center,
+        .common-content font {
+            margin-top: 1rem;
+            display: inline-block
+        }
+
+        .common-content center {
+            width: 100%
+        }
+
+        .common-content pre {
+            margin-top: 1rem;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            overflow: hidden
+        }
+
+        .common-content pre code {
+            font-size: .8rem;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            overflow-x: auto
+        }
+
+        .common-content hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        .common-content b,
+        .common-content h1,
+        .common-content h2,
+        .common-content h3,
+        .common-content h4,
+        .common-content h5,
+        .common-content strong {
+            font-weight: 700
+        }
+
+        .common-content h1,
+        .common-content h2 {
+            font-size: 1.125rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content h3,
+        .common-content h4,
+        .common-content h5 {
+            font-size: 1rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: .15rem
+        }
+
+        .common-content .orange {
+            color: #ff5a05
+        }
+
+        .common-content .reference {
+            font-size: 1rem;
+            color: #888
+        }
+
+        .custom-rich-content h1 {
+            margin-top: 0;
+            font-weight: 400;
+            font-size: 15.25px;
+            border-bottom: 1px solid #eee;
+            line-height: 2.8
+        }
+
+        .custom-rich-content li,
+        .custom-rich-content p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6
+        }
+
+        table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        table.hljs-ln,
+        table.hljs-ln tbody,
+        table.hljs-ln td,
+        table.hljs-ln tr {
+            box-sizing: border-box
+        }
+
+        table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none
+        }
+
+        table.hljs-ln td.hljs-ln-code,
+        table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            font-size: 12px;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            color: #24292e;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+        video::-webkit-media-controls {
+            overflow: hidden !important
+        }
+
+        video::-webkit-media-controls-enclosure {
+            width: calc(100% + 32px);
+            margin-left: auto
+        }
+
+        ._29HP61GA_0 {
+            max-width:800px;
+            margin:0 auto;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.76;
+            white-space: normal;
+            word-break: normal;
+            font-size: 17px;
+            -webkit-transition: background-color .3s ease;
+            transition: background-color .3s ease
+        }
+
+        ._29HP61GA_0 .MathJax_Display {
+            overflow: auto
+        }
+
+        ._29HP61GA_0 .poster {
+            position: fixed;
+            left: -10000px;
+            top: -10000px;
+            overflow: hidden;
+            padding: 1rem;
+            background: #ececec
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy {
+            font-size: 13px;
+            color: #888;
+            position: absolute;
+            right: 1em;
+            top: .5em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy .iconfont {
+            font-size: 12px;
+            margin-right: .2em
+        }
+
+        ._29HP61GA_0 a {
+            color: #fa8919;
+            border-bottom: 1px solid #fa8919
+        }
+
+        ._29HP61GA_0 img {
+            display: block;
+            max-width: 100%;
+            position: relative;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background-color: #eee;
+            vertical-align: top;
+            border-radius: 0
+        }
+
+        ._29HP61GA_0 audio,
+        ._29HP61GA_0 video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        ._29HP61GA_0 pre {
+            margin-top: 16px;
+            padding: 34px 0 0;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 6px;
+            background: rgba(246, 247, 251, .749);
+            border: 0
+        }
+
+        ._29HP61GA_0 pre code {
+            font-size: 12px;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-left: 16px;
+            margin-right: 16px;
+            overflow-x: scroll
+        }
+
+        ._29HP61GA_0 pre code:after {
+            content: "";
+            height: 30px;
+            width: 100%;
+            display: block
+        }
+
+        ._29HP61GA_0 hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        ._29HP61GA_0 h1,
+        ._29HP61GA_0 h2,
+        ._29HP61GA_0 h3,
+        ._29HP61GA_0 h4,
+        ._29HP61GA_0 h5 {
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 b,
+        ._29HP61GA_0 strong {
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 h1 {
+            font-size: 21px
+        }
+
+        ._29HP61GA_0 h2 {
+            font-size: 20px
+        }
+
+        ._29HP61GA_0 h3 {
+            font-size: 19px
+        }
+
+        ._29HP61GA_0 h4 {
+            font-size: 18px
+        }
+
+        ._29HP61GA_0 h5 {
+            font-size: 17px
+        }
+
+        ._29HP61GA_0 center,
+        ._29HP61GA_0 p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: 0;
+            margin-bottom: 30px;
+            word-break: break-word
+        }
+
+        ._29HP61GA_0 center {
+            text-align: center
+        }
+
+        ._29HP61GA_0 blockquote {
+            margin-top: 0;
+            margin-bottom: 34px;
+            border-left: 3px solid #e8e8e8;
+            padding-left: 17px;
+            color: #353535
+        }
+
+        ._29HP61GA_0 blockquote p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol,
+        ._29HP61GA_0 ul {
+            margin-bottom: 30px
+        }
+
+        ._29HP61GA_0 ol p,
+        ._29HP61GA_0 ul p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol {
+            list-style: decimal;
+            margin-left: 20px
+        }
+
+        ._29HP61GA_0 ul li {
+            padding-left: 17px;
+            position: relative;
+            margin-bottom: 10px
+        }
+
+        ._29HP61GA_0 ul li:after {
+            content: "";
+            height: 6px;
+            width: 6px;
+            border-radius: 50%;
+            background: #353535;
+            position: absolute;
+            top: 10px;
+            left: 0
+        }
+
+        ._29HP61GA_0 .orange {
+            color: #fa8919
+        }
+
+        ._29HP61GA_0 .reference {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-right {
+            text-align: right
+        }
+
+        ._29HP61GA_0 .m-center {
+            text-align: center;
+            display: block
+        }
+
+        ._29HP61GA_0 .m-gray {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-small {
+            font-size: 15px
+        }
+
+        ._29HP61GA_0 table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        ._29HP61GA_0 table.hljs-ln,
+        ._29HP61GA_0 table.hljs-ln tbody,
+        ._29HP61GA_0 table.hljs-ln td,
+        ._29HP61GA_0 table.hljs-ln tr {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        ._29HP61GA_0 table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            font-size: 12px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code,
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            font-size: 13px;
+            color: #666;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+    </style>
+</head>
+<body>
+<div class="_29HP61GA_0">
+<h1>09-答疑篇：学习网络编程前，需要准备哪些东西？</h1>
+<p>你好，我是盛延敏，这里是网络编程实战第9讲，欢迎回来。</p><p>今天是基础篇的最后一讲。在这一讲中，我将会针对基础篇中大家提出的普遍问题进行总结和答疑，让我们整理一下，再接着学习下一个模块的内容。</p><h2>代码和环境</h2><p>既然我希望通过学习，可以带你进行网络编程实战，那么就得有一个环境，可以运行文章中的例子，并加以活学活用。</p><p>我已经将代码上传到GitHub中，你可以访问以下地址来获得最新的代码。</p><p><a href="https://github.com/froghui/yolanda">https://github.com/froghui/yolanda</a></p><p>代码按照章节组织，比如chap-7就对应第七篇文章。</p><p>代码按照CMake组织，CMake是一个跨平台的编译管理系统，使用CMake可以方便地在Linux等类UNIX系统下动态生成Makefile，再由make工具编译、链接生成二进制文件。当然，CMake也可以支持Windows系统下的C/C++编译，这里我们就不展开了。</p><p>所有的代码我都已经测试过，可以运行在Linux和MacOS上。</p><h3>Ubuntu系统</h3><p>在Linux下，如果你是Ubuntu系统，需要安装Cmake、make和gcc/g++等编译系统和工具。</p><pre><code>sudo apt-get install gcc g++ make cmake
+</code></pre><p>如果是CentOS或Red Hat，需要执行yum install命令：</p><!-- [[[read_end]]] --><pre><code>sudo yum install gcc g++ make cmake
+</code></pre><p>使用CMake编译程序需要两步，第一步执行Cmake生成配置文件，主要是Makefile；具体做法是执行如下的cmake命令，之后在build目录下，会发现CMake根据系统环境如编译器、头文件等自动生成了一份Makefile：</p><pre><code>cd build &amp;&amp; cmake -f ../
+</code></pre><p>接下来执行第二步，在build目录运行make，让make驱动gcc编译、链接生成二进制可执行程序，这个过程可能会持续几分钟。最后在build/bin目录下，会生成所有可运行的二进制程序。</p><pre><code>-rwxr-xr-x 1 vagrant vagrant 13944 Aug 18 13:45 addressused*
+-rwxr-xr-x 1 vagrant vagrant 14000 Aug 18 13:45 addressused02*
+-rwxr-xr-x 1 vagrant vagrant 13848 Aug 18 13:45 batchwrite*
+-rwxr-xr-x 1 vagrant vagrant 13800 Aug 18 13:45 bufferclient*
+-rwxr-xr-x 1 vagrant vagrant 14192 Aug 18 13:45 graceclient*
+-rwxr-xr-x 1 vagrant vagrant 14096 Aug 18 13:45 graceserver*
+-rwxr-xr-x 1 vagrant vagrant  8960 Aug 18 13:45 make_socket*
+-rwxr-xr-x 1 vagrant vagrant 13920 Aug 18 13:45 pingclient*
+-rwxr-xr-x 1 vagrant vagrant 14176 Aug 18 13:45 pingserver*
+-rwxr-xr-x 1 vagrant vagrant 13976 Aug 18 13:45 reliable_client01*
+-rwxr-xr-x 1 vagrant vagrant 13832 Aug 18 13:45 reliable_client02*
+-rwxr-xr-x 1 vagrant vagrant 14120 Aug 18 13:45 reliable_server01*
+-rwxr-xr-x 1 vagrant vagrant 14040 Aug 18 13:45 reliable_server02*
+-rwxr-xr-x 1 vagrant vagrant 14136 Aug 18 13:45 samplebuffer01*
+-rwxr-xr-x 1 vagrant vagrant 13864 Aug 18 13:45 samplebuffer02*
+-rwxr-xr-x 1 vagrant vagrant 14392 Aug 18 13:45 samplebuffer03*
+-rwxr-xr-x 1 vagrant vagrant 13848 Aug 18 13:45 streamclient*
+-rwxr-xr-x 1 vagrant vagrant 14392 Aug 18 13:45 streamserver*
+-rwxr-xr-x 1 vagrant vagrant 13784 Aug 18 13:45 tcpclient*
+-rwxr-xr-x 1 vagrant vagrant 13856 Aug 18 13:45 tcpserver*
+-rwxr-xr-x 1 vagrant vagrant 13936 Aug 18 13:45 udpclient*
+-rwxr-xr-x 1 vagrant vagrant 13320 Aug 18 13:45 udpserver*
+-rwxr-xr-x 1 vagrant vagrant 13936 Aug 18 13:45 unixdataclient*
+-rwxr-xr-x 1 vagrant vagrant 13896 Aug 18 13:45 unixdataserver*
+-rwxr-xr-x 1 vagrant vagrant 13800 Aug 18 13:45 unixstreamclient*
+-rwxr-xr-x 1 vagrant vagrant 13992 Aug 18 13:45 unixstreamserver*
+</code></pre><h3>MacOS</h3><p>在MacOS上，Cmake和make都会有Mac特定版本，并且实现的原理也是基本一致的，我们可以像上面Ubuntu系统一样手动安装、配置这些工具。</p><p>如果你的系统上没有这两个软件，可以使用brew安装Cmake和make。</p><pre><code>brew install cmake 
+brew install make
+</code></pre><p>MacOS上C/C++语言的编译器不同于GNU-GCC，是一个叫做Clang的东西。Clang 背后的技术叫做LLVM（Low Level Virtual Machine）。LLVM 是以 BSD License开发的开源编译器框架系统，基于 C++ 编写而成，不仅可以支持C/C++，还可以支持Swift、Rust等语言。</p><p>如果你在MaxOS上查看Clang的版本信息，可以很明显地看到，Clang是基于LLVM开发的，并且对应的版本是多少。在我的机器上显示的LLVM版本是 10.0.0。</p><pre><code>clang -v
+Apple LLVM version 10.0.0 (clang-1000.10.44.4)
+Target: x86_64-apple-darwin17.7.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+</code></pre><p>下面是在MacOS上执行Cmake和make，使用Clang完成编译和链接的过程。</p><pre><code>cd build &amp;&amp; cmake -f ../
+-- The C compiler identification is AppleClang 10.0.0.10001044
+-- The CXX compiler identification is AppleClang 10.0.0.10001044
+-- Check for working C compiler: /Library/Developer/CommandLineTools/usr/bin/cc
+-- Check for working C compiler: /Library/Developer/CommandLineTools/usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /Library/Developer/CommandLineTools/usr/bin/c++
+-- Check for working CXX compiler: /Library/Developer/CommandLineTools/usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/shengym/Code/network/yolanda/test
+</code></pre><pre><code>cd build &amp;&amp; make
+</code></pre><p>可执行程序仍然保存在 build/bin目录下面。</p><h3>CLion</h3><p>对于有IDE情结的同学来说，推荐使用JetBrains公司出品的CLion进行编译和调试。</p><p>你可以在这里下载 <a href="https://www.jetbrains.com/clion/">https://www.jetbrains.com/clion/</a>， 获得30天的免费使用。</p><p>CLion自带了CMake等工具，可以开箱即用。它最强大的地方，是可以直接设置断点，方便进行调试。我们进入主菜单，选择Run，再选择Debug，就可以启动程序，进行调试。</p><p><img src="https://static001.geekbang.org/resource/image/28/25/28c40e2422c01340a8ab8b368355f825.png" alt=""><br>
+有些情况下，启动程序时需要输入一些参数，这个时候需要使用“Edit Configurations”为可执行程序配置参数。下面是一个例子：</p><p><img src="https://static001.geekbang.org/resource/image/61/5c/6191b86211dd13df6613bdb3481d8d5c.png" alt=""></p><h2>学习路径</h2><p>也许你刚刚入门，一直对网络编程的学习路径有很大的困惑，我在这里统一回复一下。</p><p>我觉得学习网络编程技术，必须要过一道语言关，这个语言就是C语言。专栏本身也是基于C语言的。虽然现代工业化语言如Java、Golang等已经足够强大，但是你要知道，在这些语言的背后，无一例外的总是有C语言的影子。C语言是可以和系统直接交互的语言，无论是系统调用，还是内核实现，都和C语言有非常直接的联系，比如Java本身就是用C++实现的，Golang虽然现在可以自举，也就是可以使用Golang实现Golang本身，但是它的第一版也是用C/C++实现的。</p><p>我不建议一开始就学习C++语言，在我看来, C++语言在C语言原来的基础上做了很多语言层面的增强，而这些增强的语言特性，例如模板、继承、虚函数、boost语言库等，对于刚开始接触底层的人显得有些艰深。</p><p>学习一门编程语言，显然不是学习这门语言的控制流或者变量类型，而是抓住这门语言的精髓。我认为C语言的精髓包括数组和指针、结构体和函数。</p><p>C语言的地址、数组、指针可以帮助我们详细地理解计算机的体系结构，一段数据怎样在内存中摆放，怎么去访问等，你可以在学习它们的过程中得到锤炼，了解这些基础的编程理念。</p><p>有些同学一上来就啃“TCP/IP协议”，我觉得对于实战来说，显得过于着急。我们可以把“TCP/IP协议”当做编程过程中答疑解惑的好帮手，有问题之后再从中寻找答案，而不是急急忙忙就来啃这类书籍。说实话，这类书籍理论性偏强，有时候大段读下来也少有收获。</p><p>最好的办法，还是自己跟随一些入门书籍，或者我的这篇实战，尝试动手去写、去调试代码，这中间你会不断获得一些反馈，然后再和大家一起探讨，不断加深了解。</p><p>当你学到了一定阶段，就可以给自己开一些小的任务，比如写一个聊天室程序，或者写一个HTTP服务器端程序，带着任务去学习，获得成就感的同时，对网络编程的理解也随之更上一层楼了。</p><h2>书籍推荐</h2><p>我希望你可以通过这个专栏更好地了解网络编程，但是深入的学习还需要你自行去找更多的资料。我在这里给你推荐一些书，这些书是各个领域的经典。</p><p>C语言入门方面，我推荐 《C程序设计语言》，我在文稿里附上了豆瓣链接，你可以看下大家的评价以及他们的学习方式：  <a href="https://book.douban.com/subject/1139336/">https://book.douban.com/subject/1139336/</a></p><p>UNIX网络编程方面，强烈推荐Stevens大神的两卷本《UNIX网络编程》，其中第一卷是讲套接字的，第二卷是讲IPC进程间通信的。这套书也随书配备了源代码，你如果有兴趣的话，可以对代码进行改写和调试。</p><p>豆瓣链接在此： <a href="https://book.douban.com/subject/1500149/">https://book.douban.com/subject/1500149/</a></p><p>这套书的卷一基本上面面俱到地讲述了UNIX网络编程的方方面面，但有时候稍显啰嗦，特别是高性能高并发这块，已经跟不上时代，但你可以把注意力放在卷一的前半部分。</p><p>这套书翻译了好几版，就我的体验来说，比较推荐杨继张翻译的版本。</p><p>TCP/IP协议方面，当然是推荐Stevens的大作《TCP/IP详解》, 这套书总共有三卷，第一卷讲协议，第二卷讲实现，第三卷讲TCP事务。我在这里推荐第一卷，第二卷的实现是基于BSD的代码讲解的，就不推荐了。我想如果你想看源码的话，还是推荐看Linux的，毕竟我们用的比较多。第三卷涉及的内容比较少见，也不推荐了。</p><p>这套书各个出版社翻译了好多版本，你可以去豆瓣自行查看哪个版本评分比较高。</p><p>《TCP/IP详解 卷1：协议》豆瓣链接如下：</p><p><a href="https://book.douban.com/subject/1088054/">https://book.douban.com/subject/1088054/</a></p><p>最后除了书籍外，还有一个非常好的了解TCP的方法，那就是查看RFC文档，对于有一定英文能力的同学来说，可以说是一个捷径。RFC最大的好处可以帮我们了解TCP发展的背景和脉络。</p><h2>疑难解答</h2><p>前面的内容算是我对你学习网络编程提供的一些小建议或者小帮助。接下来，我们正式进入到文章本身的内容。</p><p>在第5讲思考题部分中，我出了这么一道题目“一段数据流从应用程序发送端，一直到应用程序接收端，总共经过了多少次拷贝？”大家的回答五花八门。</p><p>我的本意可以用文稿中的一张图来表示，还记得TCP/IP层次模型么？我想通过这么一个问题，来展示TCP/IP分层的思想。</p><p><img src="https://static001.geekbang.org/resource/image/50/8f/50c05c8509a1d8436273adbf8701bb8f.png" alt=""><br>
+让我们先看发送端，当应用程序将数据送到发送缓冲区时，调用的是send或write方法，如果缓存中没有空间，系统调用就会失败或者阻塞。我们说，这个动作事实上是一次”显式拷贝“。而在这之后，数据将会按照TCP/IP的分层再次进行拷贝，这层的拷贝对我们来说就不是显式的了。</p><p>接下来轮到TCP协议栈工作，创建Packet报文，并把报文发送到传输队列中（qdisc），传输队列是一个典型的 FIFO 队列，队列的最大值可以通过 ifocnfig 命令输出的 txqueuelen 来查看。通常情况下，这个值有几千报文大小。</p><p>TX ring 在网络驱动和网卡之间，也是一个传输请求的队列。</p><p>网卡作为物理设备工作在物理层，主要工作是把要发送的报文保存到内部的缓存中，并发送出去。</p><p>接下来再看接收端，报文首先到达网卡，由网卡保存在自己的接收缓存中，接下来报文被发送至网络驱动和网卡之间的 RX ring，网络驱动从 RX ring 获取报文 ，然后把报文发送到上层。</p><p>这里值得注意的是，网络驱动和上层之间没有缓存，因为网络驱动使用 Napi 进行数据传输。因此，可以认为上层直接从 RX ring 中读取报文。</p><p>最后，报文的数据保存在套接字接收缓存中，应用程序从套接字接收缓存中读取数据。</p><p>这就是数据流从应用程序发送端，一直到应用程序接收端的整个历程，你看懂了吗？</p><p>上面的任何一个环节稍有积压，都会对程序性能产生影响。但好消息是，内核和网络设备供应商已经帮我们把一切都打点好了，我们看到和用到的，其实只是冰山上的一角而已。</p><p>这就是基础篇的总结与答疑部分，我先对之前基础篇的内容补充了一些资料，尽可能地为你学习网络编程提供方便，然后针对大家有明显疑惑的问题进行了解答，希望对你有所帮助。</p><p><img src="https://static001.geekbang.org/resource/image/bf/25/bfc96ae0d8f839919b9d9866cfb8b025.jpg" alt=""></p><h2>精选留言：</h2>
+        <ul>
+        
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            ly  2019-08-21 17:54:09
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            哈哈，和老师灵魂碰撞了，unix的网络编程卷1和2昨天下单的。<br>按照第5章的相关逻辑自己用Java写了一段demo程序。<br>【Java代码逻辑】<br>服务端接收 1024 字节(read)就休眠1秒钟；<br>客户端for循环50次,每1次for循环写 10 * 1024 字节出去(write&#47;flush)。<br>【现象】<br>服务端间隔1秒打印出接收到的1024字节数据。<br>客户端发送完几乎每发送1024*10字节以后会阻塞一会，然后接着再发送1024*10字节，但是客户端发送完所有数据退出时，服务端还在不断的接收打印。<br>【wireshark抓包片段】<br>（56725客户端端口，8888服务端端口）<br>------------------------------------------------------------<br>......<br>56725  &gt;  8888 [ACK] Seq=1 Ack=1 Win=8192 Len=1460<br>56725  &gt;  8888 [ACK] Seq=1461 Ack=1 Win=8192 Len=1460<br>8888  &gt;  56725 [ACK] Seq=1 Ack=2921 Win=8192 Len=0<br>56725  &gt;  8888 [ACK] Seq=2921 Ack=1 Win=8192 Len=1460<br>56725  &gt;  8888 [ACK] Seq=4381 Ack=1 Win=8192 Len=1460<br>56725  &gt;  8888 [ACK] Seq=5841 Ack=1 Win=8192 Len=1460<br>56725  &gt;  8888 [ACK] Seq=7301 Ack=1 Win=8192 Len=1460<br>8888  &gt;  56725 [ACK] Seq=1 Ack=8761 Win=8192 Len=0<br>......<br>------------------------------------------------------------<br>观察的期间会出现一些 TCP Window Full &#47; TCP window Update 等标记。<br>【个人理解】<br>客户端之所以发送 1024*10 字节以后会阻塞，应该是发送端的速度大于了接收端的速度，TCP协议会自动对发送方限流，又或者是因为本地发送缓冲区满了，需要阻塞发送方。<br><br>【疑问】<br>1. 为什么客户端向服务端发送数据的时候，wireShark显示的是 [ACK] 应答标记,我记得之前发送比较少的数据时显示的是 [PSH+ACK]标记？<br>2. TCP Window Full&#47;TCP window Update 这些标记什么时候会出现，代表什么意思呢？<br>请老师点评。。。。 [1赞]
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            石将从  2019-08-21 23:57:15
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            [root@izm5eb4ves923h7tl63px4z build]# cmake -f ..&#47;<br>CMake Error: Could not find CMAKE_ROOT !!!<br>CMake has most likely not been installed correctly.<br>Modules directory not found in<br>&#47;app&#47;cmake&#47;share&#47;cmake-3.15<br>CMake Error: Error executing cmake::LoadCache(). Aborting.<br><br>[root@izm5eb4ves923h7tl63px4z build]# <br> 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            石将从  2019-08-21 23:07:48
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师，你这个环境省略了好多东西啊，cd build &amp;&amp; cmake -f ..&#47;<br>哪里的Build目录呀<br> 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-08-21 20:45:51
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            所以最终是拷贝了六次？ 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-08-21 20:03:29
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            那个build目录是那个路径下的啊？我感觉都是系统路径下呢 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            张立华  2019-08-21 19:41:46
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            cmake的 -f参数，干什么的。 老师，我google查了下，都没找到这个参数啊 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            许童童  2019-08-21 11:15:09
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            一段数据流从应用程序发送端，一直到应用程序接收端，总共经过了多少次拷贝？<br>这道思考题确实很难，网上搜到的结果也是五花八门。 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            马仔  2019-08-21 10:39:06
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            我想学习Linux代码在window上的porting，但是网上的资料都比较散。老师可以推荐一些比较完整的资料吗。 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            摘星星的人  2019-08-21 09:35:41
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            运行起来了，好多警告，是 gcc 版本问题吗，gcc7.4， wsl Ubuntu18.04。根据源码，好好学习，还是有点懵懂的 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            😊  2019-08-21 08:29:10
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            transferTo方法是节省了中间两次数据的copy吗？ 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            业余爱好者  2019-08-21 08:04:03
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            搞java的，看了这篇，更有信心学好c和网络编程了 
+        </div>
+        
+    </div>
+</li>
+            </ul>
+</div>
+</body>
+</html>

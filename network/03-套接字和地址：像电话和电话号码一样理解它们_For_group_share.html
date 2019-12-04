@@ -1,0 +1,1324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>03-套接字和地址：像电话和电话号码一样理解它们</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+        html {
+            color: #333;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-rendering: optimizelegibility;
+            font-family: Helvetica Neue, PingFang SC, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+        }
+
+        html.borderbox *,
+        html.borderbox :after,
+        html.borderbox :before {
+            box-sizing: border-box
+        }
+
+        article,
+        aside,
+        blockquote,
+        body,
+        button,
+        code,
+        dd,
+        details,
+        dl,
+        dt,
+        fieldset,
+        figcaption,
+        figure,
+        footer,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        header,
+        hr,
+        input,
+        legend,
+        li,
+        menu,
+        nav,
+        ol,
+        p,
+        pre,
+        section,
+        td,
+        textarea,
+        th,
+        ul {
+            margin: 0;
+            padding: 0
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        menu,
+        nav,
+        section {
+            display: block
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, Helvetica, sans-serif
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            padding: 0;
+            border: 0
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        fieldset,
+        img {
+            border: 0
+        }
+
+        blockquote {
+            position: relative;
+            color: #999;
+            font-weight: 400;
+            border-left: 1px solid #1abc9c;
+            padding-left: 1em;
+            margin: 1em 3em 1em 2em
+        }
+
+        @media only screen and (max-width: 640px) {
+            blockquote {
+                margin: 1em 0
+            }
+        }
+
+        abbr,
+        acronym {
+            border-bottom: 1px dotted;
+            font-variant: normal
+        }
+
+        abbr {
+            cursor: help
+        }
+
+        del {
+            text-decoration: line-through
+        }
+
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        th,
+        var {
+            font-style: normal;
+            font-weight: 400
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        caption,
+        th {
+            text-align: left
+        }
+
+        q:after,
+        q:before {
+            content: ""
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative
+        }
+
+        :root sub,
+        :root sup {
+            vertical-align: baseline
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        a {
+            color: #1abc9c
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .typo a {
+            border-bottom: 1px solid #1abc9c
+        }
+
+        .typo a:hover {
+            border-bottom-color: #555;
+            color: #555
+        }
+
+        .typo a:hover,
+        a,
+        ins {
+            text-decoration: none
+        }
+
+        .typo-u,
+        u {
+            text-decoration: underline
+        }
+
+        mark {
+            background: #fffdd1;
+            border-bottom: 1px solid #ffedce;
+            padding: 2px;
+            margin: 0 5px
+        }
+
+        code,
+        pre,
+        pre tt {
+            font-family: Courier, Courier New, monospace
+        }
+
+        pre {
+            background: hsla(0, 0%, 97%, .7);
+            border: 1px solid #ddd;
+            padding: 1em 1.5em;
+            display: block;
+            -webkit-overflow-scrolling: touch
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #cfcfcf;
+            margin-bottom: .8em;
+            height: 10px
+        }
+
+        .typo-small,
+        figcaption,
+        small {
+            font-size: .9em;
+            color: #888
+        }
+
+        b,
+        strong {
+            font-weight: 700;
+            color: #000
+        }
+
+        [draggable] {
+            cursor: move
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        .textwrap,
+        .textwrap td,
+        .textwrap th {
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        .textwrap-table {
+            table-layout: fixed
+        }
+
+        .serif {
+            font-family: Palatino, Optima, Georgia, serif
+        }
+
+        .typo-dl,
+        .typo-form,
+        .typo-hr,
+        .typo-ol,
+        .typo-p,
+        .typo-pre,
+        .typo-table,
+        .typo-ul,
+        .typo dl,
+        .typo form,
+        .typo hr,
+        .typo ol,
+        .typo p,
+        .typo pre,
+        .typo table,
+        .typo ul,
+        blockquote {
+            margin-bottom: 1rem
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: PingFang SC, Helvetica Neue, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+            color: #000;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo-h2,
+        .typo-h3,
+        .typo-h4,
+        .typo-h5,
+        .typo-h6,
+        .typo h1,
+        .typo h2,
+        .typo h3,
+        .typo h4,
+        .typo h5,
+        .typo h6 {
+            margin-top: 1.2em;
+            margin-bottom: .6em;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo h1 {
+            font-size: 2em
+        }
+
+        .typo-h2,
+        .typo h2 {
+            font-size: 1.8em
+        }
+
+        .typo-h3,
+        .typo h3 {
+            font-size: 1.6em
+        }
+
+        .typo-h4,
+        .typo h4 {
+            font-size: 1.4em
+        }
+
+        .typo-h5,
+        .typo-h6,
+        .typo h5,
+        .typo h6 {
+            font-size: 1.2em
+        }
+
+        .typo-ul,
+        .typo ul {
+            margin-left: 1.3em;
+            list-style: disc
+        }
+
+        .typo-ol,
+        .typo ol {
+            list-style: decimal;
+            margin-left: 1.9em
+        }
+
+        .typo-ol ol,
+        .typo-ol ul,
+        .typo-ul ol,
+        .typo-ul ul,
+        .typo li ol,
+        .typo li ul {
+            margin-bottom: .8em;
+            margin-left: 2em
+        }
+
+        .typo-ol ul,
+        .typo-ul ul,
+        .typo li ul {
+            list-style: circle
+        }
+
+        .typo-table td,
+        .typo-table th,
+        .typo table caption,
+        .typo table td,
+        .typo table th {
+            border: 1px solid #ddd;
+            padding: .5em 1em;
+            color: #666
+        }
+
+        .typo-table th,
+        .typo table th {
+            background: #fbfbfb
+        }
+
+        .typo-table thead th,
+        .typo table thead th {
+            background: hsla(0, 0%, 95%, .7)
+        }
+
+        .typo table caption {
+            border-bottom: none
+        }
+
+        .typo-input,
+        .typo-textarea {
+            -webkit-appearance: none;
+            border-radius: 0
+        }
+
+        .typo-em,
+        .typo em,
+        caption,
+        legend {
+            color: #000;
+            font-weight: inherit
+        }
+
+        .typo-em {
+            position: relative
+        }
+
+        .typo-em:after {
+            position: absolute;
+            top: .65em;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            content: "\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB"
+        }
+
+        .typo img {
+            max-width: 100%
+        }
+
+        .common-content {
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.75rem;
+            white-space: normal;
+            word-break: normal;
+            font-size: 1rem
+        }
+
+        .common-content img {
+            display: block;
+            max-width: 100%;
+            background-color: #eee
+        }
+
+        .common-content audio,
+        .common-content video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        .common-content center,
+        .common-content font {
+            margin-top: 1rem;
+            display: inline-block
+        }
+
+        .common-content center {
+            width: 100%
+        }
+
+        .common-content pre {
+            margin-top: 1rem;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            overflow: hidden
+        }
+
+        .common-content pre code {
+            font-size: .8rem;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            overflow-x: auto
+        }
+
+        .common-content hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        .common-content b,
+        .common-content h1,
+        .common-content h2,
+        .common-content h3,
+        .common-content h4,
+        .common-content h5,
+        .common-content strong {
+            font-weight: 700
+        }
+
+        .common-content h1,
+        .common-content h2 {
+            font-size: 1.125rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content h3,
+        .common-content h4,
+        .common-content h5 {
+            font-size: 1rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: .15rem
+        }
+
+        .common-content .orange {
+            color: #ff5a05
+        }
+
+        .common-content .reference {
+            font-size: 1rem;
+            color: #888
+        }
+
+        .custom-rich-content h1 {
+            margin-top: 0;
+            font-weight: 400;
+            font-size: 15.25px;
+            border-bottom: 1px solid #eee;
+            line-height: 2.8
+        }
+
+        .custom-rich-content li,
+        .custom-rich-content p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6
+        }
+
+        table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        table.hljs-ln,
+        table.hljs-ln tbody,
+        table.hljs-ln td,
+        table.hljs-ln tr {
+            box-sizing: border-box
+        }
+
+        table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none
+        }
+
+        table.hljs-ln td.hljs-ln-code,
+        table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            font-size: 12px;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            color: #24292e;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+        video::-webkit-media-controls {
+            overflow: hidden !important
+        }
+
+        video::-webkit-media-controls-enclosure {
+            width: calc(100% + 32px);
+            margin-left: auto
+        }
+
+        ._29HP61GA_0 {
+            max-width:800px;
+            margin:0 auto;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.76;
+            white-space: normal;
+            word-break: normal;
+            font-size: 17px;
+            -webkit-transition: background-color .3s ease;
+            transition: background-color .3s ease
+        }
+
+        ._29HP61GA_0 .MathJax_Display {
+            overflow: auto
+        }
+
+        ._29HP61GA_0 .poster {
+            position: fixed;
+            left: -10000px;
+            top: -10000px;
+            overflow: hidden;
+            padding: 1rem;
+            background: #ececec
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy {
+            font-size: 13px;
+            color: #888;
+            position: absolute;
+            right: 1em;
+            top: .5em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy .iconfont {
+            font-size: 12px;
+            margin-right: .2em
+        }
+
+        ._29HP61GA_0 a {
+            color: #fa8919;
+            border-bottom: 1px solid #fa8919
+        }
+
+        ._29HP61GA_0 img {
+            display: block;
+            max-width: 100%;
+            position: relative;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background-color: #eee;
+            vertical-align: top;
+            border-radius: 0
+        }
+
+        ._29HP61GA_0 audio,
+        ._29HP61GA_0 video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        ._29HP61GA_0 pre {
+            margin-top: 16px;
+            padding: 34px 0 0;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 6px;
+            background: rgba(246, 247, 251, .749);
+            border: 0
+        }
+
+        ._29HP61GA_0 pre code {
+            font-size: 12px;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-left: 16px;
+            margin-right: 16px;
+            overflow-x: scroll
+        }
+
+        ._29HP61GA_0 pre code:after {
+            content: "";
+            height: 30px;
+            width: 100%;
+            display: block
+        }
+
+        ._29HP61GA_0 hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        ._29HP61GA_0 h1,
+        ._29HP61GA_0 h2,
+        ._29HP61GA_0 h3,
+        ._29HP61GA_0 h4,
+        ._29HP61GA_0 h5 {
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 b,
+        ._29HP61GA_0 strong {
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 h1 {
+            font-size: 21px
+        }
+
+        ._29HP61GA_0 h2 {
+            font-size: 20px
+        }
+
+        ._29HP61GA_0 h3 {
+            font-size: 19px
+        }
+
+        ._29HP61GA_0 h4 {
+            font-size: 18px
+        }
+
+        ._29HP61GA_0 h5 {
+            font-size: 17px
+        }
+
+        ._29HP61GA_0 center,
+        ._29HP61GA_0 p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: 0;
+            margin-bottom: 30px;
+            word-break: break-word
+        }
+
+        ._29HP61GA_0 center {
+            text-align: center
+        }
+
+        ._29HP61GA_0 blockquote {
+            margin-top: 0;
+            margin-bottom: 34px;
+            border-left: 3px solid #e8e8e8;
+            padding-left: 17px;
+            color: #353535
+        }
+
+        ._29HP61GA_0 blockquote p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol,
+        ._29HP61GA_0 ul {
+            margin-bottom: 30px
+        }
+
+        ._29HP61GA_0 ol p,
+        ._29HP61GA_0 ul p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol {
+            list-style: decimal;
+            margin-left: 20px
+        }
+
+        ._29HP61GA_0 ul li {
+            padding-left: 17px;
+            position: relative;
+            margin-bottom: 10px
+        }
+
+        ._29HP61GA_0 ul li:after {
+            content: "";
+            height: 6px;
+            width: 6px;
+            border-radius: 50%;
+            background: #353535;
+            position: absolute;
+            top: 10px;
+            left: 0
+        }
+
+        ._29HP61GA_0 .orange {
+            color: #fa8919
+        }
+
+        ._29HP61GA_0 .reference {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-right {
+            text-align: right
+        }
+
+        ._29HP61GA_0 .m-center {
+            text-align: center;
+            display: block
+        }
+
+        ._29HP61GA_0 .m-gray {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-small {
+            font-size: 15px
+        }
+
+        ._29HP61GA_0 table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        ._29HP61GA_0 table.hljs-ln,
+        ._29HP61GA_0 table.hljs-ln tbody,
+        ._29HP61GA_0 table.hljs-ln td,
+        ._29HP61GA_0 table.hljs-ln tr {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        ._29HP61GA_0 table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            font-size: 12px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code,
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            font-size: 13px;
+            color: #666;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+    </style>
+</head>
+<body>
+<div class="_29HP61GA_0">
+<h1>03-套接字和地址：像电话和电话号码一样理解它们</h1>
+<p>在网络编程中，我们经常会提到socket这个词，它的中文翻译为套接字，有的时候也叫做套接口。</p><p>socket这个英文单词的原意是“插口”“插槽”， 在网络编程中，它的寓意是可以通过插口接入的方式，快速完成网络连接和数据收发。你可以把它想象成现实世界的电源插口，或者是早期上网需要的网络插槽，所以socket也可以看做是对物理世界的直接映射。</p><p>其实计算机程序设计是一门和英文有着紧密联系的学科，很多专有名词使用英文原词比翻译成中文更容易让大家接受。为了方便，在专栏里我们一般会直接使用英文，如果需要翻译就一律用“套接字”这个翻译。</p><h2>socket到底是什么？</h2><p>在网络编程中，到底应该怎么理解socket呢？我在这里先呈上这么一张图，你可以先看看。</p><p><img src="https://static001.geekbang.org/resource/image/0b/64/0ba3f3d04b1466262c02d6f24ee76a64.jpg" alt=""><br>
+这张图表达的其实是网络编程中，客户端和服务器工作的核心逻辑。</p><p>我们先从右侧的服务器端开始看，因为在客户端发起连接请求之前，服务器端必须初始化好。右侧的图显示的是服务器端初始化的过程，首先初始化socket，之后服务器端需要执行bind函数，将自己的服务能力绑定在一个众所周知的地址和端口上，紧接着，服务器端执行listen操作，将原先的socket转化为服务端的socket，服务端最后阻塞在accept上等待客户端请求的到来。</p><!-- [[[read_end]]] --><p>此时，服务器端已经准备就绪。客户端需要先初始化socket，再执行connect向服务器端的地址和端口发起连接请求，这里的地址和端口必须是客户端预先知晓的。这个过程，就是著名的<strong>TCP三次握手</strong>（Three-way Handshake）。下一篇文章，我会详细讲到TCP三次握手的原理。</p><p>一旦三次握手完成，客户端和服务器端建立连接，就进入了数据传输过程。</p><p>具体来说，客户端进程向操作系统内核发起write字节流写操作，内核协议栈将字节流通过网络设备传输到服务器端，服务器端从内核得到信息，将字节流从内核读入到进程中，并开始业务逻辑的处理，完成之后，服务器端再将得到的结果以同样的方式写给客户端。可以看到，<strong>一旦连接建立，数据的传输就不再是单向的，而是双向的，这也是TCP的一个显著特性</strong>。</p><p>当客户端完成和服务器端的交互后，比如执行一次Telnet操作，或者一次HTTP请求，需要和服务器端断开连接时，就会执行close函数，操作系统内核此时会通过原先的连接链路向服务器端发送一个FIN包，服务器收到之后执行被动关闭，这时候整个链路处于半关闭状态，此后，服务器端也会执行close函数，整个链路才会真正关闭。半关闭的状态下，发起close请求的一方在没有收到对方FIN包之前都认为连接是正常的；而在全关闭的状态下，双方都感知连接已经关闭。</p><p>请你牢牢记住文章开头的那幅图，它是贯穿整个专栏的核心图之一。</p><p>讲这幅图的真正用意在于引入socket的概念，请注意，以上所有的操作，都是通过socket来完成的。无论是客户端的connect，还是服务端的accept，或者read/write操作等，<strong>socket是我们用来建立连接，传输数据的唯一途径</strong>。</p><h3>更好地理解socket：一个更直观的解释</h3><p>你可以把整个TCP的网络交互和数据传输想象成打电话，顺着这个思路想象，socket就好像是我们手里的电话机，connect就好比拿着电话机拨号，而服务器端的bind就好比是去电信公司开户，将电话号码和我们家里的电话机绑定，这样别人就可以用这个号码找到你，listen就好似人们在家里听到了响铃，accept就好比是被叫的一方拿起电话开始应答。至此，三次握手就完成了，连接建立完毕。</p><p>接下来，拨打电话的人开始说话：“你好。”这时就进入了write，接收电话的人听到的过程可以想象成read（听到并读出数据），并且开始应答，双方就进入了read/write的数据传输过程。</p><p>最后，拨打电话的人完成了此次交流，挂上电话，对应的操作可以理解为close，接听电话的人知道对方已挂机，也挂上电话，也是一次close。</p><p>在整个电话交流过程中，电话是我们可以和外面通信的设备，对应到网络编程的世界里，socket也是我们可以和外界进行网络通信的途径。</p><h3>socket的发展历史</h3><p>通过上面的讲解和这个打电话的类比，你现在清楚socket到底是什么了吧？那socket最开始是怎么被提出来的呢？接下来就很有必要一起来简单追溯一下它的历史了。</p><p>socket是加州大学伯克利分校的研究人员在20世纪80年代早期提出的，所以也被叫做伯克利套接字。伯克利的研究者们设想用socket的概念，屏蔽掉底层协议栈的差别。第一版实现socket的就是TCP/IP协议，最早是在BSD 4.2 Unix内核上实现了socket。很快大家就发现这么一个概念带来了网络编程的便利，于是有更多人也接触到了socket的概念。Linux作为Unix系统的一个开源实现，很早就从头开发实现了TCP/IP协议，伴随着socket的成功，Windows也引入了socket的概念。于是在今天的世界里，socket成为网络互联互通的标准。</p><h2>套接字地址格式</h2><p>在使用套接字时，首先要解决通信双方寻址的问题。我们需要套接字的地址建立连接，就像打电话时首先需要查找电话簿，找到你想要联系的那个人，你才可以建立连接，开始交流。接下来，我们重点讨论套接字的地址格式。</p><h3>通用套接字地址格式</h3><p>下面先看一下套接字的<strong>通用</strong>地址结构：</p><pre><code>/* POSIX.1g 规范规定了地址族为2字节的值.  */
+typedef unsigned short int sa_family_t;
+/* 描述通用套接字地址  */
+struct sockaddr{
+    sa_family_t sa_family;  /* 地址族.  16-bit*/
+    char sa_data[14];   /* 具体的地址值 112-bit */
+  }; 
+</code></pre><p>在这个结构体里，第一个字段是地址族，它表示使用什么样的方式对地址进行解释和保存，好比电话簿里的手机格式，或者是固话格式，这两种格式的长度和含义都是不同的。地址族在glibc里的定义非常多，常用的有以下几种：</p><ul>
+<li>AF_LOCAL：表示的是本地地址，对应的是Unix套接字，这种情况一般用于本地socket通信，很多情况下也可以写成AF_UNIX、AF_FILE；</li>
+<li>AF_INET：因特网使用的IPv4地址；</li>
+<li>AF_INET6：因特网使用的IPv6地址。</li>
+</ul><p>这里的AF_表示的含义是Address Family，但是很多情况下，我们也会看到以PF_表示的宏，比如PF_INET、PF_INET6等，实际上PF_的意思是Protocol Family，也就是协议族的意思。我们用AF_xxx这样的值来初始化socket地址，用PF_xxx这样的值来初始化socket。我们在&lt;sys/socket.h&gt;头文件中可以清晰地看到，这两个值本身就是一一对应的。</p><pre><code>/* 各种地址族的宏定义  */
+#define AF_UNSPEC PF_UNSPEC
+#define AF_LOCAL  PF_LOCAL
+#define AF_UNIX   PF_UNIX
+#define AF_FILE   PF_FILE
+#define AF_INET   PF_INET
+#define AF_AX25   PF_AX25
+#define AF_IPX    PF_IPX
+#define AF_APPLETALK  PF_APPLETALK
+#define AF_NETROM PF_NETROM
+#define AF_BRIDGE PF_BRIDGE
+#define AF_ATMPVC PF_ATMPVC
+#define AF_X25    PF_X25
+#define AF_INET6  PF_INET6
+</code></pre><p>sockaddr是一个通用的地址结构，通用的意思是适用于多种地址族。为什么定义这么一个通用地址结构呢，这个放在后面讲。</p><h3>IPv4套接字格式地址</h3><p>接下来，看一下常用的IPv4地址族的结构：</p><pre><code>/* IPV4套接字地址，32bit值.  */
+typedef uint32_t in_addr_t;
+struct in_addr
+  {
+    in_addr_t s_addr;
+  };
+  
+/* 描述IPV4的套接字地址格式  */
+struct sockaddr_in
+  {
+    sa_family_t sin_family; /* 16-bit */
+    in_port_t sin_port;     /* 端口口  16-bit*/
+    struct in_addr sin_addr;    /* Internet address. 32-bit */
+
+
+    /* 这里仅仅用作占位符，不做实际用处  */
+    unsigned char sin_zero[8];
+  };
+</code></pre><p>我们对这个结构体稍作解读，首先可以发现和sockaddr一样，都有一个16-bit的sin_family字段，对于IPv4来说这个值就是AF_INET。</p><p>接下来是端口号，我们可以看到端口号最多是16-bit，也就是说最大支持2的16次方，这个数字是65536，所以我们应该知道支持寻址的端口号最多就是65535。关于端口，我在前面的章节也提到过，这里重点阐述一下保留端口。所谓保留端口就是大家约定俗成的，已经被对应服务广为使用的端口，比如ftp的21端口，ssh的22端口，http的80端口等。一般而言，大于5000的端口可以作为我们自己应用程序的端口使用。</p><p>下面是glibc定义的保留端口。</p><pre><code>/* Standard well-known ports.  */
+enum
+  {
+    IPPORT_ECHO = 7,    /* Echo service.  */
+    IPPORT_DISCARD = 9,   /* Discard transmissions service.  */
+    IPPORT_SYSTAT = 11,   /* System status service.  */
+    IPPORT_DAYTIME = 13,  /* Time of day service.  */
+    IPPORT_NETSTAT = 15,  /* Network status service.  */
+    IPPORT_FTP = 21,    /* File Transfer Protocol.  */
+    IPPORT_TELNET = 23,   /* Telnet protocol.  */
+    IPPORT_SMTP = 25,   /* Simple Mail Transfer Protocol.  */
+    IPPORT_TIMESERVER = 37, /* Timeserver service.  */
+    IPPORT_NAMESERVER = 42, /* Domain Name Service.  */
+    IPPORT_WHOIS = 43,    /* Internet Whois service.  */
+    IPPORT_MTP = 57,
+
+
+
+
+    IPPORT_TFTP = 69,   /* Trivial File Transfer Protocol.  */
+    IPPORT_RJE = 77,
+    IPPORT_FINGER = 79,   /* Finger service.  */
+    IPPORT_TTYLINK = 87,
+    IPPORT_SUPDUP = 95,   /* SUPDUP protocol.  */
+
+
+    IPPORT_EXECSERVER = 512,  /* execd service.  */
+    IPPORT_LOGINSERVER = 513, /* rlogind service.  */
+    IPPORT_CMDSERVER = 514,
+    IPPORT_EFSSERVER = 520,
+
+
+    /* UDP ports.  */
+    IPPORT_BIFFUDP = 512,
+    IPPORT_WHOSERVER = 513,
+    IPPORT_ROUTESERVER = 520,
+
+
+    /* Ports less than this value are reserved for privileged processes.  */
+    IPPORT_RESERVED = 1024,
+
+
+    /* Ports greater this value are reserved for (non-privileged) servers.  */
+    IPPORT_USERRESERVED = 5000
+</code></pre><p>实际的IPv4地址是一个32-bit的字段，可以想象最多支持的地址数就是2的32次方，大约是42亿，应该说这个数字在设计之初还是非常巨大的，无奈互联网蓬勃发展，全球接入的设备越来越多，这个数字渐渐显得不太够用了，于是大家所熟知的IPv6就隆重登场了。</p><h3>IPv6套接字地址格式</h3><p>我们再看看IPv6的地址结构：</p><pre><code>struct sockaddr_in6
+  {
+    sa_family_t sin6_family; /* 16-bit */
+    in_port_t sin6_port;  /* 传输端口号 # 16-bit */
+    uint32_t sin6_flowinfo; /* IPv6流控信息 32-bit*/
+    struct in6_addr sin6_addr;  /* IPv6地址128-bit */
+    uint32_t sin6_scope_id; /* IPv6域ID 32-bit */
+  };
+</code></pre><p>整个结构体长度是28个字节，其中流控信息和域IP先不用管，这两个字段，一个在glibc的官网上根本没出现，另一个是当前未使用的字段。这里的地址族显然应该是AF_INET6，端口同IPv4地址一样，关键的地址从32位升级到128位，这个数字就大到恐怖了，完全解决了寻址数字不够的问题。</p><p>请注意，以上无论IPv4还是IPv6的地址格式都是因特网套接字的格式，还有一种本地套接字格式，用来做为本地进程间的通信， 也就是前面提到的AF_LOCAL。</p><pre><code>struct sockaddr_un {
+    unsigned short sun_family; /* 固定为 AF_LOCAL */
+    char sun_path[108];   /* 路径名 */
+};
+</code></pre><h3>几种套接字地址格式比较</h3><p>这几种地址的比较见下图，IPv4和IPv6套接字地址结构的长度是固定的，而本地地址结构的长度是可变的。</p><p><img src="https://static001.geekbang.org/resource/image/ed/58/ed49b0f1b658e82cb07a6e1e81f36b58.png" alt=""></p><h2>总结</h2><p>这一讲我们重点讲述了什么是套接字，以及对应的套接字地址格式。套接字作为网络编程的基础，概念异常重要。套接字的设计为我们打开了网络编程的大门，实际上，正是因为BSD套接字如此成功，各大Unix厂商（包括开源的Linux）以及Windows平台才会很快照搬了过来。在下一讲中，我们将开始创建并使用套接字，建立连接，进一步开始我们的网络编程之旅。</p><h2>思考题</h2><p>最后给你留两道思考题吧，你可以想一想IPv4、IPv6、本地套接字格式以及通用地址套接字，它们有什么共性呢？如果你是BSD套接字的设计者，你为什么要这样设计呢？</p><p>第二道题是，为什么本地套接字格式不需要端口号，而IPv4和IPv6套接字格式却需要端口号呢？</p><p>我在评论区期待你的思考与见解，如果你觉得这篇文章对你有所帮助，欢迎点击“请朋友读”，把这篇文章分享给你朋友或同事。</p><p><img src="https://static001.geekbang.org/resource/image/bf/25/bfc96ae0d8f839919b9d9866cfb8b025.jpg" alt=""></p><h2>精选留言：</h2>
+        <ul>
+        
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            业余爱好者  2019-08-07 08:02:36
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            unix系统有一种一统天下的简洁之美:一切皆文件，socket也是文件。<br><br>1.像sock_addr的结构体里描述的那样，几种套接字都要有地址族和地址两个字段。这容易理解，你要与外部通信，肯定要至少告诉计算机对方的地址和使用的是哪一种地址。与远程计算机的通信还需要一个端口号。而本地socket的不同之处在于不需要端口号，那么就有了问题2;<br><br>2.本地socket本质上是在访问本地的文件系统，所以自然不需要端口。远程socket是直接将一段字节流发送到远程计算机的一个进程，而远程计算机可能同时有多个进程在监听，所以用端口号标定要发给哪一个进程。<br> [25赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-07 08:39:22</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">回答的很好，给你点赞</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            xcoder  2019-08-07 09:59:10
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师能讲下关于WebSocket、Http和socket之间的联系吗? [4赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-07 12:54:02</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">Http是应用层协议，是基于Tcp socket的实现，websocket是http的增强，利用了Tcp双向的特性，增强了服务器端到客户端的传输能力<br><br><br>以前客户端是需要不断通过轮询来从服务端得到信息，使用websocket以后就可以服务端直接推送信息到客户端</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            (☆_☆)  2019-08-07 07:37:18
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            讲的太好了，越来越懂网络编程了 [3赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-07 08:38:33</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">渐渐进入状态了</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            conanforever22  2019-08-07 17:45:05
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            1. 我觉得这样设计的目的是为了给用户提供一个统一的接口, 不用每个地址族成员都增加个函数原型; 只用通过sockaddr.sa_family来确定具体是什么类型的地址, 有点工厂模式的意思; 如果是C++的话就可以用函数重载来实现了<br>2. socket主要还是为了进程间通信, 本地套接字主要用于本地IPC, 网络套接字用于跨机器通信; 如果把socket抽象成文件的话, 通信进程双方需要能够根据一个唯一的fd来找到彼此, 跨机器的话可以用端口, 本地的话直接用文件inode就可以了 [2赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-08 22:46:06</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">你的理解很到位，工厂模式我倒是没有仔细想过，有点独辟蹊径</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            Linuxer  2019-08-07 08:47:42
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            2字节表示地址族很富裕，知道地址族，基本确定地址结构，通用地址结构，能够很好区分这两部分，一个字符数组就能知道每一种地址结构的起始地址，高明 [2赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-07 08:52:02</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">回答的也很高明</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            Sweety  2019-08-07 22:49:38
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            打卡。感觉评论区的人都好厉害。 [1赞]
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            zhchnchn  2019-08-07 16:34:32
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            请问老师，实际编程中一般使用sockaddr_in，sockaddr_in6，sockaddr_un结构，那么通用套接字地址结构sockaddr的作用是什么？一般在什么场景下使用？ [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-08 22:48:40</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">通用套接字就是所有函数的入口参数，用通用套接字就不需要为Tcp udp等各定义一组socket函数了，前面一位同学总结它为工厂模式，我认为挺到位的</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            萌妻的路飞  2019-08-07 16:11:35
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            c语言还是有点生疏，搜索一下才明白了文中的代码。所以想问下老师，需不需要去补一些c语言，补的话重点看哪些就够了 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-08 22:49:01</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">基本的函数，指针就可以了</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            摘星星的人  2019-08-07 14:10:01
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            1 共性是固定长度，有IP地址和端口号，m这么设计的原因是为了让网络的各个设备通信更加便利，如果没有统一规范，你的是这个格式，他的是那个格式，通信就GG了。<br><br>2 把主机想象成一栋大楼，一个进程就是一户人家，网络通信就是和外面的人互相寄快递，本地的话就邻居之间的交流，外面的人要给你就需要你的地址（IP地址）和户号（端口号）不然快递员不知道送给那家那户。而邻居家之间的，只需要你住在那户（因为有共同地址）就行了。<br><br>期待ing [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-08 22:52:14</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">期待你下节课的总结</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            许童童  2019-08-07 11:30:54
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师讲得好，跟着老师一起精进。 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-07 12:55:24</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">谢谢，一起走起</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            (￣_￣ )  2019-08-07 08:43:37
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            ip加端口号区分唯一进程，而本地套接字可以通过路径来区分 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-07 12:46:55</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">完美</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            me+  2019-08-09 07:32:41
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师，那张核心的图不是很理解？就是客户端和服务器从从自身的读和写都有画线连过去，我的理解是客户端的读应该和服务器的写连接，客户端的写应该和客户端的读连接，但是这个图中，自身的写和读又连在一起，感觉有点奇怪 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            pyhhou  2019-08-09 03:02:48
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            请教老师一下，看完文章，了解了 socket 在 “客户端-浏览器” 这样一个架构中扮演的角色，但是我对 socket 的概念还不是特别理解，不太明白的是，socket 的定义到底是什么？它是和 HTTP、TCP 类似的约定俗成的协议吗？还是说是一个文件，亦或是一段程序代码，里面记录了一些当前网络通信中涉及到的协议、地址、端口号以及其他的一些必要参数？ 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            高超  2019-08-08 20:15:55
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师能不能给下 glibc 中对应代码所在的文件路径啊？找的有点费劲 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            彩色的沙漠  2019-08-08 17:00:45
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            文中“实际上 PF_ 的意思是 Protocal Family”,Protocal-&gt;Protocol 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-08 18:17:16</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">感谢纠正</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            啦啦的小猪  2019-08-08 16:40:42
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            留言只是表明自己看了这节的内容，但是问题确实回答不上来。老师讲的很好，我下去再找找资料多思考 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            sucy  2019-08-08 14:41:00
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            声音好听， 有电台主持人的赶脚 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            motorlei  2019-08-08 14:39:20
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            打卡！加油！ 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-08-08 14:18:45
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            第一问:都有地址簇和ip地址，大概是为了兼容把！<br>第二问:本来进行猜想因为是本机并且保留端口,但是一想又不对最后百度出和自己的总结得出以下答案<br>本地套接字主要是为了不同进程间的通信他和网络socket不同，不需要经过网络协议栈,他被绑定在一个系统文件上,不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程，有点像文件的读写和pipe管道的读写,但是他是本地的进行读写所以不会存在网络上的延迟,丢包等问题也很可靠,并且该socket文件由bind函数创建，如果bind时文件已经存在则会出错<br>本章提到了地址簇然后也简单的提了一下协议簇但是对协议簇的了解，仅仅停留在有这个东西上,然后收获最大的是本地套接字相关知识<br> 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            酱油君  2019-08-07 21:32:06
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            不怕人笑话 我从来没系统地上过网络编程课 希望能借老师的这个专栏让自己认识一下网络编程 能学好网络编程最好<br><br>啊  老师像我们从来没用c语言写过代码的人 后续的实战章节怎么办啊  
+        </div>
+        
+    </div>
+</li>
+            </ul>
+</div>
+</body>
+</html>

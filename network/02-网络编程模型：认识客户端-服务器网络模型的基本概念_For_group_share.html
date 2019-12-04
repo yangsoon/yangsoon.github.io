@@ -1,0 +1,1213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>02-网络编程模型：认识客户端-服务器网络模型的基本概念</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+        html {
+            color: #333;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-rendering: optimizelegibility;
+            font-family: Helvetica Neue, PingFang SC, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+        }
+
+        html.borderbox *,
+        html.borderbox :after,
+        html.borderbox :before {
+            box-sizing: border-box
+        }
+
+        article,
+        aside,
+        blockquote,
+        body,
+        button,
+        code,
+        dd,
+        details,
+        dl,
+        dt,
+        fieldset,
+        figcaption,
+        figure,
+        footer,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        header,
+        hr,
+        input,
+        legend,
+        li,
+        menu,
+        nav,
+        ol,
+        p,
+        pre,
+        section,
+        td,
+        textarea,
+        th,
+        ul {
+            margin: 0;
+            padding: 0
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        menu,
+        nav,
+        section {
+            display: block
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, Helvetica, sans-serif
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            padding: 0;
+            border: 0
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        fieldset,
+        img {
+            border: 0
+        }
+
+        blockquote {
+            position: relative;
+            color: #999;
+            font-weight: 400;
+            border-left: 1px solid #1abc9c;
+            padding-left: 1em;
+            margin: 1em 3em 1em 2em
+        }
+
+        @media only screen and (max-width: 640px) {
+            blockquote {
+                margin: 1em 0
+            }
+        }
+
+        abbr,
+        acronym {
+            border-bottom: 1px dotted;
+            font-variant: normal
+        }
+
+        abbr {
+            cursor: help
+        }
+
+        del {
+            text-decoration: line-through
+        }
+
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        th,
+        var {
+            font-style: normal;
+            font-weight: 400
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        caption,
+        th {
+            text-align: left
+        }
+
+        q:after,
+        q:before {
+            content: ""
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative
+        }
+
+        :root sub,
+        :root sup {
+            vertical-align: baseline
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        a {
+            color: #1abc9c
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .typo a {
+            border-bottom: 1px solid #1abc9c
+        }
+
+        .typo a:hover {
+            border-bottom-color: #555;
+            color: #555
+        }
+
+        .typo a:hover,
+        a,
+        ins {
+            text-decoration: none
+        }
+
+        .typo-u,
+        u {
+            text-decoration: underline
+        }
+
+        mark {
+            background: #fffdd1;
+            border-bottom: 1px solid #ffedce;
+            padding: 2px;
+            margin: 0 5px
+        }
+
+        code,
+        pre,
+        pre tt {
+            font-family: Courier, Courier New, monospace
+        }
+
+        pre {
+            background: hsla(0, 0%, 97%, .7);
+            border: 1px solid #ddd;
+            padding: 1em 1.5em;
+            display: block;
+            -webkit-overflow-scrolling: touch
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #cfcfcf;
+            margin-bottom: .8em;
+            height: 10px
+        }
+
+        .typo-small,
+        figcaption,
+        small {
+            font-size: .9em;
+            color: #888
+        }
+
+        b,
+        strong {
+            font-weight: 700;
+            color: #000
+        }
+
+        [draggable] {
+            cursor: move
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        .textwrap,
+        .textwrap td,
+        .textwrap th {
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        .textwrap-table {
+            table-layout: fixed
+        }
+
+        .serif {
+            font-family: Palatino, Optima, Georgia, serif
+        }
+
+        .typo-dl,
+        .typo-form,
+        .typo-hr,
+        .typo-ol,
+        .typo-p,
+        .typo-pre,
+        .typo-table,
+        .typo-ul,
+        .typo dl,
+        .typo form,
+        .typo hr,
+        .typo ol,
+        .typo p,
+        .typo pre,
+        .typo table,
+        .typo ul,
+        blockquote {
+            margin-bottom: 1rem
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: PingFang SC, Helvetica Neue, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+            color: #000;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo-h2,
+        .typo-h3,
+        .typo-h4,
+        .typo-h5,
+        .typo-h6,
+        .typo h1,
+        .typo h2,
+        .typo h3,
+        .typo h4,
+        .typo h5,
+        .typo h6 {
+            margin-top: 1.2em;
+            margin-bottom: .6em;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo h1 {
+            font-size: 2em
+        }
+
+        .typo-h2,
+        .typo h2 {
+            font-size: 1.8em
+        }
+
+        .typo-h3,
+        .typo h3 {
+            font-size: 1.6em
+        }
+
+        .typo-h4,
+        .typo h4 {
+            font-size: 1.4em
+        }
+
+        .typo-h5,
+        .typo-h6,
+        .typo h5,
+        .typo h6 {
+            font-size: 1.2em
+        }
+
+        .typo-ul,
+        .typo ul {
+            margin-left: 1.3em;
+            list-style: disc
+        }
+
+        .typo-ol,
+        .typo ol {
+            list-style: decimal;
+            margin-left: 1.9em
+        }
+
+        .typo-ol ol,
+        .typo-ol ul,
+        .typo-ul ol,
+        .typo-ul ul,
+        .typo li ol,
+        .typo li ul {
+            margin-bottom: .8em;
+            margin-left: 2em
+        }
+
+        .typo-ol ul,
+        .typo-ul ul,
+        .typo li ul {
+            list-style: circle
+        }
+
+        .typo-table td,
+        .typo-table th,
+        .typo table caption,
+        .typo table td,
+        .typo table th {
+            border: 1px solid #ddd;
+            padding: .5em 1em;
+            color: #666
+        }
+
+        .typo-table th,
+        .typo table th {
+            background: #fbfbfb
+        }
+
+        .typo-table thead th,
+        .typo table thead th {
+            background: hsla(0, 0%, 95%, .7)
+        }
+
+        .typo table caption {
+            border-bottom: none
+        }
+
+        .typo-input,
+        .typo-textarea {
+            -webkit-appearance: none;
+            border-radius: 0
+        }
+
+        .typo-em,
+        .typo em,
+        caption,
+        legend {
+            color: #000;
+            font-weight: inherit
+        }
+
+        .typo-em {
+            position: relative
+        }
+
+        .typo-em:after {
+            position: absolute;
+            top: .65em;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            content: "\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB"
+        }
+
+        .typo img {
+            max-width: 100%
+        }
+
+        .common-content {
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.75rem;
+            white-space: normal;
+            word-break: normal;
+            font-size: 1rem
+        }
+
+        .common-content img {
+            display: block;
+            max-width: 100%;
+            background-color: #eee
+        }
+
+        .common-content audio,
+        .common-content video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        .common-content center,
+        .common-content font {
+            margin-top: 1rem;
+            display: inline-block
+        }
+
+        .common-content center {
+            width: 100%
+        }
+
+        .common-content pre {
+            margin-top: 1rem;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            overflow: hidden
+        }
+
+        .common-content pre code {
+            font-size: .8rem;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            overflow-x: auto
+        }
+
+        .common-content hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        .common-content b,
+        .common-content h1,
+        .common-content h2,
+        .common-content h3,
+        .common-content h4,
+        .common-content h5,
+        .common-content strong {
+            font-weight: 700
+        }
+
+        .common-content h1,
+        .common-content h2 {
+            font-size: 1.125rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content h3,
+        .common-content h4,
+        .common-content h5 {
+            font-size: 1rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: .15rem
+        }
+
+        .common-content .orange {
+            color: #ff5a05
+        }
+
+        .common-content .reference {
+            font-size: 1rem;
+            color: #888
+        }
+
+        .custom-rich-content h1 {
+            margin-top: 0;
+            font-weight: 400;
+            font-size: 15.25px;
+            border-bottom: 1px solid #eee;
+            line-height: 2.8
+        }
+
+        .custom-rich-content li,
+        .custom-rich-content p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6
+        }
+
+        table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        table.hljs-ln,
+        table.hljs-ln tbody,
+        table.hljs-ln td,
+        table.hljs-ln tr {
+            box-sizing: border-box
+        }
+
+        table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none
+        }
+
+        table.hljs-ln td.hljs-ln-code,
+        table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            font-size: 12px;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            color: #24292e;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+        video::-webkit-media-controls {
+            overflow: hidden !important
+        }
+
+        video::-webkit-media-controls-enclosure {
+            width: calc(100% + 32px);
+            margin-left: auto
+        }
+
+        ._29HP61GA_0 {
+            max-width:800px;
+            margin:0 auto;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.76;
+            white-space: normal;
+            word-break: normal;
+            font-size: 17px;
+            -webkit-transition: background-color .3s ease;
+            transition: background-color .3s ease
+        }
+
+        ._29HP61GA_0 .MathJax_Display {
+            overflow: auto
+        }
+
+        ._29HP61GA_0 .poster {
+            position: fixed;
+            left: -10000px;
+            top: -10000px;
+            overflow: hidden;
+            padding: 1rem;
+            background: #ececec
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy {
+            font-size: 13px;
+            color: #888;
+            position: absolute;
+            right: 1em;
+            top: .5em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy .iconfont {
+            font-size: 12px;
+            margin-right: .2em
+        }
+
+        ._29HP61GA_0 a {
+            color: #fa8919;
+            border-bottom: 1px solid #fa8919
+        }
+
+        ._29HP61GA_0 img {
+            display: block;
+            max-width: 100%;
+            position: relative;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background-color: #eee;
+            vertical-align: top;
+            border-radius: 0
+        }
+
+        ._29HP61GA_0 audio,
+        ._29HP61GA_0 video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        ._29HP61GA_0 pre {
+            margin-top: 16px;
+            padding: 34px 0 0;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 6px;
+            background: rgba(246, 247, 251, .749);
+            border: 0
+        }
+
+        ._29HP61GA_0 pre code {
+            font-size: 12px;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-left: 16px;
+            margin-right: 16px;
+            overflow-x: scroll
+        }
+
+        ._29HP61GA_0 pre code:after {
+            content: "";
+            height: 30px;
+            width: 100%;
+            display: block
+        }
+
+        ._29HP61GA_0 hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        ._29HP61GA_0 h1,
+        ._29HP61GA_0 h2,
+        ._29HP61GA_0 h3,
+        ._29HP61GA_0 h4,
+        ._29HP61GA_0 h5 {
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 b,
+        ._29HP61GA_0 strong {
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 h1 {
+            font-size: 21px
+        }
+
+        ._29HP61GA_0 h2 {
+            font-size: 20px
+        }
+
+        ._29HP61GA_0 h3 {
+            font-size: 19px
+        }
+
+        ._29HP61GA_0 h4 {
+            font-size: 18px
+        }
+
+        ._29HP61GA_0 h5 {
+            font-size: 17px
+        }
+
+        ._29HP61GA_0 center,
+        ._29HP61GA_0 p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: 0;
+            margin-bottom: 30px;
+            word-break: break-word
+        }
+
+        ._29HP61GA_0 center {
+            text-align: center
+        }
+
+        ._29HP61GA_0 blockquote {
+            margin-top: 0;
+            margin-bottom: 34px;
+            border-left: 3px solid #e8e8e8;
+            padding-left: 17px;
+            color: #353535
+        }
+
+        ._29HP61GA_0 blockquote p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol,
+        ._29HP61GA_0 ul {
+            margin-bottom: 30px
+        }
+
+        ._29HP61GA_0 ol p,
+        ._29HP61GA_0 ul p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol {
+            list-style: decimal;
+            margin-left: 20px
+        }
+
+        ._29HP61GA_0 ul li {
+            padding-left: 17px;
+            position: relative;
+            margin-bottom: 10px
+        }
+
+        ._29HP61GA_0 ul li:after {
+            content: "";
+            height: 6px;
+            width: 6px;
+            border-radius: 50%;
+            background: #353535;
+            position: absolute;
+            top: 10px;
+            left: 0
+        }
+
+        ._29HP61GA_0 .orange {
+            color: #fa8919
+        }
+
+        ._29HP61GA_0 .reference {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-right {
+            text-align: right
+        }
+
+        ._29HP61GA_0 .m-center {
+            text-align: center;
+            display: block
+        }
+
+        ._29HP61GA_0 .m-gray {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-small {
+            font-size: 15px
+        }
+
+        ._29HP61GA_0 table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        ._29HP61GA_0 table.hljs-ln,
+        ._29HP61GA_0 table.hljs-ln tbody,
+        ._29HP61GA_0 table.hljs-ln td,
+        ._29HP61GA_0 table.hljs-ln tr {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        ._29HP61GA_0 table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            font-size: 12px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code,
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            font-size: 13px;
+            color: #666;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+    </style>
+</head>
+<body>
+<div class="_29HP61GA_0">
+<h1>02-网络编程模型：认识客户端-服务器网络模型的基本概念</h1>
+<p>你好，我是盛延敏。上一讲我们学习了TCP/IP的创建和历史，以及Linux操作系统的建立和发展，相信你对网络编程这棵大树已经有了一个宏观上的认识，那么今天我们再往前走几步，近距离看看这棵大树的细枝末节到底是怎样的。</p><p>从哪里开始呢？从网络编程的基本概念开始说起吧。</p><h2>客户端-服务器网络编程模型</h2><p>在谈论网络编程时，我们首先需要建立一个概念，也就是我们今天的主题“客户端-服务器”。</p><p>拿我们常用的网络购物来说，我们在手机上的每次操作，都是作为客户端向服务器发送请求，并收到响应的例子。</p><p>这个过程具体阐释如下：</p><p><img src="https://static001.geekbang.org/resource/image/78/83/78e415180d2946c418485d30f3f78f83.png" alt=""></p><ol>
+<li>当一个客户端需要服务时，比如网络购物下单，它会向服务器端发送一个请求。注意，这个请求是按照双方约定的格式来发送的，以便保证服务器端是可以理解的；</li>
+<li>服务器端收到这个请求后，会根据双方约定的格式解释它，并且以合适的方式进行操作，比如调用数据库操作来创建一个购物单；</li>
+<li>服务器端完成处理请求之后，会给客户端发送一个响应，比如向客户端发送购物单的实际付款额，然后等待客户端的下一步操作；</li>
+<li>客户端收到响应并进行处理，比如在手机终端上显示该购物单的实际付款额，并且让用户选择付款方式。</li>
+</ol><p>在网络编程中，具体到客户端-服务器模型时，我们经常会考虑是使用TCP还是UDP，其实它们二者的区别也很简单：TCP中连接是谁发起的，在UDP中报文是谁发送的。在TCP通信中，建立连接是一个非常重要的环节。区别出客户端和服务器，本质上是因为二者编程模型是不同的。</p><!-- [[[read_end]]] --><p>服务器端需要在一开始就监听在一个众所周知的端口上，等待客户端发送请求，一旦有客户端连接建立，服务器端就会消耗一定的计算机资源为它服务，服务器端是需要同时为成千上万的客户端服务的。如何保证服务器端在数据量巨大的客户端访问时依然能维持效率和稳定，这也是我们讲述高性能网络编程的目的。</p><p>客户端相对来说更为简单，它向服务器端的监听端口发起连接请求，连接建立之后，通过连接通路和服务器端进行通信。</p><p><strong>还有一点需要强调的是，无论是客户端，还是服务器端，它们运行的单位都是进程（process），而不是机器</strong>。一个客户端，比如我们的手机终端，同一个时刻可以建立多个到不同服务器的连接，比如同时打游戏，上知乎，逛天猫；而服务器端更是可能在一台机器上部署运行了多个服务，比如同时开启了SSH服务和HTTP服务。</p><h2>IP和端口</h2><p>正如寄信需要一个地址一样，在网络世界里，同样也需要地址的概念。在TCP/IP协议栈中，IP用来表示网络世界的地址。</p><p>前面我们提到了，在一台计算机上是可以同时存在多个连接的，那么如何区分出不同的连接呢？</p><p>这里就必须提到端口这个概念。我们拿住酒店举例子，酒店的地址是唯一的，每间房间的号码是不同的，类似的，计算机的IP地址是唯一的，每个连接的端口号是不同的。</p><p>端口号是一个16位的整数，最多为65536。当一个客户端发起连接请求时，客户端的端口是由操作系统内核临时分配的，称为临时端口；然而，前面也提到过，服务器端的端口通常是一个众所周知的端口。</p><p>一个连接可以通过客户端-服务器端的IP和端口唯一确定，这叫做套接字对，按照下面的四元组表示：</p><pre><code>（clientaddr:clientport, serveraddr: serverport)
+</code></pre><p>下图表示了一个客户端-服务器之间的连接：</p><p><img src="https://static001.geekbang.org/resource/image/54/2a/543b5488f9422558069df507cfaa462a.png" alt=""></p><h2>保留网段</h2><p>一个比较常见的现象是，我们所在的单位或者组织，普遍会使用诸如10.0.x.x或者192.168.x.x这样的IP地址，你可能会纳闷，这样的IP到底代表了什么呢？不同的组织使用同样的IP会不会导致冲突呢?</p><p>背后的原因是这样的，国际标准组织在IPv4地址空间里面，专门划出了一些网段，这些网段不会用做公网上的IP，而是仅仅保留做内部使用，我们把这些地址称作保留网段。</p><p>下表是三个保留网段，其可以容纳的计算机主机个数分别是16777216个、1048576个和65536个。</p><p><img src="https://static001.geekbang.org/resource/image/80/ef/8062576bcd515e1c84cec960e4796fef.png" alt=""><br>
+在详细讲述这个表格之前，我们需要首先了解一下子网掩码的概念。</p><h2>子网掩码</h2><p>在网络IP划分的时候，我们需要区分两个概念。</p><p>第一是网络（network）的概念，直观点说，它表示的是这组IP共同的部分，比如在192.168.1.1~192.168.1.255这个区间里，它们共同的部分是192.168.1.0。</p><p>第二是主机（host）的概念，它表示的是这组IP不同的部分，上面的例子中1~255就是不同的那些部分，表示有255个可用的不同IP。</p><p>例如IPv4地址，192.0.2.12，我们可以说前面三个 bytes 是子网，最后一个 byte 是 host，或者换个方式，我们能说 host 为8 位，子网掩码为192.0.2.0/24（255.255.255.0）。</p><p>有点晕？别着急，接下来要讲的是一些基本概念。</p><p>很久很久以前，有子网（subnet）的分类，在这里，一个IPv4地址的第一个，前两个或前三个 字节是属于网络的一部分。</p><p>如果你很幸运地可以拥有一个字节的网络，而另外三个字节是 host 地址，那在你的网络里，你有价值三个字节，也就是24个比特的主机地址，这是什么概念呢？ 2的24次方，大约是一千六百万个地址左右。这是一个“Class A”（A 类）网络。</p><p><img src="https://static001.geekbang.org/resource/image/80/ef/8062576bcd515e1c84cec960e4796fef.png" alt=""><br>
+我们再来重新看一下这张表格，表格第一行就是这样的一个A类网络，10是对应的网络字节部分，主机的字节是3，我们将一个字节的子网记作255.0.0.0。</p><p>相对的，“Class B”（B 类）的网络，网络有两个字节，而 host 只有两个字节，也就是说拥有的主机个数为65536。“Class C”（C 类）的网络，网络有三个 字节，而 host 只有一个 字节，也就是说拥有的主机个数为256。</p><p>网络地址位数由子网掩码（Netmask）决定，你可以将IP地址与子网掩码进行“位与”操作，就能得到网络的值。子网掩码一般看起来像是 255.255.255.0（二进制为11111111.11111111.11111111.00000000），比如你的IP是192.0.2.12，使用这个子网掩码时，你的网络就会是192.0.2.12与255.255.255.0所得到的值：192.0.2.0，192.0.2.0就是这个网络的值。</p><p>子网掩码能接受任意个位，而不单纯是上面讨论的8，16或24个比特而已。所以你可以有一个子网掩码255.255.255.252（二进制位11111111.11111111.11111111.11111100），这个子网掩码能切出一个30个位的网络以及2个位的主机，这个网络最多有四台 host。为什么是4台host呢？因为不变的部分只有最后两位，所有的可能为2的2次方，即4台host。</p><p>注意，子网掩码的格式永远都是二进制格式：前面是一连串的 1，后面跟着一连串的 0。</p><p>不过一大串的数字会有点不好用，比如像 255.192.0.0 这样的子网掩码，人们无法直观地知道有多少个1，多少个0，后来人们发明了新的办法，你只需要将一个斜线放在IP地址后面，接着用一个十进制的数字用以表示网络的位数，类似这样：192.0.2.12/30, 这样就很容易知道有30个1， 2个0，所以主机个数为4。</p><p>相信这个时候再去看保留网段，你应该会理解表格里的内容了。这里就不再赘述。</p><h2>全球域名系统</h2><p>如果每次要访问一个服务，都要记下这个服务对应的IP地址，无疑是一种枯燥而繁琐的事情，就像你要背下200多个好友的电话号码一般无聊。</p><p>此时，你应该知道我将要表达什么。对的，正如电话簿记录了好友和电话的对应关系一样，域名（DNS）也记录了网站和IP的对应关系。</p><p>全球域名按照从大到小的结构，形成了一棵树状结构。实际访问一个域名时，是从最底层开始写起，例如 <a href="http://www.google.com,">www.google.com</a>，<a href="http://www.tinghua.edu.cn">www.tinghua.edu.cn</a>等。</p><p><img src="https://static001.geekbang.org/resource/image/23/be/23dc0a68d6016b71365e62879a3a6cbe.jpg" alt=""></p><h2>数据报和字节流</h2><p>尽管名称是TCP/IP协议栈，但是从上一讲关于OSI和TCP/IP协议栈的对比中，我们看到传输层其实是有两种协议的，一种是大家广为熟悉的TCP， 而另一种就是UDP。</p><p>TCP，又被叫做字节流套接字（Stream Socket），注意我们这里先引入套接字socket，套接字socket在后面几讲中将被反复提起，因为它实际上是网络编程的核心概念。当然，UDP也有一个类似的叫法, 数据报套接字（Datagram Socket），一般分别以“SOCK_STREAM”与“SOCK_DGRAM”分别来表示TCP和UDP套接字。</p><p>Datagram Sockets 有时称为“无连接的sockets”（connectionless sockets）。</p><p>Stream sockets 是可靠的，双向连接的通讯串流。比如以“1-2-3”的顺序将字节流输出到套接字上，它们在另一端一定会以“1-2-3”的顺序抵达，而且不会出错。</p><p>这种高质量的通信是如何办到的呢？这就是由TCP（Transmission Control Protocol）协议完成的，TCP通过诸如连接管理，拥塞控制，数据流与窗口管理，超时和重传等一系列精巧而详细的设计，提供了高质量的端到端的通信方式。</p><p>这部分内容不是我们这里讲解的重点，有感兴趣的同学可以去读《TCP/IP详解卷一：协议》 。</p><p>我们平时使用浏览器访问网页，或者在手机端用天猫App购物时，使用的都是字节流套接字。</p><p>等等，如果是这样，世界都用TCP好了，哪里有UDP什么事呢？</p><p>事实上，UDP在很多场景也得到了极大的应用，比如多人联网游戏、视频会议，甚至聊天室。如果你听说过NTP，你一定很惊讶NTP也是用UDP实现的。</p><p>使用UDP的原因，第一是速度，第二还是速度。</p><p>想象一下，一个有上万人的联网游戏，如果要给每个玩家同步游戏中其他玩家的位置信息，而且丢失一两个也不会造成多大的问题，那么UDP是一个比较经济合算的选择。</p><p>还有一种叫做广播或多播的技术，就是向网络中的多个节点同时发送信息，这个时候，选择UDP更是非常合适的。</p><p>UDP也可以做到更高的可靠性，只不过这种可靠性，需要应用程序进行设计处理，比如对报文进行编号，设计Request-Ack机制，再加上重传等，在一定程度上可以达到更为高可靠的UDP程序。当然，这种可靠性和TCP相比还是有一定的距离，不过也可以弥补实战中UDP的一些不足。</p><p>在后面的章节中，我们将会分别介绍TCP和UDP的网络编程技术。</p><h2>总结</h2><p>这一讲我们主要介绍了客户端-服务器网络编程模型，初步介绍了IP地址、端口、子网掩码和域名等基础概念，以下知识点你需要重点关注一下：</p><ol>
+<li>网络编程需要牢牢树立起“客户端”和“服务器”模型，两者编程的方法和框架是明显不同的。</li>
+<li>TCP连接是客户端-服务器的IP和端口四元组唯一确定的，IP是一台机器在网络世界的唯一标识。</li>
+<li>有两种截然不同的传输层协议，面向连接的“数据流”协议TCP，以及无连接的“数据报”协议UDP。</li>
+</ol><p>从下一讲开始，我们将开始使用套接字编写我们的第一个客户端-服务器程序。</p><h2>思考题</h2><p>最后给你布置几个思考题。</p><p>我们看到保留地址中第二行172.16.0.0/12描述为16个连续的B段，第三行192.168.0.0/16描述为256个连续的C段地址，怎么理解这种描述呢？</p><p>另外，章节里提到了服务端必须侦听在一个众所周知的端口上，这个端口怎么选择，又是如何让客户端知道的呢？</p><p>如果你仔细想过这个问题，欢迎在评论区写在你的思考，也欢迎把这篇文章分享给你的朋友或者同事，大家一起交流一下。</p><p><img src="https://static001.geekbang.org/resource/image/bf/25/bfc96ae0d8f839919b9d9866cfb8b025.jpg" alt=""></p><h2>精选留言：</h2>
+        <ul>
+        
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            a、  2019-08-05 01:08:40
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            1.172.16.0.0~172.31.255.255，因为b类网络的host只占最后两个字节，172.16~172.31就代表了16个连续的b类网络可用<br>2.192.168.0.0~192.168.255.255，因为c类网络的host只占最后一个字节，所以从192.168.0到192.168.255，就有256个连续的c类网络可用<br>3.服务器可以监听的端口有从0到65535，理论上这台服务器的这个端口只要没被占用，你都可以给服务器绑定。<br>4.如果是一些默认的服务，服务器绑的也是默认的端口，那么客户端是可以知道的。比如:80是给http服务，443是给https服务，21是给ftp服务等。否则的话，就需要服务器开发者告诉客户端应该连接哪个端口 [20赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 13:32:15</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">给你点赞</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            剑衣清风  2019-08-05 09:44:55
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            172.16.0.0&#47;12 中得出信息，172.16.0.0 为 B 类网，12 为网络号，默认 B 类网的网络号是 2*8=16 位，而此处为 12 位，那么便有 2^(16-12) = 16 个连续子网<br>相应的 192.168.0.0&#47;16 ，192.168.0.0 为 C 类网，16 为网络号，默认 C 类网的网络号是 3*8=24 位，而此处为 16 位，那么便有 2^(24-16) = 256 个连续的子网<br><br><br>大家可以看看 趣谈网络协议，里面有介绍，另外  https:&#47;&#47;blog.csdn.net&#47;molaifeng&#47;article&#47;details&#47;88109717 为我结合所学及网络参考所成的博文，可以参考下 [6赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 13:29:26</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">总结的不错，这个部分还是蛮重要的</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            啦啦的小猪  2019-08-05 01:47:37
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            讲的很好啊，期待下来的课程 [3赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 13:31:27</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">谢谢，会慢慢进入高潮部分的</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            错过了过去  2019-08-05 15:58:18
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            ”Stream sockets 是可靠的，双向连接的通讯串流。⽐如以“1-2-3”的顺序将字节流输出到套接字<br>上，它们在另⼀端⼀定会以“1-2-3”的顺序抵达，⽽且不会出错。“ <br>这里还是要分层的吧，在应用层可以说是顺序到达的，那是因为传输层干了活，但是传输层收到包就不一定是顺序到达的了。 [1赞]
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 23:21:32</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">是这样的，因为TCP就是传输层协议，就是它帮我们做到顺序的</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            莫珣  2019-08-05 19:12:13
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            172.16.0.0&#47;12，首先172表明这是这个B类网络，12表示子网掩码从左往右有12个1，可以得出网络地址是172.16，但B类网络的网络地址一共有16位，所有还有4位是可以0和1任意组合的，所以总得意思就是说在172.16这个网络地址下面你还可以划分出15个局域网，那么加上172.16自己，刚好就是16个连续的B段网络。192.168.0.0&#47;16的理解过程和172.16.0.0&#47;12是一样的。<br><br>         端口选择，服务端端口是用一个unsigned short来表示的，理论上服务端选择端口只要在这个短整型的表示范围内即可。知名服务端软件的默认端口本身是一种建议而非规范，但是因为它们太有名了，慢慢的就变成了一种约定俗成的东西。如果你在部署的时候给改变了这个默认端口，那么你就需要告诉客户端你部署时使用的端口是什么。<br><br>        如果是你自己开发的服务端，那么端口号尽可能的不要与这些知名软件的端口冲突。当然你是不可能记住每一个软件的端口，所以你必须在你的文档中说明你所选择的默认端口是什么。并且你还需要将监听端口设计为可配置的，以便在端口冲突时为你的客户提供一个简单易行的解决方案。 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 23:25:06</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">总结的很棒</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            Skrpy  2019-08-05 23:42:24
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            “网络地址位数由子网掩码（Netmask）决定，你可以将 IP 地址与子网掩码进行“位与”操作，就能得到网络的值。”<br><br>老师这句话体现了子网掩码有什么用<br><br>“128 ~ 191.某.某.某” 属于 B 类网络；“192 ~ 223.某.某.某” 属于 C 类网络。(这里老师可以把 A、B、C 类网的网段区间说明一下)<br><br>（一）172.16.0.0&#47;12：<br>172.16.0.0 和 1111 1111.1111 0000.0.0（12个连续的 1 的子网掩码，也称 CIDR 地址掩码） 进行“与”操作后，得到网络地址的值：172.0.0.0；B 类网络中，网络号从左到右占 16 位，即 172.16（172.0000 1111）为网络号，故从 172.0000 1111 ~ 172.1111 1111 共有16个连续的 B 段网。<br><br>（二）192.168.0.0&#47;16：<br>192.168.0.0 和 1111 1111.1111 1111.0.0（16个连续的 1 的子网掩码）进行“与”操作后，得到网络地址的值：192.168.0.0；C 类网络中，网络号从左到右占 24 位，即 192.168.0（192.168.0000 0000）为网络号，故从 192.168.0000 0000 ~ 192.168.1111 1111 共有 256 个连续的 C 段网。 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            饭  2019-08-05 21:20:58
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师：域名分成4级，是为了提供海量域名，还有避免重名的原因吗？<br>另外下节课实例是用什么语言实现了？我C#开发的 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 23:26:48</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">C语言</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            高超  2019-08-05 20:00:21
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师后面会讲解 TCP 和 UDP 的报文格式以及详细的工作原理吗？期待 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 23:26:27</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">报文格式不会详细展开，会讲他们的工作原理，从程序设计角度</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-08-05 19:35:06
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            求ip地址所属网络段还是要通过子网掩码和Ip地址做与运算 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-08-05 19:33:24
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            因为从表示网络号的位数来看 第一个 12位 第一个字节 b位 则还剩下4位表示第二个字节 2 的4次方 也就16 C类地址用同样的方法算 2 的 8次方 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-08-05 19:29:40
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            因为一个是12位 一个是16位  
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            葛学强  2019-08-05 18:58:47
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            看了两遍，打卡 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            leesper  2019-08-05 18:42:12
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            服务端的端口号是有套路的，比如web服务一定是80，ssh端口号22 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 23:24:40</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">是的</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            Sweety  2019-08-05 17:05:13
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            打卡.子网掩码看的迷迷糊糊的,再看一次. 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 23:21:56</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">应该会明白的</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            平少  2019-08-05 13:03:43
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            打卡 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            rainbowbox  2019-08-05 07:24:25
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师后面有讲SCTP的内容吗？是否可以介绍SCTP和TCP的优劣 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 13:30:20</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">这部分因为用的人不是特别多，暂时没有涉及</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            ZeroIce  2019-08-05 02:23:30
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            速度比较高，是不是就是因为其不用太多考虑数据顺序准确性而造成的？ 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 13:31:02</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">有这方面的因素</div>
+</div>
+            
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            Eagles  2019-08-05 01:41:18
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            可能是之前没有接触过ip划分这一块的知识，子网掩码这一段木有看明白。 
+        </div>
+        <br/>
+<div>
+    <div style="color:#888;font-size:15.25px;font-weight:400;line-height:1.2">作者回复2019-08-05 13:31:47</div>
+    <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">再看一下，应该会明白</div>
+</div>
+            
+    </div>
+</li>
+            </ul>
+</div>
+</body>
+</html>

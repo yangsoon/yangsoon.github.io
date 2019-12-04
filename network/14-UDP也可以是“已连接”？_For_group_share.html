@@ -1,0 +1,1154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>14-UDP也可以是“已连接”？</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+        html {
+            color: #333;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-rendering: optimizelegibility;
+            font-family: Helvetica Neue, PingFang SC, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+        }
+
+        html.borderbox *,
+        html.borderbox :after,
+        html.borderbox :before {
+            box-sizing: border-box
+        }
+
+        article,
+        aside,
+        blockquote,
+        body,
+        button,
+        code,
+        dd,
+        details,
+        dl,
+        dt,
+        fieldset,
+        figcaption,
+        figure,
+        footer,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        header,
+        hr,
+        input,
+        legend,
+        li,
+        menu,
+        nav,
+        ol,
+        p,
+        pre,
+        section,
+        td,
+        textarea,
+        th,
+        ul {
+            margin: 0;
+            padding: 0
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        menu,
+        nav,
+        section {
+            display: block
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, Helvetica, sans-serif
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            padding: 0;
+            border: 0
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        fieldset,
+        img {
+            border: 0
+        }
+
+        blockquote {
+            position: relative;
+            color: #999;
+            font-weight: 400;
+            border-left: 1px solid #1abc9c;
+            padding-left: 1em;
+            margin: 1em 3em 1em 2em
+        }
+
+        @media only screen and (max-width: 640px) {
+            blockquote {
+                margin: 1em 0
+            }
+        }
+
+        abbr,
+        acronym {
+            border-bottom: 1px dotted;
+            font-variant: normal
+        }
+
+        abbr {
+            cursor: help
+        }
+
+        del {
+            text-decoration: line-through
+        }
+
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        th,
+        var {
+            font-style: normal;
+            font-weight: 400
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        caption,
+        th {
+            text-align: left
+        }
+
+        q:after,
+        q:before {
+            content: ""
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative
+        }
+
+        :root sub,
+        :root sup {
+            vertical-align: baseline
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        a {
+            color: #1abc9c
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .typo a {
+            border-bottom: 1px solid #1abc9c
+        }
+
+        .typo a:hover {
+            border-bottom-color: #555;
+            color: #555
+        }
+
+        .typo a:hover,
+        a,
+        ins {
+            text-decoration: none
+        }
+
+        .typo-u,
+        u {
+            text-decoration: underline
+        }
+
+        mark {
+            background: #fffdd1;
+            border-bottom: 1px solid #ffedce;
+            padding: 2px;
+            margin: 0 5px
+        }
+
+        code,
+        pre,
+        pre tt {
+            font-family: Courier, Courier New, monospace
+        }
+
+        pre {
+            background: hsla(0, 0%, 97%, .7);
+            border: 1px solid #ddd;
+            padding: 1em 1.5em;
+            display: block;
+            -webkit-overflow-scrolling: touch
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #cfcfcf;
+            margin-bottom: .8em;
+            height: 10px
+        }
+
+        .typo-small,
+        figcaption,
+        small {
+            font-size: .9em;
+            color: #888
+        }
+
+        b,
+        strong {
+            font-weight: 700;
+            color: #000
+        }
+
+        [draggable] {
+            cursor: move
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        .textwrap,
+        .textwrap td,
+        .textwrap th {
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        .textwrap-table {
+            table-layout: fixed
+        }
+
+        .serif {
+            font-family: Palatino, Optima, Georgia, serif
+        }
+
+        .typo-dl,
+        .typo-form,
+        .typo-hr,
+        .typo-ol,
+        .typo-p,
+        .typo-pre,
+        .typo-table,
+        .typo-ul,
+        .typo dl,
+        .typo form,
+        .typo hr,
+        .typo ol,
+        .typo p,
+        .typo pre,
+        .typo table,
+        .typo ul,
+        blockquote {
+            margin-bottom: 1rem
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: PingFang SC, Helvetica Neue, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+            color: #000;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo-h2,
+        .typo-h3,
+        .typo-h4,
+        .typo-h5,
+        .typo-h6,
+        .typo h1,
+        .typo h2,
+        .typo h3,
+        .typo h4,
+        .typo h5,
+        .typo h6 {
+            margin-top: 1.2em;
+            margin-bottom: .6em;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo h1 {
+            font-size: 2em
+        }
+
+        .typo-h2,
+        .typo h2 {
+            font-size: 1.8em
+        }
+
+        .typo-h3,
+        .typo h3 {
+            font-size: 1.6em
+        }
+
+        .typo-h4,
+        .typo h4 {
+            font-size: 1.4em
+        }
+
+        .typo-h5,
+        .typo-h6,
+        .typo h5,
+        .typo h6 {
+            font-size: 1.2em
+        }
+
+        .typo-ul,
+        .typo ul {
+            margin-left: 1.3em;
+            list-style: disc
+        }
+
+        .typo-ol,
+        .typo ol {
+            list-style: decimal;
+            margin-left: 1.9em
+        }
+
+        .typo-ol ol,
+        .typo-ol ul,
+        .typo-ul ol,
+        .typo-ul ul,
+        .typo li ol,
+        .typo li ul {
+            margin-bottom: .8em;
+            margin-left: 2em
+        }
+
+        .typo-ol ul,
+        .typo-ul ul,
+        .typo li ul {
+            list-style: circle
+        }
+
+        .typo-table td,
+        .typo-table th,
+        .typo table caption,
+        .typo table td,
+        .typo table th {
+            border: 1px solid #ddd;
+            padding: .5em 1em;
+            color: #666
+        }
+
+        .typo-table th,
+        .typo table th {
+            background: #fbfbfb
+        }
+
+        .typo-table thead th,
+        .typo table thead th {
+            background: hsla(0, 0%, 95%, .7)
+        }
+
+        .typo table caption {
+            border-bottom: none
+        }
+
+        .typo-input,
+        .typo-textarea {
+            -webkit-appearance: none;
+            border-radius: 0
+        }
+
+        .typo-em,
+        .typo em,
+        caption,
+        legend {
+            color: #000;
+            font-weight: inherit
+        }
+
+        .typo-em {
+            position: relative
+        }
+
+        .typo-em:after {
+            position: absolute;
+            top: .65em;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            content: "\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB"
+        }
+
+        .typo img {
+            max-width: 100%
+        }
+
+        .common-content {
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.75rem;
+            white-space: normal;
+            word-break: normal;
+            font-size: 1rem
+        }
+
+        .common-content img {
+            display: block;
+            max-width: 100%;
+            background-color: #eee
+        }
+
+        .common-content audio,
+        .common-content video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        .common-content center,
+        .common-content font {
+            margin-top: 1rem;
+            display: inline-block
+        }
+
+        .common-content center {
+            width: 100%
+        }
+
+        .common-content pre {
+            margin-top: 1rem;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            overflow: hidden
+        }
+
+        .common-content pre code {
+            font-size: .8rem;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            overflow-x: auto
+        }
+
+        .common-content hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        .common-content b,
+        .common-content h1,
+        .common-content h2,
+        .common-content h3,
+        .common-content h4,
+        .common-content h5,
+        .common-content strong {
+            font-weight: 700
+        }
+
+        .common-content h1,
+        .common-content h2 {
+            font-size: 1.125rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content h3,
+        .common-content h4,
+        .common-content h5 {
+            font-size: 1rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: .15rem
+        }
+
+        .common-content .orange {
+            color: #ff5a05
+        }
+
+        .common-content .reference {
+            font-size: 1rem;
+            color: #888
+        }
+
+        .custom-rich-content h1 {
+            margin-top: 0;
+            font-weight: 400;
+            font-size: 15.25px;
+            border-bottom: 1px solid #eee;
+            line-height: 2.8
+        }
+
+        .custom-rich-content li,
+        .custom-rich-content p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6
+        }
+
+        table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        table.hljs-ln,
+        table.hljs-ln tbody,
+        table.hljs-ln td,
+        table.hljs-ln tr {
+            box-sizing: border-box
+        }
+
+        table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none
+        }
+
+        table.hljs-ln td.hljs-ln-code,
+        table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            font-size: 12px;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            color: #24292e;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+        video::-webkit-media-controls {
+            overflow: hidden !important
+        }
+
+        video::-webkit-media-controls-enclosure {
+            width: calc(100% + 32px);
+            margin-left: auto
+        }
+
+        ._29HP61GA_0 {
+            max-width:800px;
+            margin:0 auto;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.76;
+            white-space: normal;
+            word-break: normal;
+            font-size: 17px;
+            -webkit-transition: background-color .3s ease;
+            transition: background-color .3s ease
+        }
+
+        ._29HP61GA_0 .MathJax_Display {
+            overflow: auto
+        }
+
+        ._29HP61GA_0 .poster {
+            position: fixed;
+            left: -10000px;
+            top: -10000px;
+            overflow: hidden;
+            padding: 1rem;
+            background: #ececec
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy {
+            font-size: 13px;
+            color: #888;
+            position: absolute;
+            right: 1em;
+            top: .5em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy .iconfont {
+            font-size: 12px;
+            margin-right: .2em
+        }
+
+        ._29HP61GA_0 a {
+            color: #fa8919;
+            border-bottom: 1px solid #fa8919
+        }
+
+        ._29HP61GA_0 img {
+            display: block;
+            max-width: 100%;
+            position: relative;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background-color: #eee;
+            vertical-align: top;
+            border-radius: 0
+        }
+
+        ._29HP61GA_0 audio,
+        ._29HP61GA_0 video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        ._29HP61GA_0 pre {
+            margin-top: 16px;
+            padding: 34px 0 0;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 6px;
+            background: rgba(246, 247, 251, .749);
+            border: 0
+        }
+
+        ._29HP61GA_0 pre code {
+            font-size: 12px;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-left: 16px;
+            margin-right: 16px;
+            overflow-x: scroll
+        }
+
+        ._29HP61GA_0 pre code:after {
+            content: "";
+            height: 30px;
+            width: 100%;
+            display: block
+        }
+
+        ._29HP61GA_0 hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        ._29HP61GA_0 h1,
+        ._29HP61GA_0 h2,
+        ._29HP61GA_0 h3,
+        ._29HP61GA_0 h4,
+        ._29HP61GA_0 h5 {
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 b,
+        ._29HP61GA_0 strong {
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 h1 {
+            font-size: 21px
+        }
+
+        ._29HP61GA_0 h2 {
+            font-size: 20px
+        }
+
+        ._29HP61GA_0 h3 {
+            font-size: 19px
+        }
+
+        ._29HP61GA_0 h4 {
+            font-size: 18px
+        }
+
+        ._29HP61GA_0 h5 {
+            font-size: 17px
+        }
+
+        ._29HP61GA_0 center,
+        ._29HP61GA_0 p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: 0;
+            margin-bottom: 30px;
+            word-break: break-word
+        }
+
+        ._29HP61GA_0 center {
+            text-align: center
+        }
+
+        ._29HP61GA_0 blockquote {
+            margin-top: 0;
+            margin-bottom: 34px;
+            border-left: 3px solid #e8e8e8;
+            padding-left: 17px;
+            color: #353535
+        }
+
+        ._29HP61GA_0 blockquote p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol,
+        ._29HP61GA_0 ul {
+            margin-bottom: 30px
+        }
+
+        ._29HP61GA_0 ol p,
+        ._29HP61GA_0 ul p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol {
+            list-style: decimal;
+            margin-left: 20px
+        }
+
+        ._29HP61GA_0 ul li {
+            padding-left: 17px;
+            position: relative;
+            margin-bottom: 10px
+        }
+
+        ._29HP61GA_0 ul li:after {
+            content: "";
+            height: 6px;
+            width: 6px;
+            border-radius: 50%;
+            background: #353535;
+            position: absolute;
+            top: 10px;
+            left: 0
+        }
+
+        ._29HP61GA_0 .orange {
+            color: #fa8919
+        }
+
+        ._29HP61GA_0 .reference {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-right {
+            text-align: right
+        }
+
+        ._29HP61GA_0 .m-center {
+            text-align: center;
+            display: block
+        }
+
+        ._29HP61GA_0 .m-gray {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-small {
+            font-size: 15px
+        }
+
+        ._29HP61GA_0 table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        ._29HP61GA_0 table.hljs-ln,
+        ._29HP61GA_0 table.hljs-ln tbody,
+        ._29HP61GA_0 table.hljs-ln td,
+        ._29HP61GA_0 table.hljs-ln tr {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        ._29HP61GA_0 table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            font-size: 12px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code,
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            font-size: 13px;
+            color: #666;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+    </style>
+</head>
+<body>
+<div class="_29HP61GA_0">
+<h1>14-UDP也可以是“已连接”？</h1>
+<p>你好，我是盛延敏，这里是网络编程实战的第14讲，欢迎回来。</p><p>在前面的基础篇中，我们已经接触到了UDP数据报协议相关的知识，在我们的脑海里，已经深深印上了“<strong>UDP 等于无连接协议</strong>”的特性。那么看到这一讲的题目，你是不是觉得有点困惑？没关系，和我一起进入”已连接“的UDP的世界，回头再看这个标题，相信你就会恍然大悟。</p><h2>从一个例子开始</h2><p>我们先从一个客户端例子开始，在这个例子中，客户端在UDP套接字上调用connect函数，之后将标准输入的字符串发送到服务器端，并从服务器端接收处理后的报文。当然，和服务器端发送和接收报文是通过调用函数sendto和recvfrom来完成的。</p><pre><code>#include &quot;lib/common.h&quot;
+# define    MAXLINE     4096
+
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        error(1, 0, &quot;usage: udpclient1 &lt;IPaddress&gt;&quot;);
+    }
+
+    int socket_fd;
+    socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
+
+    struct sockaddr_in server_addr;
+    bzero(&amp;server_addr, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(SERV_PORT);
+    inet_pton(AF_INET, argv[1], &amp;server_addr.sin_addr);
+
+    socklen_t server_len = sizeof(server_addr);
+
+    if (connect(socket_fd, (struct sockaddr *) &amp;server_addr, server_len)) {
+        error(1, errno, &quot;connect failed&quot;);
+    }
+
+    struct sockaddr *reply_addr;
+    reply_addr = malloc(server_len);
+
+    char send_line[MAXLINE], recv_line[MAXLINE + 1];
+    socklen_t len;
+    int n;
+
+    while (fgets(send_line, MAXLINE, stdin) != NULL) {
+        int i = strlen(send_line);
+        if (send_line[i - 1] == '\n') {
+            send_line[i - 1] = 0;
+        }
+
+        printf(&quot;now sending %s\n&quot;, send_line);
+        size_t rt = sendto(socket_fd, send_line, strlen(send_line), 0, (struct sockaddr *) &amp;server_addr, server_len);
+        if (rt &lt; 0) {
+            error(1, errno, &quot;sendto failed&quot;);
+        }
+        printf(&quot;send bytes: %zu \n&quot;, rt);
+        
+        len = 0;
+        recv_line[0] = 0;
+        n = recvfrom(socket_fd, recv_line, MAXLINE, 0, reply_addr, &amp;len);
+        if (n &lt; 0)
+            error(1, errno, &quot;recvfrom failed&quot;);
+        recv_line[n] = 0;
+        fputs(recv_line, stdout);
+        fputs(&quot;\n&quot;, stdout);
+    }
+
+    exit(0);
+}
+</code></pre><p>我对这个程序做一个简单的解释：</p><ul>
+<li>9-10行创建了一个UDP套接字；</li>
+<li>12-16行创建了一个IPv4地址，绑定到指定端口和IP；</li>
+<li><strong>20-22行调用connect将UDP套接字和IPv4地址进行了“绑定”，这里connect函数的名称有点让人误解，其实可能更好的选择是叫做setpeername</strong>；</li>
+<li>31-55行是程序的主体，读取标准输入字符串后，调用sendto发送给对端；之后调用recvfrom等待对端的响应，并把对端响应信息打印到标准输出。</li>
+</ul><!-- [[[read_end]]] --><p>在没有开启服务端的情况下，我们运行一下这个程序：</p><pre><code>$ ./udpconnectclient 127.0.0.1
+g1
+now sending g1
+send bytes: 2
+recvfrom failed: Connection refused (111)
+</code></pre><p>看到这里你会不会觉得很奇怪？不是说好UDP是“无连接”的协议吗？不是说好UDP客户端只会阻塞在recvfrom这样的调用上吗？怎么这里冒出一个“Connection refused”的错误呢？</p><p>别着急，下面就跟着我的思路慢慢去解开这个谜团。</p><h2>UDP connect的作用</h2><p>从前面的例子中，你会发现，我们可以对UDP套接字调用connect函数，但是和TCP connect调用引起TCP三次握手，建立TCP有效连接不同，UDP connect函数的调用，并不会引起和服务器目标端的网络交互，也就是说，并不会触发所谓的”握手“报文发送和应答。</p><p>那么对UDP套接字进行connect操作到底有什么意义呢？</p><p>其实上面的例子已经给出了答案，这主要是为了让应用程序能够接收”异步错误“的信息。</p><p>如果我们回想一下第6篇不调用connect操作的客户端程序，在服务器端不开启的情况下，客户端程序是不会报错的，程序只会阻塞在recvfrom上，等待返回（或者超时）。</p><p>在这里，我们通过对UDP套接字进行connect操作，将UDP套接字建立了”上下文“，该套接字和服务器端的地址和端口产生了联系，正是这种绑定关系给了操作系统内核必要的信息，能够将操作系统内核收到的信息和对应的套接字进行关联。</p><p>我们可以展开讨论一下。</p><p>事实上，当我们调用sendto或者send操作函数时，应用程序报文被发送，我们的应用程序返回，操作系统内核接管了该报文，之后操作系统开始尝试往对应的地址和端口发送，因为对应的地址和端口不可达，一个ICMP报文会返回给操作系统内核，该ICMP报文含有目的地址和端口等信息。</p><p>如果我们不进行connect操作，建立（UDP套接字——目的地址+端口）之间的映射关系，操作系统内核就没有办法把ICMP不可达的信息和UDP套接字进行关联，也就没有办法将ICMP信息通知给应用程序。</p><p>如果我们进行了connect操作，帮助操作系统内核从容建立了（UDP套接字——目的地址+端口）之间的映射关系，当收到一个ICMP不可达报文时，操作系统内核可以从映射表中找出是哪个UDP套接字拥有该目的地址和端口，别忘了套接字在操作系统内部是全局唯一的，当我们在该套接字上再次调用recvfrom或recv方法时，就可以收到操作系统内核返回的”Connection Refused“的信息。</p><h2>收发函数</h2><p>在对UDP进行connect之后，关于收发函数的使用，很多书籍是这样推荐的：</p><ul>
+<li>使用send或write函数来发送，如果使用sendto需要把相关的to地址信息置零；</li>
+<li>使用recv或read函数来接收，如果使用recvfrom需要把对应的from地址信息置零。</li>
+</ul><p>其实不同的UNIX实现对此表现出来的行为不尽相同。</p><p>在我的Linux 4.4.0环境中，使用sendto和recvfrom，系统会自动忽略to和from信息。在我的macOS 10.13中，确实需要遵守这样的规定，使用sendto或recvfrom会得到一些奇怪的结果，切回send和recv后正常。</p><p>考虑到兼容性，我们也推荐这些常规做法。所以在接下来的程序中，我会使用这样的做法来实现。</p><h2>服务器端connect的例子</h2><p>一般来说，服务器端不会主动发起connect操作，因为一旦如此，服务器端就只能响应一个客户端了。不过，有时候也不排除这样的情形，一旦一个客户端和服务器端发送UDP报文之后，该服务器端就要服务于这个唯一的客户端。</p><p>一个类似的服务器端程序如下：</p><pre><code>#include &quot;lib/common.h&quot;
+
+static int count;
+
+static void recvfrom_int(int signo) {
+    printf(&quot;\nreceived %d datagrams\n&quot;, count);
+    exit(0);
+}
+
+int main(int argc, char **argv) {
+    int socket_fd;
+    socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
+
+    struct sockaddr_in server_addr;
+    bzero(&amp;server_addr, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    server_addr.sin_port = htons(SERV_PORT);
+
+    bind(socket_fd, (struct sockaddr *) &amp;server_addr, sizeof(server_addr));
+
+    socklen_t client_len;
+    char message[MAXLINE];
+    message[0] = 0;
+    count = 0;
+
+    signal(SIGINT, recvfrom_int);
+
+    struct sockaddr_in client_addr;
+    client_len = sizeof(client_addr);
+
+    int n = recvfrom(socket_fd, message, MAXLINE, 0, (struct sockaddr *) &amp;client_addr, &amp;client_len);
+    if (n &lt; 0) {
+        error(1, errno, &quot;recvfrom failed&quot;);
+    }
+    message[n] = 0;
+    printf(&quot;received %d bytes: %s\n&quot;, n, message);
+
+    if (connect(socket_fd, (struct sockaddr *) &amp;client_addr, client_len)) {
+        error(1, errno, &quot;connect failed&quot;);
+    }
+
+    while (strncmp(message, &quot;goodbye&quot;, 7) != 0) {
+        char send_line[MAXLINE];
+        sprintf(send_line, &quot;Hi, %s&quot;, message);
+
+        size_t rt = send(socket_fd, send_line, strlen(send_line), 0);
+        if (rt &lt; 0) {
+            error(1, errno, &quot;send failed &quot;);
+        }
+        printf(&quot;send bytes: %zu \n&quot;, rt);
+
+        size_t rc = recv(socket_fd, message, MAXLINE, 0);
+        if (rc &lt; 0) {
+            error(1, errno, &quot;recv failed&quot;);
+        }
+        
+        count++;
+    }
+
+    exit(0);
+}
+</code></pre><p>我对这个程序做下解释：</p><ul>
+<li>11-12行创建UDP套接字；</li>
+<li>14-18行创建IPv4地址，绑定到ANY和对应端口；</li>
+<li>20行绑定UDP套接字和IPv4地址；</li>
+<li>27行为该程序注册一个信号处理函数，以响应Ctrl+C信号量操作；</li>
+<li>32-37行调用recvfrom等待客户端报文到达，并将客户端信息保持到client_addr中；</li>
+<li><strong>39-41行调用connect操作，将UDP套接字和客户端client_addr进行绑定</strong>；</li>
+<li>43-59行是程序的主体，对接收的信息进行重新处理，加上”Hi“前缀后发送给客户端，并持续不断地从客户端接收报文，该过程一直持续，直到客户端发送”goodbye“报文为止。</li>
+</ul><p>注意这里所有收发函数都使用了send和recv。</p><p>接下来我们实现一个connect的客户端程序：</p><pre><code>#include &quot;lib/common.h&quot;
+# define    MAXLINE     4096
+
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        error(1, 0, &quot;usage: udpclient3 &lt;IPaddress&gt;&quot;);
+    }
+
+    int socket_fd;
+    socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
+
+    struct sockaddr_in server_addr;
+    bzero(&amp;server_addr, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(SERV_PORT);
+    inet_pton(AF_INET, argv[1], &amp;server_addr.sin_addr);
+
+    socklen_t server_len = sizeof(server_addr);
+
+    if (connect(socket_fd, (struct sockaddr *) &amp;server_addr, server_len)) {
+        error(1, errno, &quot;connect failed&quot;);
+    }
+
+    char send_line[MAXLINE], recv_line[MAXLINE + 1];
+    int n;
+
+    while (fgets(send_line, MAXLINE, stdin) != NULL) {
+        int i = strlen(send_line);
+        if (send_line[i - 1] == '\n') {
+            send_line[i - 1] = 0;
+        }
+
+        printf(&quot;now sending %s\n&quot;, send_line);
+        size_t rt = send(socket_fd, send_line, strlen(send_line), 0);
+        if (rt &lt; 0) {
+            error(1, errno, &quot;send failed &quot;);
+        }
+        printf(&quot;send bytes: %zu \n&quot;, rt);
+
+        recv_line[0] = 0;
+        n = recv(socket_fd, recv_line, MAXLINE, 0);
+        if (n &lt; 0)
+            error(1, errno, &quot;recv failed&quot;);
+        recv_line[n] = 0;
+        fputs(recv_line, stdout);
+        fputs(&quot;\n&quot;, stdout);
+    }
+
+    exit(0);
+}
+</code></pre><p>我对这个客户端程序做一下解读：</p><ul>
+<li>9-10行创建了一个UDP套接字；</li>
+<li>12-16行创建了一个IPv4地址，绑定到指定端口和IP；</li>
+<li><strong>20-22行调用connect将UDP套接字和IPv4地址进行了“绑定”</strong>；</li>
+<li>27-46行是程序的主体，读取标准输入字符串后，调用send发送给对端；之后调用recv等待对端的响应，并把对端响应信息打印到标准输出。</li>
+</ul><p>注意这里所有收发函数也都使用了send和recv。</p><p>接下来，我们先启动服务器端程序，然后依次开启两个客户端，分别是客户端1、客户端2，并且让客户端1先发送UDP报文。</p><p>服务器端：</p><pre><code>$ ./udpconnectserver
+received 2 bytes: g1
+send bytes: 6
+</code></pre><p>客户端1：</p><pre><code> ./udpconnectclient2 127.0.0.1
+g1
+now sending g1
+send bytes: 2
+Hi, g1
+</code></pre><p>客户端2：</p><pre><code>./udpconnectclient2 127.0.0.1
+g2
+now sending g2
+send bytes: 2
+recv failed: Connection refused (111)
+</code></pre><p>我们看到，客户端1先发送报文，服务端随之通过connect和客户端1进行了“绑定”，这样，客户端2从操作系统内核得到了ICMP的错误，该错误在recv函数中返回，显示了“Connection refused”的错误信息。</p><h2>性能考虑</h2><p>一般来说，客户端通过connect绑定服务端的地址和端口，对UDP而言，可以有一定程度的性能提升。</p><p>这是为什么呢？</p><p>因为如果不使用connect方式，每次发送报文都会需要这样的过程：</p><p>连接套接字→发送报文→断开套接字→连接套接字→发送报文→断开套接字 →………</p><p>而如果使用connect方式，就会变成下面这样：</p><p>连接套接字→发送报文→发送报文→……→最后断开套接字</p><p>我们知道，连接套接字是需要一定开销的，比如需要查找路由表信息。所以，UDP客户端程序通过connect可以获得一定的性能提升。</p><h2>总结</h2><p>在今天的内容里，我对UDP套接字调用connect方法进行了深入的分析。之所以对UDP使用connect，绑定本地地址和端口，是为了让我们的程序可以快速获取异步错误信息的通知，同时也可以获得一定性能上的提升。</p><h2>思考题</h2><p>在本讲的最后，按照惯例，给大家留两个思考题：</p><ol>
+<li>可以对一个UDP 套接字进行多次connect操作吗? 你不妨动手试试，看看结果。</li>
+<li>如果想使用多播或广播，我们应该怎么去使用connect呢？</li>
+</ol><p>欢迎你在评论区写下你的思考，也欢迎把这篇文章分享给你的朋友或者同事，一起交流一下。</p><p><img src="https://static001.geekbang.org/resource/image/bf/25/bfc96ae0d8f839919b9d9866cfb8b025.jpg" alt=""></p><h2>精选留言：</h2>
+        <ul>
+        
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            Liam  2019-09-02 08:47:00
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            按照老师的说法，只有connect才建立socket和ip地址的映射；那么，如果不进行connect，收到信息后内核又是如何把数据交给对应的socket呢 [1赞]
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            程序水果宝  2019-09-02 22:56:10
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            对于recvfrom函数，我们可以看成是TCP中accept函数和read函数的结合，前三个参数是read的参数，后两个参数是accept的参数。对于sendto函数，则可以看成是TCP中connect函数和send函数的结合，前三个参数是send的参数，后两个参数则是connect的参数。所以udp在发送和接收数据的过程中都会建立套接字连接，只不过每次调用sendto发送完数据后，内核都会将临时保存的对端地址数据删除掉，也就是断开套接字，从而就会出现老师所说的那个循环 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            传说中的成大大  2019-09-02 15:00:14
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            udp 连接套接字 这个是什么过程？ 断开套接字这又是什么过程呢？ 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            酱油君  2019-09-02 09:31:41
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            老师 文中提到的icmp报文 发源地 是本机的网卡吗？ 
+        </div>
+        
+    </div>
+</li>
+            </ul>
+</div>
+</body>
+</html>

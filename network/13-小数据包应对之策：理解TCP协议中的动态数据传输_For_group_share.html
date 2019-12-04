@@ -1,0 +1,970 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>13-小数据包应对之策：理解TCP协议中的动态数据传输</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+        html {
+            color: #333;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-rendering: optimizelegibility;
+            font-family: Helvetica Neue, PingFang SC, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+        }
+
+        html.borderbox *,
+        html.borderbox :after,
+        html.borderbox :before {
+            box-sizing: border-box
+        }
+
+        article,
+        aside,
+        blockquote,
+        body,
+        button,
+        code,
+        dd,
+        details,
+        dl,
+        dt,
+        fieldset,
+        figcaption,
+        figure,
+        footer,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        header,
+        hr,
+        input,
+        legend,
+        li,
+        menu,
+        nav,
+        ol,
+        p,
+        pre,
+        section,
+        td,
+        textarea,
+        th,
+        ul {
+            margin: 0;
+            padding: 0
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        menu,
+        nav,
+        section {
+            display: block
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, Helvetica, sans-serif
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            padding: 0;
+            border: 0
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        fieldset,
+        img {
+            border: 0
+        }
+
+        blockquote {
+            position: relative;
+            color: #999;
+            font-weight: 400;
+            border-left: 1px solid #1abc9c;
+            padding-left: 1em;
+            margin: 1em 3em 1em 2em
+        }
+
+        @media only screen and (max-width: 640px) {
+            blockquote {
+                margin: 1em 0
+            }
+        }
+
+        abbr,
+        acronym {
+            border-bottom: 1px dotted;
+            font-variant: normal
+        }
+
+        abbr {
+            cursor: help
+        }
+
+        del {
+            text-decoration: line-through
+        }
+
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        th,
+        var {
+            font-style: normal;
+            font-weight: 400
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        caption,
+        th {
+            text-align: left
+        }
+
+        q:after,
+        q:before {
+            content: ""
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative
+        }
+
+        :root sub,
+        :root sup {
+            vertical-align: baseline
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        a {
+            color: #1abc9c
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .typo a {
+            border-bottom: 1px solid #1abc9c
+        }
+
+        .typo a:hover {
+            border-bottom-color: #555;
+            color: #555
+        }
+
+        .typo a:hover,
+        a,
+        ins {
+            text-decoration: none
+        }
+
+        .typo-u,
+        u {
+            text-decoration: underline
+        }
+
+        mark {
+            background: #fffdd1;
+            border-bottom: 1px solid #ffedce;
+            padding: 2px;
+            margin: 0 5px
+        }
+
+        code,
+        pre,
+        pre tt {
+            font-family: Courier, Courier New, monospace
+        }
+
+        pre {
+            background: hsla(0, 0%, 97%, .7);
+            border: 1px solid #ddd;
+            padding: 1em 1.5em;
+            display: block;
+            -webkit-overflow-scrolling: touch
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #cfcfcf;
+            margin-bottom: .8em;
+            height: 10px
+        }
+
+        .typo-small,
+        figcaption,
+        small {
+            font-size: .9em;
+            color: #888
+        }
+
+        b,
+        strong {
+            font-weight: 700;
+            color: #000
+        }
+
+        [draggable] {
+            cursor: move
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        .textwrap,
+        .textwrap td,
+        .textwrap th {
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        .textwrap-table {
+            table-layout: fixed
+        }
+
+        .serif {
+            font-family: Palatino, Optima, Georgia, serif
+        }
+
+        .typo-dl,
+        .typo-form,
+        .typo-hr,
+        .typo-ol,
+        .typo-p,
+        .typo-pre,
+        .typo-table,
+        .typo-ul,
+        .typo dl,
+        .typo form,
+        .typo hr,
+        .typo ol,
+        .typo p,
+        .typo pre,
+        .typo table,
+        .typo ul,
+        blockquote {
+            margin-bottom: 1rem
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: PingFang SC, Helvetica Neue, Verdana, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+            color: #000;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo-h2,
+        .typo-h3,
+        .typo-h4,
+        .typo-h5,
+        .typo-h6,
+        .typo h1,
+        .typo h2,
+        .typo h3,
+        .typo h4,
+        .typo h5,
+        .typo h6 {
+            margin-top: 1.2em;
+            margin-bottom: .6em;
+            line-height: 1.35
+        }
+
+        .typo-h1,
+        .typo h1 {
+            font-size: 2em
+        }
+
+        .typo-h2,
+        .typo h2 {
+            font-size: 1.8em
+        }
+
+        .typo-h3,
+        .typo h3 {
+            font-size: 1.6em
+        }
+
+        .typo-h4,
+        .typo h4 {
+            font-size: 1.4em
+        }
+
+        .typo-h5,
+        .typo-h6,
+        .typo h5,
+        .typo h6 {
+            font-size: 1.2em
+        }
+
+        .typo-ul,
+        .typo ul {
+            margin-left: 1.3em;
+            list-style: disc
+        }
+
+        .typo-ol,
+        .typo ol {
+            list-style: decimal;
+            margin-left: 1.9em
+        }
+
+        .typo-ol ol,
+        .typo-ol ul,
+        .typo-ul ol,
+        .typo-ul ul,
+        .typo li ol,
+        .typo li ul {
+            margin-bottom: .8em;
+            margin-left: 2em
+        }
+
+        .typo-ol ul,
+        .typo-ul ul,
+        .typo li ul {
+            list-style: circle
+        }
+
+        .typo-table td,
+        .typo-table th,
+        .typo table caption,
+        .typo table td,
+        .typo table th {
+            border: 1px solid #ddd;
+            padding: .5em 1em;
+            color: #666
+        }
+
+        .typo-table th,
+        .typo table th {
+            background: #fbfbfb
+        }
+
+        .typo-table thead th,
+        .typo table thead th {
+            background: hsla(0, 0%, 95%, .7)
+        }
+
+        .typo table caption {
+            border-bottom: none
+        }
+
+        .typo-input,
+        .typo-textarea {
+            -webkit-appearance: none;
+            border-radius: 0
+        }
+
+        .typo-em,
+        .typo em,
+        caption,
+        legend {
+            color: #000;
+            font-weight: inherit
+        }
+
+        .typo-em {
+            position: relative
+        }
+
+        .typo-em:after {
+            position: absolute;
+            top: .65em;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            content: "\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB\30FB"
+        }
+
+        .typo img {
+            max-width: 100%
+        }
+
+        .common-content {
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.75rem;
+            white-space: normal;
+            word-break: normal;
+            font-size: 1rem
+        }
+
+        .common-content img {
+            display: block;
+            max-width: 100%;
+            background-color: #eee
+        }
+
+        .common-content audio,
+        .common-content video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        .common-content center,
+        .common-content font {
+            margin-top: 1rem;
+            display: inline-block
+        }
+
+        .common-content center {
+            width: 100%
+        }
+
+        .common-content pre {
+            margin-top: 1rem;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            overflow: hidden
+        }
+
+        .common-content pre code {
+            font-size: .8rem;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            overflow-x: auto
+        }
+
+        .common-content hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        .common-content b,
+        .common-content h1,
+        .common-content h2,
+        .common-content h3,
+        .common-content h4,
+        .common-content h5,
+        .common-content strong {
+            font-weight: 700
+        }
+
+        .common-content h1,
+        .common-content h2 {
+            font-size: 1.125rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content h3,
+        .common-content h4,
+        .common-content h5 {
+            font-size: 1rem;
+            margin-bottom: .45rem
+        }
+
+        .common-content p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: .15rem
+        }
+
+        .common-content .orange {
+            color: #ff5a05
+        }
+
+        .common-content .reference {
+            font-size: 1rem;
+            color: #888
+        }
+
+        .custom-rich-content h1 {
+            margin-top: 0;
+            font-weight: 400;
+            font-size: 15.25px;
+            border-bottom: 1px solid #eee;
+            line-height: 2.8
+        }
+
+        .custom-rich-content li,
+        .custom-rich-content p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6
+        }
+
+        table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        table.hljs-ln,
+        table.hljs-ln tbody,
+        table.hljs-ln td,
+        table.hljs-ln tr {
+            box-sizing: border-box
+        }
+
+        table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none
+        }
+
+        table.hljs-ln td.hljs-ln-code,
+        table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            font-size: 12px;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            color: #24292e;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+        video::-webkit-media-controls {
+            overflow: hidden !important
+        }
+
+        video::-webkit-media-controls-enclosure {
+            width: calc(100% + 32px);
+            margin-left: auto
+        }
+
+        ._29HP61GA_0 {
+            max-width:800px;
+            margin:0 auto;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #353535;
+            line-height: 1.76;
+            white-space: normal;
+            word-break: normal;
+            font-size: 17px;
+            -webkit-transition: background-color .3s ease;
+            transition: background-color .3s ease
+        }
+
+        ._29HP61GA_0 .MathJax_Display {
+            overflow: auto
+        }
+
+        ._29HP61GA_0 .poster {
+            position: fixed;
+            left: -10000px;
+            top: -10000px;
+            overflow: hidden;
+            padding: 1rem;
+            background: #ececec
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy {
+            font-size: 13px;
+            color: #888;
+            position: absolute;
+            right: 1em;
+            top: .5em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 .richcontent-pre-copy .iconfont {
+            font-size: 12px;
+            margin-right: .2em
+        }
+
+        ._29HP61GA_0 a {
+            color: #fa8919;
+            border-bottom: 1px solid #fa8919
+        }
+
+        ._29HP61GA_0 img {
+            display: block;
+            max-width: 100%;
+            position: relative;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background-color: #eee;
+            vertical-align: top;
+            border-radius: 0
+        }
+
+        ._29HP61GA_0 audio,
+        ._29HP61GA_0 video {
+            width: 100%;
+            background-color: #eee
+        }
+
+        ._29HP61GA_0 pre {
+            margin-top: 16px;
+            padding: 34px 0 0;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 6px;
+            background: rgba(246, 247, 251, .749);
+            border: 0
+        }
+
+        ._29HP61GA_0 pre code {
+            font-size: 12px;
+            font-family: Consolas, Liberation Mono, Menlo, monospace, Courier;
+            display: block;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-left: 16px;
+            margin-right: 16px;
+            overflow-x: scroll
+        }
+
+        ._29HP61GA_0 pre code:after {
+            content: "";
+            height: 30px;
+            width: 100%;
+            display: block
+        }
+
+        ._29HP61GA_0 hr {
+            border: none;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #f5f5f5;
+            height: 1px;
+            background: none
+        }
+
+        ._29HP61GA_0 h1,
+        ._29HP61GA_0 h2,
+        ._29HP61GA_0 h3,
+        ._29HP61GA_0 h4,
+        ._29HP61GA_0 h5 {
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 b,
+        ._29HP61GA_0 strong {
+            font-weight: 700
+        }
+
+        ._29HP61GA_0 h1 {
+            font-size: 21px
+        }
+
+        ._29HP61GA_0 h2 {
+            font-size: 20px
+        }
+
+        ._29HP61GA_0 h3 {
+            font-size: 19px
+        }
+
+        ._29HP61GA_0 h4 {
+            font-size: 18px
+        }
+
+        ._29HP61GA_0 h5 {
+            font-size: 17px
+        }
+
+        ._29HP61GA_0 center,
+        ._29HP61GA_0 p {
+            font-weight: 400;
+            color: #353535;
+            margin-top: 0;
+            margin-bottom: 30px;
+            word-break: break-word
+        }
+
+        ._29HP61GA_0 center {
+            text-align: center
+        }
+
+        ._29HP61GA_0 blockquote {
+            margin-top: 0;
+            margin-bottom: 34px;
+            border-left: 3px solid #e8e8e8;
+            padding-left: 17px;
+            color: #353535
+        }
+
+        ._29HP61GA_0 blockquote p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol,
+        ._29HP61GA_0 ul {
+            margin-bottom: 30px
+        }
+
+        ._29HP61GA_0 ol p,
+        ._29HP61GA_0 ul p {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        ._29HP61GA_0 ol {
+            list-style: decimal;
+            margin-left: 20px
+        }
+
+        ._29HP61GA_0 ul li {
+            padding-left: 17px;
+            position: relative;
+            margin-bottom: 10px
+        }
+
+        ._29HP61GA_0 ul li:after {
+            content: "";
+            height: 6px;
+            width: 6px;
+            border-radius: 50%;
+            background: #353535;
+            position: absolute;
+            top: 10px;
+            left: 0
+        }
+
+        ._29HP61GA_0 .orange {
+            color: #fa8919
+        }
+
+        ._29HP61GA_0 .reference {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-right {
+            text-align: right
+        }
+
+        ._29HP61GA_0 .m-center {
+            text-align: center;
+            display: block
+        }
+
+        ._29HP61GA_0 .m-gray {
+            color: #888
+        }
+
+        ._29HP61GA_0 .m-small {
+            font-size: 15px
+        }
+
+        ._29HP61GA_0 table.hljs-ln {
+            margin-bottom: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        ._29HP61GA_0 table.hljs-ln,
+        ._29HP61GA_0 table.hljs-ln tbody,
+        ._29HP61GA_0 table.hljs-ln td,
+        ._29HP61GA_0 table.hljs-ln tr {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        ._29HP61GA_0 table.hljs-ln td {
+            padding: 0;
+            border: 0
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            min-width: 15px;
+            font-size: 12px;
+            color: rgba(27, 31, 35, .3);
+            text-align: right;
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code,
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-numbers {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+            line-height: 20px;
+            vertical-align: top
+        }
+
+        ._29HP61GA_0 table.hljs-ln td.hljs-ln-code {
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            overflow: visible;
+            font-size: 13px;
+            color: #666;
+            word-wrap: normal;
+            white-space: pre
+        }
+
+    </style>
+</head>
+<body>
+<div class="_29HP61GA_0">
+<h1>13-小数据包应对之策：理解TCP协议中的动态数据传输</h1>
+<p>你好，我是盛延敏，这里是网络编程实战第13讲，欢迎回来。</p><p>在上一篇文章里，我在应用程序中模拟了TCP Keep-Alive机制，完成TCP心跳检测，达到发现不活跃连接的目的。在这一讲里，我们将从TCP角度看待数据流的发送和接收。</p><p>如果你学过计算机网络的话，那么对于发送窗口、接收窗口、拥塞窗口等名词肯定不会陌生，它们各自解决的是什么问题，又是如何解决的？在今天的文章里，我希望能从一个更加通俗易懂的角度进行剖析。</p><h2>调用数据发送接口以后……</h2><p>在前面的内容中，我们已经熟悉如何通过套接字发送数据，比如使用write或者send方法来进行数据流的发送。</p><p>我们已经知道，<strong>调用这些接口并不意味着数据被真正发送到网络上，其实，这些数据只是从应用程序中被拷贝到了系统内核的套接字缓冲区中，或者说是发送缓冲区中</strong>，等待协议栈的处理。至于这些数据是什么时候被发送出去的，对应用程序来说，是无法预知的。对这件事情真正负责的，是运行于操作系统内核的TCP协议栈实现模块。</p><h2>流量控制和生产者-消费者模型</h2><p>我们可以把理想中的TCP协议可以想象成一队运输货物的货车，运送的货物就是TCP数据包，这些货车将数据包从发送端运送到接收端，就这样不断周而复始。</p><!-- [[[read_end]]] --><p>我们仔细想一下，货物达到接收端之后，是需要卸货处理、登记入库的，接收端限于自己的处理能力和仓库规模，是不可能让这队货车以不可控的速度发货的。接收端肯定会和发送端不断地进行信息同步，比如接收端通知发送端：“后面那20车你给我等等，等我这里腾出地方你再继续发货。”</p><p>其实这就是发送窗口和接收窗口的本质，我管这个叫做“TCP的生产者-消费者”模型。</p><p>发送窗口和接收窗口是TCP连接的双方，一个作为生产者，一个作为消费者，为了达到一致协同的生产-消费速率、而产生的算法模型实现。</p><p>说白了，作为TCP发送端，也就是生产者，不能忽略TCP的接收端，也就是消费者的实际状况，不管不顾地把数据包都传送过来。如果都传送过来，消费者来不及消费，必然会丢弃；而丢弃反过使得生产者又重传，发送更多的数据包，最后导致网络崩溃。</p><p>我想，理解了“TCP的生产者-消费者”模型，再反过来看发送窗口和接收窗口的设计目的和方式，我们就会恍然大悟了。</p><h2>拥塞控制和数据传输</h2><p>TCP的生产者-消费者模型，只是在考虑单个连接的数据传递，但是， TCP数据包是需要经过网卡、交换机、核心路由器等一系列的网络设备的，网络设备本身的能力也是有限的，当多个连接的数据包同时在网络上传送时，势必会发生带宽争抢、数据丢失等，这样，<strong>TCP就必须考虑多个连接共享在有限的带宽上，兼顾效率和公平性的控制</strong>，这就是拥塞控制的本质。</p><p>举个形象一点的例子，有一个货车行驶在半夜三点的大路上，这样的场景是断然不需要拥塞控制的。</p><p>我们可以把网络设备形成的网络信息高速公路和生活中实际的高速公路做个对比。正是因为有多个TCP连接，形成了高速公路上的多队运送货车，高速公路上开始变得熙熙攘攘，这个时候，就需要拥塞控制的接入了。</p><p>在TCP协议中，拥塞控制是通过拥塞窗口来完成的，拥塞窗口的大小会随着网络状况实时调整。</p><p>拥塞控制常用的算法有“慢启动”，它通过一定的规则，慢慢地将网络发送数据的速率增加到一个阈值。超过这个阈值之后，慢启动就结束了，另一个叫做“拥塞避免”的算法登场。在这个阶段，TCP会不断地探测网络状况，并随之不断调整拥塞窗口的大小。</p><p>现在你可以发现，在任何一个时刻，TCP发送缓冲区的数据是否能真正发送出去，<strong>至少</strong>取决于两个因素，一个是<strong>当前的发送窗口大小</strong>，另一个是<strong>拥塞窗口大小</strong>，而TCP协议中总是取两者中最小值作为判断依据。比如当前发送的字节为100，发送窗口的大小是200，拥塞窗口的大小是80，那么取200和80中的最小值，就是80，当前发送的字节数显然是大于拥塞窗口的，结论就是不能发送出去。</p><p>这里千万要分清楚发送窗口和拥塞窗口的区别。</p><p>发送窗口反应了作为单TCP连接、点对点之间的流量控制模型，它是需要和接收端一起共同协调来调整大小的；而拥塞窗口则是反应了作为多个TCP连接共享带宽的拥塞控制模型，它是发送端独立地根据网络状况来动态调整的。</p><h2>一些有趣的场景</h2><p>注意我在前面的表述中，提到了在任何一个时刻里，TCP发送缓冲区的数据是否能真正发送出去，用了“至少两个因素”这个说法，细心的你有没有想过这个问题，除了之前引入的发送窗口、拥塞窗口之外，还有什么其他因素吗？</p><p>我们考虑以下几个有趣的场景：</p><p>第一个场景，接收端处理得急不可待，比如刚刚读入了100个字节，就告诉发送端：“喂，我已经读走100个字节了，你继续发”，在这种情况下，你觉得发送端应该怎么做呢？</p><p>第二个场景是所谓的“交互式”场景，比如我们使用telnet登录到一台服务器上，或者使用SSH和远程的服务器交互，这种情况下，我们在屏幕上敲打了一个命令，等待服务器返回结果，这个过程需要不断和服务器端进行数据传输。这里最大的问题是，每次传输的数据可能都非常小，比如敲打的命令“pwd”，仅仅三个字符。这意味着什么？这就好比，每次叫了一辆大货车，只送了一个小水壶。在这种情况下，你又觉得发送端该怎么做才合理呢？</p><p>第三个场景是从接收端来说的。我们知道，接收端需要对每个接收到的TCP分组进行确认，也就是发送ACK报文，但是ACK报文本身是不带数据的分段，如果一直这样发送大量的ACK报文，就会消耗大量的带宽。之所以会这样，是因为TCP报文、IP报文固有的消息头是不可或缺的，比如两端的地址、端口号、时间戳、序列号等信息， 在这种情形下，你觉得合理的做法是什么？</p><p>TCP之所以复杂，就是因为TCP需要考虑的因素较多。像以上这几个场景，都是TCP需要考虑的情况，一句话概况就是如何有效地利用网络带宽。</p><p>第一个场景也被叫做糊涂窗口综合症，这个场景需要在接收端进行优化。也就是说，接收端不能在接收缓冲区空出一个很小的部分之后，就急吼吼地向发送端发送窗口更新通知，而是需要在自己的缓冲区大到一个合理的值之后，再向发送端发送窗口更新通知。这个合理的值，由对应的RFC规范定义。</p><p>第二个场景需要在发送端进行优化。这个优化的算法叫做Nagle算法，Nagle算法的本质其实就是限制大批量的小数据包同时发送，为此，它提出，在任何一个时刻，未被确认的小数据包不能超过一个。这里的小数据包，指的是长度小于最大报文段长度MSS的TCP分组。这样，发送端就可以把接下来连续的几个小数据包存储起来，等待接收到前一个小数据包的ACK分组之后，再将数据一次性发送出去。</p><p>第三个场景，也是需要在接收端进行优化，这个优化的算法叫做延时ACK。延时ACK在收到数据后并不马上回复，而是累计需要发送的ACK报文，等到有数据需要发送给对端时，将累计的ACK<strong>捎带一并发送出去</strong>。当然，延时ACK机制，不能无限地延时下去，否则发送端误认为数据包没有发送成功，引起重传，反而会占用额外的网络带宽。</p><h2>禁用Nagle算法</h2><p>有没有发现一个很奇怪的组合，即Nagle算法和延时ACK的组合。</p><p>这个组合为什么奇怪呢？我举一个例子你来体会一下。</p><p>比如，客户端分两次将一个请求发送出去，由于请求的第一部分的报文未被确认，Nagle算法开始起作用；同时延时ACK在服务器端起作用，假设延时时间为200ms，服务器等待200ms后，对请求的第一部分进行确认；接下来客户端收到了确认后，Nagle算法解除请求第二部分的阻止，让第二部分得以发送出去，服务器端在收到之后，进行处理应答，同时将第二部分的确认捎带发送出去。</p><p><img src="https://static001.geekbang.org/resource/image/42/eb/42073ad07805783add96ee87aeee8aeb.png" alt=""><br>
+你从这张图中可以看到，Nagle算法和延时确认组合在一起，增大了处理时延，实际上，两个优化彼此在阻止对方。</p><p>从上面的例子可以看到，在有些情况下Nagle算法并不适用， 比如对时延敏感的应用。</p><p>幸运的是，我们可以通过对套接字的修改来关闭Nagle算法。</p><pre><code>int on = 1; 
+setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (void *)&amp;on, sizeof(on)); 
+</code></pre><p>值得注意的是，除非我们对此有十足的把握，否则不要轻易改变默认的TCP Nagle算法。因为在现代操作系统中，针对Nagle算法和延时ACK的优化已经非常成熟了，有可能在禁用Nagle算法之后，性能问题反而更加严重。</p><h2>将写操作合并</h2><p>其实前面的例子里，如果我们能将一个请求一次性发送过去，而不是分开两部分独立发送，结果会好很多。所以，在写数据之前，将数据合并到缓冲区，批量发送出去，这是一个比较好的做法。不过，有时候数据会存储在两个不同的缓存中，对此，我们可以使用如下的方法来进行数据的读写操作，从而避免Nagle算法引发的副作用。</p><pre><code>ssize_t writev(int filedes, const struct iovec *iov, int iovcnt)
+ssize_t readv(int filedes, const struct iovec *iov, int iovcnt);
+</code></pre><p>这两个函数的第二个参数都是指向某个iovec结构数组的一个指针，其中iovec结构定义如下：</p><pre><code>struct iovec {
+void *iov_base; /* starting address of buffer */
+size_t　iov_len; /* size of buffer */
+};”
+</code></pre><p>下面的程序展示了集中写的方式：</p><pre><code>int main(int argc, char **argv) {
+    if (argc != 2) {
+        error(1, 0, &quot;usage: tcpclient &lt;IPaddress&gt;&quot;);
+    }
+
+    int socket_fd;
+    socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+
+    struct sockaddr_in server_addr;
+    bzero(&amp;server_addr, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(SERV_PORT);
+    inet_pton(AF_INET, argv[1], &amp;server_addr.sin_addr);
+
+    socklen_t server_len = sizeof(server_addr);
+    int connect_rt = connect(socket_fd, (struct sockaddr *) &amp;server_addr, server_len);
+    if (connect_rt &lt; 0) {
+        error(1, errno, &quot;connect failed &quot;);
+    }
+
+    char buf[128];
+    struct iovec iov[2];
+
+    char *send_one = &quot;hello,&quot;;
+    iov[0].iov_base = send_one;
+    iov[0].iov_len = strlen(send_one);
+    iov[1].iov_base = buf;
+    while (fgets(buf, sizeof(buf), stdin) != NULL) {
+        iov[1].iov_len = strlen(buf);
+        int n = htonl(iov[1].iov_len);
+        if (writev(socket_fd, iov, 2) &lt; 0)
+            error(1, errno, &quot;writev failure&quot;);
+    }
+    exit(0);
+}
+</code></pre><p>这个程序的前半部分创建套接字，建立连接就不再赘述了。关键的是24-33行，使用了iovec数组，分别写入了两个不同的字符串，一个是“hello,”，另一个通过标准输入读入。</p><p>在启动该程序之前，我们需要启动服务器端程序，在客户端依次输入“world”和“network”：</p><pre><code>world
+network
+</code></pre><p>接下来我们可以看到服务器端接收到了iovec组成的新的字符串。这里的原理其实就是在调用writev操作时，会自动把几个数组的输入合并成一个有序的字节流，然后发送给对端。</p><pre><code>received 12 bytes: hello,world
+
+received 14 bytes: hello,network
+</code></pre><h2>总结</h2><p>今天的内容我重点讲述了TCP流量控制的生产者-消费者模型，你需要记住以下几点：</p><ul>
+<li>发送窗口用来控制发送和接收端的流量；阻塞窗口用来控制多条连接公平使用的有限带宽。</li>
+<li>小数据包加剧了网络带宽的浪费，为了解决这个问题，引入了如Nagle算法、延时ACK等机制。</li>
+<li>在程序设计层面，不要多次频繁地发送小报文，如果有，可以使用writev批量发送。</li>
+</ul><h2>思考题</h2><p>和往常一样，给大家留两道思考题：</p><p>针对最后呈现的writev函数，你可以查一查Linux下一次性最多允许数组的大小是多少？</p><p>另外TCP拥塞控制算法是一个非常重要的研究领域，请你查阅下最新的有关这方面的研究，看看有没有新的发现？</p><p>欢迎你在评论区写下你的思考，也欢迎把这篇文章分享给你的朋友或者同事，一起来交流。</p><p><img src="https://static001.geekbang.org/resource/image/bf/25/bfc96ae0d8f839919b9d9866cfb8b025.jpg" alt=""></p><h2>精选留言：</h2>
+        <ul>
+        
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            许童童  2019-08-30 11:25:01
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            TCP 拥塞控制算法,我知道最新的有BBR算法，这个算法在网络包填满路由器缓冲区之前就触发流量控制，而不在丢包后才触发，有效的降低了延迟。 
+        </div>
+        
+    </div>
+</li>
+            
+<br/>
+
+<li>
+    <div>
+        <div style="color: #888;font-size:15.25px;font-weight:400;line-height:1.2">
+            张立华  2019-08-30 11:24:30
+        </div>
+        <div style="color:#353535;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6">
+            非阻塞socket，对于write和send， 返回实际发送的字节数。所以一般在while里不断发送，直到全部发送完毕。    send根据只要根据要发送的buf做个偏移，很方便。   而writev 就很繁琐了啊 
+        </div>
+        
+    </div>
+</li>
+            </ul>
+</div>
+</body>
+</html>
