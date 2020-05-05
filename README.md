@@ -4,6 +4,10 @@
 
 > 记录自己的学习过程和一些开脑洞的事情
 
+## ucore实验报告
+1. [ucore Lab1 实验报告](https://yangsoon.github.io/#/posts/42)
+2. [ucore Lab2 实验报告](https://yangsoon.github.io/#/posts/44)
+
 ## 源码剖析
 1. [Soonsock Golang实现的轻量级Shadowsocks](https://yangsoon.github.io/#/posts/39)
 2. [有栈协程实现原理](https://yangsoon.github.io/#/posts/38)
@@ -17,7 +21,3 @@
 
 ## 其他
 1. [MacOs实用命令行工具](https://yangsoon.github.io/#/posts/37)
-
-## ucore实验报告
-1. [ucore Lab1 实验报告](https://yangsoon.github.io/#/posts/42)
-2. [ucore Lab2 实验报告](https://yangsoon.github.io/#/posts/44)
