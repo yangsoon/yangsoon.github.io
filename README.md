@@ -8,7 +8,8 @@
 找工作的毕业生的垂死挣扎，因为时间问题所以每次实验中的challenge没有写，以后有时间一定补上 🕊🕊🕊
 1. [ucore Lab1 系统软件启动过程](https://yangsoon.github.io/#/posts/42)
 2. [ucore Lab2 物理内存管理](https://yangsoon.github.io/#/posts/44)
-2. [ucore Lab2 虚拟内存管理](https://yangsoon.github.io/#/posts/45)
+3. [ucore Lab3 虚拟内存管理](https://yangsoon.github.io/#/posts/45)
+4. [ucore Lab4 内核线程管理](https://yangsoon.github.io/#/posts/46)
 
 ## 源码剖析
 1. [Soonsock Golang实现的轻量级Shadowsocks](https://yangsoon.github.io/#/posts/39)
