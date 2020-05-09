@@ -5,7 +5,7 @@
 > 记录自己的学习过程和一些开脑洞的事情
 
 ## ucore实验报告
-找工作的毕业生的垂死挣扎，时间问题challenge没有写 以后有时间补上 🕊🕊🕊
+找工作的毕业生的垂死挣扎，因为时间问题所以每次实验中的challenge没有写，以后有时间一定补上 🕊🕊🕊
 1. [ucore Lab1 系统软件启动过程](https://yangsoon.github.io/#/posts/42)
 2. [ucore Lab2 物理内存管理](https://yangsoon.github.io/#/posts/44)
 2. [ucore Lab2 虚拟内存管理](https://yangsoon.github.io/#/posts/45)
