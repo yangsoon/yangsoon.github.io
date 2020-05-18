@@ -12,7 +12,6 @@
 4. [ucore Lab4 内核线程管理](https://yangsoon.github.io/#/posts/46)
 5. [ucore Lab5 用户进程管理](https://yangsoon.github.io/#/posts/47)
 6. [ucore Lab6 调度器](https://yangsoon.github.io/#/posts/48)
-7. [ucore Lab7 同步互斥](https://yangsoon.github.io/#/posts/49)
 
 ## 源码剖析
 1. [Soonsock Golang实现的轻量级Shadowsocks](https://yangsoon.github.io/#/posts/39)
