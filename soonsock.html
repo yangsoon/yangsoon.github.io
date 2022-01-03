@@ -3,30 +3,38 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- iOS Safari -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Chrome, Firefox OS and Opera Status Bar Color -->
-  <meta name="theme-color" content="#FFFFFF">
-  <meta property="og:title" content="Soonsock Golang实现的轻量级Shadowsocks">
-    <meta name="description" content="shadowsock原理剖析">
-  <meta property="og:description" content="shadowsock原理剖析">
-    <meta property="og:type" content="blog">
-  <title>Soonsock Golang实现的轻量级Shadowsocks</title>
-  <!-- Favicon -->
-    <link rel="shortcut icon" href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
-  <link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
-  <link rel="stylesheet" type="text/css" href="css/notablog.css">
-  <link rel="stylesheet" type="text/css" href="css/theme.css">
-  <style>
-    :root {
-      font-size: 18px;
-    }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
 
+  <link rel="shortcut icon" href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&amp;id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>Soonsock Golang实现的轻量级Shadowsocks&nbsp;|&nbsp;yangsoon の 自嗨</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="Soonsock Golang实现的轻量级Shadowsocks">
+  
+    <meta name="description" content="shadowsock原理剖析">
+    <meta property="og:description" content="shadowsock原理剖析">
+  
+  
+    <meta property="og:image" content="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fec17cb63-2cf4-4cf9-a167-8ea1191cfbe6%2FGolang.svg?table=block&amp;id=9358fa25-7a1a-4555-b7b8-f4d5e9836f8d">
+  
+  <style>
     .DateTagBar {
       margin-top: 1.0rem;
     }
@@ -35,30 +43,68 @@
 
 <body>
   <nav class="Navbar">
-    <a href="index.html">
-      <div class="Navbar__Btn"><span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3"></span> <span>Home</span></div>
-    </a>
-                            <span class="Navbar__Delim">&centerdot;</span>
-    <a href="about.html">
-      <div class="Navbar__Btn"><span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe8540b67-25be-41a9-8a21-2d3e20712d66%2FIMG_2189.jpg?table=block&id=4bf8bf12-ac4b-47a5-a71e-d5892342c49c"></span> <span>About</span></div>
-    </a>
-                  </nav>
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&amp;id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe8540b67-25be-41a9-8a21-2d3e20712d66%2FIMG_2189.jpg?table=block&amp;id=4bf8bf12-ac4b-47a5-a71e-d5892342c49c"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+</nav>
   <header class="Header">
-        <div class="Header__Cover">
-      <img src="https://images.unsplash.com/photo-1583316161835-3d4d351c00c2?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb">
+    
+      <div class="Header__Cover">
+        <img src="https://images.unsplash.com/photo-1583316161835-3d4d351c00c2?ixlib=rb-1.2.1&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb">
+      </div>
+    
+    <div class="Header__Spacer ">
     </div>
-        <div class="Header__Spacer ">
-    </div>
-        <div class="Header__Icon"><span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fec17cb63-2cf4-4cf9-a167-8ea1191cfbe6%2FGolang.svg?table=block&id=9358fa25-7a1a-4555-b7b8-f4d5e9836f8d"></span></div>
-        <h1 class="Header__Title">Soonsock Golang实现的轻量级Shadowsocks</h1>
-        <div class="DateTagBar">
-            <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, Jul 13, 2021</span>
-                  <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
-        <a href="tag/golang.html">golang</a>
-      </span>
-          </div>
-      </header>
-  <article id="https://www.notion.so/9358fa257a1a4555b7b8f4d5e9836f8d" class="PageRoot PageRoot--FullWidth"><div id="https://www.notion.so/725978242d374045b5aaeebb4d024b67" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F01119e23-4f44-4bd8-a9cf-94b6e2741bb5%2F1.png?width=684&amp;table=block&amp;id=72597824-2d37-4045-b5aa-eebb4d024b67"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F01119e23-4f44-4bd8-a9cf-94b6e2741bb5%2F1.png?width=684&amp;table=block&amp;id=72597824-2d37-4045-b5aa-eebb4d024b67" style="width:684px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/6cd28cd391584787a12e52d68952f26d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/4c2c46205ef04ea9a0abb13d3de2437a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">本文将介绍一个简化版本的shadowsocks— </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/yangsoon/soonsocks"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">soonsocks</strong></a></span><span class="SemanticString"> 的实现，soonsocks源于腾讯大佬</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/cssivision/shadowsocks">cssivision</a></span><span class="SemanticString">的项目并做了部分修改使得更便于阅读和理解，项目对shadowsocks-go的实现进行了简化，只支持三种加密算法以及只支持一台服务器提供代理服务。下面本文将从socks5协议开始讲解soonsocks的实现，帮助大家更好的了解shadowsocks。</span></span></p></div><div id="https://www.notion.so/1d3e32fc3403417082a6a770f5e1bdd7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">如果您觉得文章不错，欢迎给项目一个star </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/yangsoon/soonsocks"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">soonsocks</strong></a></span></span></p></div><h3 id="https://www.notion.so/8eaf65bdf37b41a6ab2d8f35cd78309d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/8eaf65bdf37b41a6ab2d8f35cd78309d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">socks5协议</span></span></h3><div id="https://www.notion.so/524d93f0ccef43d0af0263c8558eb0de" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">关于socks5协议，网上的讲解</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://zhihan.me/network/2017/09/24/socks5-protocol/">^1</a></span><span class="SemanticString">有很多，而且sock5协议的</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://www.ietf.org/rfc/rfc1928.txt">RFC 1928</a></span><span class="SemanticString">很短，包格式也很少。下图展示了socks5客户端和代理采用无认证的方式(ss就是采用无认证的方式)进行连接并传输数据的流程。主要是为了和shadowsocks的实现做对比。</span></span></p></div><div id="https://www.notion.so/0439db1439d747408ad0b76749b3b240" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7069a679-767d-4c94-a81e-222b0cbb25dc%2F2.png?width=720&amp;table=block&amp;id=0439db14-39d7-4740-8ad0-b76749b3b240"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7069a679-767d-4c94-a81e-222b0cbb25dc%2F2.png?width=720&amp;table=block&amp;id=0439db14-39d7-4740-8ad0-b76749b3b240" style="width:720px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/37a99e79f26444f1a6c9b5447fe1abfd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/067ef4ceda924ae9ad6dfbfa09e476b3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">主要流程分为socks5协商、建立连接和传输阶段:</span></span></p></div><div id="https://www.notion.so/41f7f662cc6c4f29bb695259c70be6fe" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在协商阶段，客户端向代理发送请求协商认证方式，代理端告诉客户端采用无认证的方式</span></span></p></div><div id="https://www.notion.so/3f5f34d04e1745699354b5c838b5bf7d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在连接阶段，客户端向代理发送要请求的目的地址，代理端会响应客户端是否建立连接</span></span></p></div><div id="https://www.notion.so/cc6770ab00f6471b9870591ed4035ed1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">SOCKS5 协议只负责建立连接，在完成握手阶段和建立连接之后，SOCKS5 服务器就只做简单的转发了。客户端就开始传输数据，代理端将来自remote的响应返回给客户端。</span></span></p></div><h3 id="https://www.notion.so/033a092fb8fa4699a1c023d72a9f45b0" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/033a092fb8fa4699a1c023d72a9f45b0"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">shadowsocks如何使用socks5建立连接</span></span></h3><div id="https://www.notion.so/991ca3d2835a49338404332da928db47" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">socks5因为简单易用的特性被shadowsocks来实现代理功能，其实socks5只被用来建立连接，其核心是使用一系列加密算法加密数据以及使用代理服务器做转发来实现一些网站的访问。下图为shadowsocks进行网站访问的整体流程。</span></span></p></div><div id="https://www.notion.so/ddf201def5da4c68af62b22a7cb0b743" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff08131fb-fd17-40db-a80e-5472d46bffb4%2F3.png?width=720&amp;table=block&amp;id=ddf201de-f5da-4c68-af62-b22a7cb0b743"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff08131fb-fd17-40db-a80e-5472d46bffb4%2F3.png?width=720&amp;table=block&amp;id=ddf201de-f5da-4c68-af62-b22a7cb0b743" style="width:720px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/651dad7e91ff4b9f9c5f2549831e9ae3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">和传统的socks5不同，shadowsocks将Proxy划分为SSLocal和SSServer两个部分，其中SSLocal部署在国内无法科学上网的主机上，SSServer部署在国外的主机上，其中SSLocal可以和SServer进行tcp连接。</span></span></p></div><div id="https://www.notion.so/81cf23fde25e453db4cf47c762e2b659" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">主要流程也是分为协商连接和数据传输阶段，协商和连接阶段和传统的socks5协议一致，在数据传输阶段，SSLocal会像SSServer传输加密后的客户端请求访问的网站地址，SSServer接收到加密数据之后解密确定将要代理访问的目标地址。SSLocal发送完请求地址之后便开始接收来自客户端的请求数据加密转发给SSServer。开始数据传输。</span></span></p></div><h3 id="https://www.notion.so/dd1c787118e04984aef191edebde43f7" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/dd1c787118e04984aef191edebde43f7"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">SSLocal模块实现</span></span></h3><div id="https://www.notion.so/e7c55437d6f6446c975683c771c12334" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">SSLocal模块的实现严格按照上面的连接流程。首先SSLocal模块读取配置文件信息，绑定配置文件中指定的端口，并监听来自客户端的请求，每接收到一个请求就开启一个goroutine处理该连接的数据请求和响应。</span></span></p></div><pre id="https://www.notion.so/f1c823c7463e40f29c1088783617fbe8" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>func main() {
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fec17cb63-2cf4-4cf9-a167-8ea1191cfbe6%2FGolang.svg?table=block&amp;id=9358fa25-7a1a-4555-b7b8-f4d5e9836f8d"></span>
+      </div>
+    
+    <h1 class="Header__Title">Soonsock Golang实现的轻量级Shadowsocks</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, Jul 13, 2021</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/golang.html">golang</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/9358fa257a1a4555b7b8f4d5e9836f8d" class="PageRoot PageRoot--FullWidth"><div id="https://www.notion.so/725978242d374045b5aaeebb4d024b67" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F01119e23-4f44-4bd8-a9cf-94b6e2741bb5%2F1.png?width=684&amp;table=block&amp;id=72597824-2d37-4045-b5aa-eebb4d024b67"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F01119e23-4f44-4bd8-a9cf-94b6e2741bb5%2F1.png?width=684&amp;table=block&amp;id=72597824-2d37-4045-b5aa-eebb4d024b67" style="width:684px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><ul id="https://www.notion.so/29bc8595ae054b09896b20c85f75dcaf" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/8eaf65bdf37b41a6ab2d8f35cd78309d"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">socks5协议</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/033a092fb8fa4699a1c023d72a9f45b0"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">shadowsocks如何使用socks5建立连接</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/dd1c787118e04984aef191edebde43f7"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">SSLocal模块实现</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/3292323a98654f7fa8b772cfdabd7f20"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">SSServer模块实现</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/123f6e91f91a4f5f80201f506eecf606"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">数据加密模块</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/ea89455d9f63495fb2cd28cffb2fae95"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">高级加密标准 AES</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/39c935aa1feb4278a155a75150cac78e"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">AES CFB模式</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/2085a680d9ba473b83b2c3a069cbaa8d"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">SS加密解密传输流程</span></span></div></a></li></ul><div id="https://www.notion.so/4c2c46205ef04ea9a0abb13d3de2437a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/14a0690a36434af595afe991673f9e2a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">本文将介绍一个简化版本的shadowsocks— </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/yangsoon/soonsocks"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">soonsocks</strong></a></span><span class="SemanticString"> 的实现，soonsocks源于腾讯大佬</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/cssivision/shadowsocks">cssivision</a></span><span class="SemanticString">的项目并做了部分修改使得更便于阅读和理解，项目对shadowsocks-go的实现进行了简化，只支持三种加密算法以及只支持一台服务器提供代理服务。下面本文将从socks5协议开始讲解soonsocks的实现，帮助大家更好的了解shadowsocks。</span></span></p></div><div id="https://www.notion.so/1d3e32fc3403417082a6a770f5e1bdd7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">如果您觉得文章不错，欢迎给项目一个star </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/yangsoon/soonsocks"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">soonsocks</strong></a></span></span></p></div><h3 id="https://www.notion.so/8eaf65bdf37b41a6ab2d8f35cd78309d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/8eaf65bdf37b41a6ab2d8f35cd78309d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">socks5协议</span></span></h3><div id="https://www.notion.so/524d93f0ccef43d0af0263c8558eb0de" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">关于socks5协议，网上的讲解</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://zhihan.me/network/2017/09/24/socks5-protocol/">^1</a></span><span class="SemanticString">有很多，而且sock5协议的</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://www.ietf.org/rfc/rfc1928.txt">RFC 1928</a></span><span class="SemanticString">很短，包格式也很少。下图展示了socks5客户端和代理采用无认证的方式(ss就是采用无认证的方式)进行连接并传输数据的流程。主要是为了和shadowsocks的实现做对比。</span></span></p></div><div id="https://www.notion.so/0439db1439d747408ad0b76749b3b240" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7069a679-767d-4c94-a81e-222b0cbb25dc%2F2.png?width=720&amp;table=block&amp;id=0439db14-39d7-4740-8ad0-b76749b3b240"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7069a679-767d-4c94-a81e-222b0cbb25dc%2F2.png?width=720&amp;table=block&amp;id=0439db14-39d7-4740-8ad0-b76749b3b240" style="width:720px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/37a99e79f26444f1a6c9b5447fe1abfd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/067ef4ceda924ae9ad6dfbfa09e476b3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">主要流程分为socks5协商、建立连接和传输阶段:</span></span></p></div><div id="https://www.notion.so/41f7f662cc6c4f29bb695259c70be6fe" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在协商阶段，客户端向代理发送请求协商认证方式，代理端告诉客户端采用无认证的方式</span></span></p></div><div id="https://www.notion.so/3f5f34d04e1745699354b5c838b5bf7d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在连接阶段，客户端向代理发送要请求的目的地址，代理端会响应客户端是否建立连接</span></span></p></div><div id="https://www.notion.so/cc6770ab00f6471b9870591ed4035ed1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">SOCKS5 协议只负责建立连接，在完成握手阶段和建立连接之后，SOCKS5 服务器就只做简单的转发了。客户端就开始传输数据，代理端将来自remote的响应返回给客户端。</span></span></p></div><h3 id="https://www.notion.so/033a092fb8fa4699a1c023d72a9f45b0" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/033a092fb8fa4699a1c023d72a9f45b0"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">shadowsocks如何使用socks5建立连接</span></span></h3><div id="https://www.notion.so/991ca3d2835a49338404332da928db47" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">socks5因为简单易用的特性被shadowsocks来实现代理功能，其实socks5只被用来建立连接，其核心是使用一系列加密算法加密数据以及使用代理服务器做转发来实现一些网站的访问。下图为shadowsocks进行网站访问的整体流程。</span></span></p></div><div id="https://www.notion.so/ddf201def5da4c68af62b22a7cb0b743" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff08131fb-fd17-40db-a80e-5472d46bffb4%2F3.png?width=720&amp;table=block&amp;id=ddf201de-f5da-4c68-af62-b22a7cb0b743"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff08131fb-fd17-40db-a80e-5472d46bffb4%2F3.png?width=720&amp;table=block&amp;id=ddf201de-f5da-4c68-af62-b22a7cb0b743" style="width:720px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/651dad7e91ff4b9f9c5f2549831e9ae3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">和传统的socks5不同，shadowsocks将Proxy划分为SSLocal和SSServer两个部分，其中SSLocal部署在国内无法科学上网的主机上，SSServer部署在国外的主机上，其中SSLocal可以和SServer进行tcp连接。</span></span></p></div><div id="https://www.notion.so/81cf23fde25e453db4cf47c762e2b659" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">主要流程也是分为协商连接和数据传输阶段，协商和连接阶段和传统的socks5协议一致，在数据传输阶段，SSLocal会向SSServer传输加密后的客户端请求访问的网站地址，SSServer接收到加密数据之后解密确定将要代理访问的目标地址。SSLocal发送完请求地址之后便开始接收来自客户端的请求数据加密转发给SSServer，开始数据传输。</span></span></p></div><h3 id="https://www.notion.so/dd1c787118e04984aef191edebde43f7" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/dd1c787118e04984aef191edebde43f7"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">SSLocal模块实现</span></span></h3><div id="https://www.notion.so/e7c55437d6f6446c975683c771c12334" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">SSLocal模块的实现严格按照上面的连接流程。首先SSLocal模块读取配置文件信息，绑定配置文件中指定的端口，并监听来自客户端的请求，每接收到一个请求就开启一个goroutine处理该连接的数据请求和响应。</span></span></p></div><pre id="https://www.notion.so/f1c823c7463e40f29c1088783617fbe8" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>func main() {
 	var configPath string
 	flag.StringVar(&amp;configPath, &quot;c&quot;, &quot;config.json&quot;, &quot;json file with config&quot;)
 	flag.Parse()
@@ -266,20 +312,13 @@ func (cc *CConn) Write(b []byte) (int, error) {
 	n, err := cc.Conn.Write(encryptData)
 	return n, err
 }</span></span></span></code></pre><div id="https://www.notion.so/57e00adeaf2d4bcea84e5b04523726c8" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">仓库地址:</span></span></p></div><div id="https://www.notion.so/c56644eb873a401896396b5313560aa2" class="Bookmark"><a href="https://github.com/yangsoon/soonsocks"><h5 class="Bookmark__Title">yangsoon/soonsocks</h5><p class="Bookmark__Desc">A simple shadowsocks proxy implemented in golang cd cmd/ssserver &amp;&amp; go build -o sserver &amp;&amp; ./sserver -c ../../testdata/config.json 本文将介绍一个简化版本的shadowsocks- 的实现，soonsocks源于腾讯大佬 cssivision ...</p><p class="Bookmark__Link">https://github.com/yangsoon/soonsocks</p></a></div><div id="https://www.notion.so/21e9e4c48d4946919200c8a4cfdba0a3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
-  <div>
-    <!-- utterances - Github issue comment -->
-    <script src="https://utteranc.es/client.js" repo="yangsoon/yangsoon.github.io" issue-term="pathname"
-      label="blog-comment" theme="github-light" crossorigin="anonymous" async>
-      </script>
-  </div>
-
   <footer class="Footer">
-    <div>&copy; 小 yang 的脑洞屋 2019</div>
-    <div>&centerdot;</div>
-    <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
-        rel="noopener noreferrer">Notablog</a>.
-    </div>
-  </footer>
+  <div>&copy; yangsoon の 自嗨 2019-2021</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
 </body>
 
 </html>

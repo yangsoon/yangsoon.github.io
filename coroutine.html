@@ -3,30 +3,38 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- iOS Safari -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Chrome, Firefox OS and Opera Status Bar Color -->
-  <meta name="theme-color" content="#FFFFFF">
-  <meta property="og:title" content="有栈协程实现原理">
-    <meta name="description" content="携程(误) 协程的实现原理">
-  <meta property="og:description" content="携程(误) 协程的实现原理">
-    <meta property="og:type" content="blog">
-  <title>有栈协程实现原理</title>
-  <!-- Favicon -->
-    <link rel="shortcut icon" href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
-  <link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
-  <link rel="stylesheet" type="text/css" href="css/notablog.css">
-  <link rel="stylesheet" type="text/css" href="css/theme.css">
-  <style>
-    :root {
-      font-size: 18px;
-    }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
 
+  <link rel="shortcut icon" href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&amp;id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>有栈协程实现原理&nbsp;|&nbsp;yangsoon の 自嗨</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="有栈协程实现原理">
+  
+    <meta name="description" content="携程(误) 协程的实现原理">
+    <meta property="og:description" content="携程(误) 协程的实现原理">
+  
+  
+    <meta property="og:image" content="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F77239291-88f1-4896-b4e6-07b12a3c7b72%2F3x.svg?table=block&amp;id=46b70d0f-b1d9-4a90-aee0-0461722333ba">
+  
+  <style>
     .DateTagBar {
       margin-top: 1.0rem;
     }
@@ -35,29 +43,67 @@
 
 <body>
   <nav class="Navbar">
-    <a href="index.html">
-      <div class="Navbar__Btn"><span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3"></span> <span>Home</span></div>
-    </a>
-                            <span class="Navbar__Delim">&centerdot;</span>
-    <a href="about.html">
-      <div class="Navbar__Btn"><span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe8540b67-25be-41a9-8a21-2d3e20712d66%2FIMG_2189.jpg?table=block&id=4bf8bf12-ac4b-47a5-a71e-d5892342c49c"></span> <span>About</span></div>
-    </a>
-                  </nav>
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&amp;id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe8540b67-25be-41a9-8a21-2d3e20712d66%2FIMG_2189.jpg?table=block&amp;id=4bf8bf12-ac4b-47a5-a71e-d5892342c49c"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+</nav>
   <header class="Header">
-        <div class="Header__Cover">
-      <img src="https://images.unsplash.com/photo-1613253932202-686cbcd993b0?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb">
+    
+      <div class="Header__Cover">
+        <img src="https://images.unsplash.com/photo-1613253932202-686cbcd993b0?ixlib=rb-1.2.1&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb">
+      </div>
+    
+    <div class="Header__Spacer ">
     </div>
-        <div class="Header__Spacer ">
-    </div>
-        <div class="Header__Icon"><span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F77239291-88f1-4896-b4e6-07b12a3c7b72%2F3x.svg?table=block&id=46b70d0f-b1d9-4a90-aee0-0461722333ba"></span></div>
-        <h1 class="Header__Title">有栈协程实现原理</h1>
-        <div class="DateTagBar">
-            <span class="DateTagBar__Item DateTagBar__Date">Posted on Sun, Jul 11, 2021</span>
-                  <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
-        <a href="tag/os.html">os</a>
-      </span>
-          </div>
-      </header>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F77239291-88f1-4896-b4e6-07b12a3c7b72%2F3x.svg?table=block&amp;id=46b70d0f-b1d9-4a90-aee0-0461722333ba"></span>
+      </div>
+    
+    <h1 class="Header__Title">有栈协程实现原理</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Sun, Jul 11, 2021</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+            <a href="tag/os.html">os</a>
+          </span>
+        
+      </div>
+    
+  </header>
   <article id="https://www.notion.so/46b70d0fb1d94a90aee00461722333ba" class="PageRoot PageRoot--FullWidth"><div id="https://www.notion.so/6faabd561bdd46788fcd2c2e53e0f648" class="ColumnList"><div id="https://www.notion.so/0a1d50386fa64bb6a8ebdfe560ee4e9e" class="Column" style="width:calc((100% - var(--column-spacing) * 1) * 0.1875)"><ul id="https://www.notion.so/65faf3739df340da8ee96668936c4879" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/722ebb7638524f978a9304142c672e6b"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">协程</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/71ff10c93c464461823d74f09edb359d"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">进程、线程</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/1a4d4d2f79814963a6e6b7d72ffce7bb"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">进程地址空间</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/2b22dcb77b2e4cf2bc9ff961583966cf"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">栈的增长方式</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/8f15eff45e8c4e04ba3da948aaafb738"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">线程</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/85567b132bd84050a0dc03553b6365ba"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">线程上下文切换</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/e8b293fae4d7457f93e0dbc6571b8c8f"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">实现协程的理论依据</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/aec6fa3ab1c54d4599272a7e87a128ba"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">ucontext</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/1badb3bd39bb4d25ade4c1ed12edad42"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">coroutine实现</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/8cb8158c60b940c3ae59989e41a84319"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">coroutine例子</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/860ce9447bdc41079ce49eb1fe04cc8d"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">核心对象</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/ffad741c58c14cb68f733b4050adfd70"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">协程状态</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/cce74e23347142019bb33a6f3640798d"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">READY -&gt; RUNNING</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/3cf237b741d74562a909445c4d3aeb5a"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">RUNNING -&gt; SUSPEND</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/2aac51fa201044d39f25a12a1a25a1aa"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">SUSPEND -&gt; RUNNING</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/62c8a347d32947fbb98de5a6ecc7b574"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">运行栈保存</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/a2781ff2b97e4c21ab0a19ea80c7a8d8"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">goroutine实现</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/1bfa850fe5b04654aef93de03787cc0e"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">参考文献</span></span></div></a></li></ul></div><div id="https://www.notion.so/c991e2766b3d426ab1ba06418823e61c" class="Column" style="width:calc((100% - var(--column-spacing) * 1) * 0.8125)"><div id="https://www.notion.so/530b46964e764cb788a22327a7d72a62" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">本文主要讲解有栈线程的实现原理，以云风实现的coroutine为例。在讲解之前，本文会先描述一些基本的概念，保证读者能够轻松的理解coroutine的实现。</span></span></p></div><h2 id="https://www.notion.so/722ebb7638524f978a9304142c672e6b" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/722ebb7638524f978a9304142c672e6b"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">协程</span></span></h2><div id="https://www.notion.so/a5d1c53d9ca24c6792da2e46afaf0c36" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">关于协程的概念，在网上没有找到很好的解释，下面就说说个人的理解，(有栈)协程可以理解为一个用户态下的线程，在用户态下进行线程（协程）的上下文切换。但是和传统的线程不同的是：线程是抢占式执行，当发生系统调用或者中断的时候，交由OS调度执行；而协程是通过yield主动让出cpu所有权，切换到其他协程执行。</span></span></p></div><h2 id="https://www.notion.so/71ff10c93c464461823d74f09edb359d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/71ff10c93c464461823d74f09edb359d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">进程、线程</span></span></h2><h3 id="https://www.notion.so/1a4d4d2f79814963a6e6b7d72ffce7bb" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/1a4d4d2f79814963a6e6b7d72ffce7bb"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">进程地址空间</span></span></h3><div id="https://www.notion.so/2568ea477d1442e6a196365f305f9743" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">一般来说一个进程的地址空间有这几个默认区域:</span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/7cd6cddc55ec415cbc7bd8c8a78769c6" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString">栈：栈用于维护函数调用的上下文，包括函数的参数，局部变量等等。</span></span></li><li id="https://www.notion.so/477e038a0ef74aaf88dc84f6a51f625b" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString">堆：用来容纳程序中动态分配的内存区域，当程序使用malloc和new分配的内存就来自于堆里</span></span></li><li id="https://www.notion.so/cb7302a3e796466aa0c933eb5e07f1bc" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString">可执行文件映像。</span></span></li><li id="https://www.notion.so/85637744fe884f9cb3cdd5dacc32a7ad" class="NumberedList" value="4"><span class="SemanticStringArray"><span class="SemanticString">保留区，是对内存中受到保护而禁止访问的内存区域的总称。</span></span></li></ol><div id="https://www.notion.so/e8448f84f84046e4815e0a75abf2882e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">下图是linux下一个进程的典型内存布局: 在经典的操作系统中，栈总是 </span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">向下增长</strong></span><span class="SemanticString"> ，从高地址向低地址增长，其中栈顶指针存储在 </span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">[E|R]SP</strong></span><span class="SemanticString"> 寄存器中，而堆则总是 </span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">向上增长</strong></span><span class="SemanticString"> ，从低地址向高地址增长。</span></span></p></div><div id="https://www.notion.so/c5879966abb14d0491848eeb9961449c" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2f585320-a4d6-4979-961b-0a169b04878c%2F1.png?width=432&amp;table=block&amp;id=c5879966-abb1-4d04-9184-8eeb9961449c"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2f585320-a4d6-4979-961b-0a169b04878c%2F1.png?width=432&amp;table=block&amp;id=c5879966-abb1-4d04-9184-8eeb9961449c" style="width:432px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><h3 id="https://www.notion.so/2b22dcb77b2e4cf2bc9ff961583966cf" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/2b22dcb77b2e4cf2bc9ff961583966cf"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">栈的增长方式</span></span></h3><div id="https://www.notion.so/28061cfb7ed1478885b3d9531bd7745b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">栈在程序运行中具有举足轻重的地位，最重要的，栈保存了一个函数调用所需要维护的信息，这常常被称为</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">堆栈帧</strong></span><span class="SemanticString">，堆栈帧一般包括下面几方面内容：</span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/a775348e18804f569577bd5696b8c872" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString">函数的返回地址和参数</span></span></li><li id="https://www.notion.so/566135cf86a0434f89f39215e1e2c243" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString">临时变量：包括函数的非静态局部变量以及编译器自动生成的其他临时变量</span></span></li><li id="https://www.notion.so/7dd7685b9ab24279950594f3bb0f0e5a" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString">保存的上下文：包括在函数调用前后需要保存不变的寄存器的值</span></span></li></ol><div id="https://www.notion.so/39ecc7419782454b993fdb7890590db5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">一个函数的堆栈帧用 </span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">[E|R]SP,[E|R]BP</strong></span><span class="SemanticString"> ，这两个寄存器划定范围，</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">[E|R]SP</strong></span><span class="SemanticString">始终指向栈顶的位置称为栈指针寄存器，</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">[E|R]SP</strong></span><span class="SemanticString">指向堆栈帧的一个固定位置，</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">[E|R]SP</strong></span><span class="SemanticString"> 又被称为帧指针，一般函数中的局部变量靠 </span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">[E|R]SP</strong></span><span class="SemanticString"> 加上偏移量寻找。</span></span></p></div><blockquote id="https://www.notion.so/29377723682743b1b7e5a00885c84e6d" class="ColorfulBlock ColorfulBlock--ColorDefault Quote"><span class="SemanticStringArray"><span class="SemanticString">[E|R]SP表示esp或者rsp寄存器，esp表示32位x86架构下的栈指针寄存器，rsp表示64位x86架构下的栈指针寄存器，同理于[E|R]BP。 帧指针并不是必须的, x86-64过程中的栈帧通常有固定的大小，在调用过程中栈指针保持固定的位置，使得可以通过相对于栈指针的偏移量来访问数据^1。</span></span></blockquote><div id="https://www.notion.so/02dfd3f1184542808f127c4dcba1500b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">下面我们就简单讲解一下当程序调用一个简单的函数时，线程中的栈是如何增长的。假设有一个foo函数</span></span></p></div><pre id="https://www.notion.so/561d9b850dc0462db46261f381d0f4c7" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span> m<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">{</span>
   <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// #i</span>
   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
@@ -224,20 +270,13 @@ this is coroutine_test</span></span></span></code></pre><h2 id="https://www.noti
 	C<span class="token operator">-></span>size <span class="token operator">=</span> top <span class="token operator">-</span> <span class="token operator">&amp;</span>dummy<span class="token punctuation">;</span>
 	<span class="token function">memcpy</span><span class="token punctuation">(</span>C<span class="token operator">-></span>stack<span class="token punctuation">,</span> <span class="token operator">&amp;</span>dummy<span class="token punctuation">,</span> C<span class="token operator">-></span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></span></span></span></code></pre><h2 id="https://www.notion.so/a2781ff2b97e4c21ab0a19ea80c7a8d8" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/a2781ff2b97e4c21ab0a19ea80c7a8d8"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">goroutine实现</span></span></h2><div id="https://www.notion.so/f7735bac39254a89ac4172f7e6b7b60a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">golang语言中的goroutine也是一个有栈协程，但是和本文讲到的coroutine还是有很大不同，首先golang有自己的协程调度器，而且golang的协程是抢占式执行的，关于golang的协程要写的东西还是太多了，得再开一篇文章讨论，大家可以阅读下面的文章有个深入的了解。</span></span></p></div><div id="https://www.notion.so/37ecafa9c65f464bb0e1a9a1ab2d6c2d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://zboya.github.io/post/go_scheduler/#%E6%B7%B1%E5%85%A5golang-runtime%E7%9A%84%E8%B0%83%E5%BA%A6">深入golang-runtime的调度</a></span></span></p></div><h2 id="https://www.notion.so/1bfa850fe5b04654aef93de03787cc0e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/1bfa850fe5b04654aef93de03787cc0e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">参考文献</span></span></h2><ol class="NumberedListWrapper"><li id="https://www.notion.so/db80e062e43841058fcdb5a2833a9c24" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://book.douban.com/subject/19973015/">Operating Systems</a></span></span></li><li id="https://www.notion.so/ca60dc1119c6467b84d5f2cb91fd20fd" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://book.douban.com/subject/3652388/">程序员的自我修养</a></span></span></li></ol><div id="https://www.notion.so/fd9ca7a7161d4d4986881ef238819909" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></div></div></article>
-  <div>
-    <!-- utterances - Github issue comment -->
-    <script src="https://utteranc.es/client.js" repo="yangsoon/yangsoon.github.io" issue-term="pathname"
-      label="blog-comment" theme="github-light" crossorigin="anonymous" async>
-      </script>
-  </div>
-
   <footer class="Footer">
-    <div>&copy; 小 yang 的脑洞屋 2019</div>
-    <div>&centerdot;</div>
-    <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
-        rel="noopener noreferrer">Notablog</a>.
-    </div>
-  </footer>
+  <div>&copy; yangsoon の 自嗨 2019-2021</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
 </body>
 
 </html>

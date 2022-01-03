@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&amp;id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>基于aiotg创建一个telegram爬虫机器人&nbsp;|&nbsp;yangsoon の 自嗨</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="基于aiotg创建一个telegram爬虫机器人">
+  
+    <meta name="description" content="搭建一个telegram机器人">
+    <meta property="og:description" content="搭建一个telegram机器人">
+  
+  
+    <meta property="og:image" content="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff35d8fc1-e1f6-4751-b1c2-d34eaf37a569%2Ftelegram.svg?table=block&amp;id=4304d14d-af0e-42ae-ba17-4b156f543aeb">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F755439b9-9583-43c3-b282-b5d6af4102f1%2Fcodeedit.svg?table=collection&amp;id=3e8bb3a8-a159-4df7-963b-d7260c12c7f3"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe8540b67-25be-41a9-8a21-2d3e20712d66%2FIMG_2189.jpg?table=block&amp;id=4bf8bf12-ac4b-47a5-a71e-d5892342c49c"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff35d8fc1-e1f6-4751-b1c2-d34eaf37a569%2Ftelegram.svg?table=block&amp;id=4304d14d-af0e-42ae-ba17-4b156f543aeb"></span>
+      </div>
+    
+    <h1 class="Header__Title">基于aiotg创建一个telegram爬虫机器人</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, Jul 13, 2021</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--default">
+            <a href="tag/python.html">python</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/4304d14daf0e42aeba174b156f543aeb" class="PageRoot PageRoot--FullWidth"><h2 id="https://www.notion.so/fef4d50ef398469d9472634c03f4d5f5" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/fef4d50ef398469d9472634c03f4d5f5"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">前言</span></span></h2><div id="https://www.notion.so/8e32b550fc654e10a1ea34242a317a7c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://stepan.xyz/aiotg/index.html">aiotg</a></span><span class="SemanticString"> 可以通过异步调用telegram api的方式来构建bot，因为决定开发一个爬虫功能的bot，所以网络请求阻塞是比较严重的性能障碍。而asyncio的异步非阻塞特性能够完美的解决这一问题。这篇文章在记录如何使用aiotg进行telegram开发的同时，也会说明一些aiohttp的使用方法,这里是</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/yangsoon/funny-bot">项目源码</a></span><span class="SemanticString">。</span></span></p></div><h2 id="https://www.notion.so/3ca722bf2dce469b8c63dc60e279203b" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/3ca722bf2dce469b8c63dc60e279203b"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">aiotg简单教程</span></span></h2><h3 id="https://www.notion.so/4f91921d38ae4434b4cb22d850ae0444" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/4f91921d38ae4434b4cb22d850ae0444"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">1.一个最简单的bot</span></span></h3><pre id="https://www.notion.so/ac716594534d47c1958e424b2663a67c" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">from</span> aiotg <span class="token keyword">import</span> Bot<span class="token punctuation">,</span> Chat
+
+config <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">"api_token"</span><span class="token punctuation">:</span> <span class="token string">"***********"</span><span class="token punctuation">,</span>
+    <span class="token string">"proxy"</span><span class="token punctuation">:</span> <span class="token string">"&lt;http://127.0.0.1:8118>"</span>
+<span class="token punctuation">}</span>
+
+bot <span class="token operator">=</span> Bot<span class="token punctuation">(</span><span class="token operator">**</span>config<span class="token punctuation">)</span>
+
+<span class="token decorator annotation punctuation">@bot<span class="token punctuation">.</span>command</span><span class="token punctuation">(</span><span class="token string">r"/echo (.+)"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">echo</span><span class="token punctuation">(</span>chat<span class="token punctuation">:</span> Chat<span class="token punctuation">,</span> match<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> chat<span class="token punctuation">.</span>reply<span class="token punctuation">(</span>match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+bot<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</span></span></span></code></pre><div id="https://www.notion.so/01db1f302b994a71ac64852c5faefc6f" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/f4485fd1d59f426398e7863a7feac7f1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">上面是一个简单的回复机器人，当你使用指令 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">/echo</code></span><span class="SemanticString">+内容时，机器人会自动回复给你发送的内容。这里要注意一点，在我这里没有采用使用  </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">pipenv</code></span><span class="SemanticString">  ( </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">pip</code></span><span class="SemanticString"> ) 安装aiotg的方法，因为pip平台上安装的是master分支的包，aiotg通过使用aiohttp来调用telegram bot api，在创建一个bot的时候没有提供</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">proxy</code></span><span class="SemanticString">选项为aiohttp设置代理，在本地开发的时候会因为国内网络抽搐出现网络连接错误，所以在这里我使用了aiotg的proxy分支，直接从github上下载的代码。在创建Bot对象的时候加入proxy选项就能使用本地代理来进行开发调试了。</span></span></p></div><div id="https://www.notion.so/0043f1446641424d8c93590cadcaedb7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">后来我在aiotg telegram群里建议作者将proxy合并到主分支，后来作者表示他也有这样的想法，同时他也吐槽了一下俄罗斯的网络也有很多审查和限制，现在在aiotg里已经没有proxy分支了，在aiotg-0.9.9版本中提供proxy选项，所以大家可以继续使用pipenv下载aiotg包。</span></span></p></div><h3 id="https://www.notion.so/5a9f6ae4f3fb4f67b2c03c900142dc50" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/5a9f6ae4f3fb4f67b2c03c900142dc50"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">2.aiotg异步特性</span></span></h3><div id="https://www.notion.so/3d39412be3324b9daf5ff8946e6f0bad" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">既然用到aiotg来开发就是看中了他的异步特性，下面就列出一个简单的例子</span></span></p></div><pre id="https://www.notion.so/38f69ed07a1b4c77b8a32c838732ade2" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>import aiohttp
+import json
+from aiotg import Bot, Chat
+
+with open(&#x27;token.conf&#x27;) as f:
+    token = json.loads(f.read())
+
+bot = Bot(**token)
+
+@bot.command(&quot;/fetch&quot;)
+async def async_fecth(chat: Chat, match):
+    url = &quot;&lt;http://www.gamersky.com/ent/111/&gt;&quot;
+    async with aiohttp.ClientSession() as sesssion:
+        async with sesssion.get(url) as resp:
+            info = &#x27; version: {}\\n status :{}\\n method: {}\\n url: {}\\n&#x27;.format(
+                resp.version, resp.status, resp.method, resp.url)
+            await chat.send_text(info)
+
+bot.run(debug=True)
+
+</span></span></span></code></pre><div id="https://www.notion.so/9df50c8209fd485cbb2a7e1e374d72ef" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><h3 id="https://www.notion.so/f01536ad07ab4a4ca72526d9804e7e49" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/f01536ad07ab4a4ca72526d9804e7e49"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">3. 自定义键盘</span></span></h3><div id="https://www.notion.so/3deea96bb9c94d74acc31370eb143a4b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">关于</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://core.telegram.org/bots#keyboards">自定义键盘</a></span><span class="SemanticString">的内容可以点击链接查看官方解释。
+</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">category.json</code></span></span></p></div><pre id="https://www.notion.so/03b7802b161747c2ae8c5e052d56716d" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>[
+    {
+        &quot;name&quot;: &quot;dynamic&quot;,
+        &quot;title&quot;: &quot;动态图&quot;,
+        &quot;url&quot;: &quot;&lt;http://www.gamersky.com/ent/111/&gt;&quot;
+    },
+    {
+        &quot;name&quot;: &quot;oops&quot;,
+        &quot;title&quot;: &quot;囧图&quot;,
+        &quot;url&quot;: &quot;&lt;http://www.gamersky.com/ent/147/&gt;&quot;
+    },
+    {
+        &quot;name&quot;: &quot;beauty&quot;,
+        &quot;title&quot;: &quot;福利图&quot;,
+        &quot;url&quot;: &quot;&lt;http://tag.gamersky.com/news/66.html&gt;&quot;
+    },
+    {
+        &quot;name&quot;: &quot;easy-moment&quot;,
+        &quot;title&quot;: &quot;轻松一刻&quot;,
+        &quot;url&quot;: &quot;&lt;http://www.gamersky.com/ent/20503/&gt;&quot;
+    },
+    {
+        &quot;name&quot;: &quot;trivia&quot;,
+        &quot;title&quot;: &quot;冷知识&quot;,
+        &quot;url&quot;: &quot;&lt;http://www.gamersky.com/ent/198/&gt;&quot;
+    },
+    {
+        &quot;name&quot;: &quot;cold-tucao&quot;,
+        &quot;title&quot;: &quot;冷吐槽&quot;,
+        &quot;url&quot;: &quot;&lt;http://www.gamersky.com/ent/20108/&gt;&quot;
+    }
+]
+</span></span></span></code></pre><div id="https://www.notion.so/51dea15f5a5e488588d27ff1205a875b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">main.py</code></span></span></p></div><pre id="https://www.notion.so/1602e50305a94f1794ef7d10e7b620ce" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>import aiohttp
+import json
+from aiotg import Bot, Chat
+
+with open(&#x27;token.json&#x27;) as t, open(&#x27;category.json&#x27;) as c:
+    token = json.loads(t.read())
+    category = json.loads(c.read())
+
+bot = Bot(**token)
+
+@bot.command(&quot;/reply&quot;)
+async def resply(chat: Chat, match):
+    kb = [[item[&#x27;title&#x27;]] for item in category]
+    keyboard = {
+        &quot;keyboard&quot;: kb,
+        &quot;resize_keyboard&quot;: True
+    }
+    await chat.send_text(text=&quot;看看你的键盘&quot;, reply_markup=json.dumps(keyboard))
+
+bot.run(debug=True)
+</span></span></span></code></pre><div id="https://www.notion.so/49b5717665914d89b66cd8d8e49acf67" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/7df01b38db4a487aa4175eae60e8255b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">只需要在调用chat的发送消息函数中，指定 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">reply_markup</code></span><span class="SemanticString"> 参数，你就能个性化的设定用户键盘， </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">reply_markup</code></span><span class="SemanticString"> 参数需要一个json对象，官方指定为</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://core.telegram.org/bots/api#replykeyboardmarkup">ReplyKeyboardMarkup</a></span><span class="SemanticString">类型，其中</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">keyboard</code></span><span class="SemanticString">需要传递一个</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://core.telegram.org/bots/api#keyboardbutton">KeyboardButton</a></span><span class="SemanticString">的数组。</span></span></p></div><div id="https://www.notion.so/ab72b6d896104a05b189dd30484fca38" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">每个keyboard的成员代表着键盘中的行，你可以通过修改每行中KeyboardButton的个数来排列你的键盘，比如我们让键盘每行显示两个KeyboardButton，如下所示</span></span></p></div><pre id="https://www.notion.so/cff5db1af5eb4f1ebdc70e7b41b1d3fb" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>@bot.command(&quot;/reply&quot;)
+async def reply(chat: Chat, match):
+    # kb = [[item[&#x27;title&#x27;]] for item in category]
+    kb, row = [], -1
+    for idx, item in enumerate(category):
+        if idx % 2 == 0:
+            kb.append([])
+            row += 1
+        kb[row].append(item[&#x27;title&#x27;])
+    keyboard = {
+        &quot;keyboard&quot;: kb,
+        &quot;resize_keyboard&quot;: True
+    }
+    await chat.send_text(text=&quot;看看你的键盘&quot;, reply_markup=json.dumps(keyboard))
+</span></span></span></code></pre><div id="https://www.notion.so/efc4597ae5b0445c87d94c990f0903c1" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><h3 id="https://www.notion.so/1da555d384f54e41992b77b1f530bc1b" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/1da555d384f54e41992b77b1f530bc1b"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">4. 内联键盘和消息更新</span></span></h3><div id="https://www.notion.so/7ecfc638dad64b31bdbc2dc4cc78eb35" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">内联键盘的意思就是附着在消息上的键盘，内联键盘由内联按钮组成，每个按钮会附带一个回调数据，每次点击按钮之后会有对应的回调函数处理。</span></span></p></div><pre id="https://www.notion.so/b1aeb7e6875e482d9f1ef7ff37542c73" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>@bot.command(&quot;/inline&quot;)
+async def inlinekeyboard(chat: Chat, match):
+
+    inlinekeyboardmarkup = {
+            &#x27;type&#x27;: &#x27;InlineKeyboardMarkup&#x27;,
+            &#x27;inline_keyboard&#x27;: [
+                [{&#x27;type&#x27;: &#x27;InlineKeyboardButton&#x27;,
+                  &#x27;text&#x27;: &#x27;上一页&#x27;,
+                  &#x27;callback_data&#x27;: &#x27;page-pre&#x27;},
+                 {&#x27;type&#x27;: &#x27;InlineKeyboardButton&#x27;,
+                  &#x27;text&#x27;: &#x27;下一页&#x27;,
+                  &#x27;callback_data&#x27;: &#x27;page-next&#x27;}]
+                ]
+            }
+
+    await chat.send_text(&#x27;请翻页&#x27;, reply_markup=json.dumps(inlinekeyboardmarkup))
+
+@bot.callback(r&#x27;page-(\\w+)&#x27;)
+async def buttonclick(chat, cq, match):
+    await chat.send_text(&#x27;You clicked {}&#x27;.format(match.group(1)))
+</span></span></span></code></pre><div id="https://www.notion.so/07b087b6df2d4ae495c3801b06a54e2a" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/a9369310f3574bcba586913cdd2ed796" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">有时候我们想修改之前已经发送过的消息内容，例如当用户点击了内联键盘，而键盘的功能是进行翻页更新消息的内容。这时候我们可以使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">editMessageText</code></span><span class="SemanticString"> 功能。例如点击上面内联键盘中的上一页按钮，你可以看到消息的内容被更改了。</span></span></p></div><pre id="https://www.notion.so/3ce95575b7e346fca3e0822b107a18dd" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>@bot.callback(r&#x27;page-(\\w+)&#x27;)
+async def buttonclick(chat, cq, match):
+    await chat.edit_text(message_id=chat.message[&#x27;message_id&#x27;], text=&quot;消息被修改了&quot;)
+</span></span></span></code></pre><div id="https://www.notion.so/fc3b9f337a594e02b07dc103fe98982e" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><h3 id="https://www.notion.so/d04ea1096c404ae9b875459debd6a32d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/d04ea1096c404ae9b875459debd6a32d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">5.内联请求模式</span></span></h3><div id="https://www.notion.so/c164545b373348b0bc94b7a6c0941e23" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">内联请求模式感觉更适合在群组中使用，在讨论组中输入</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">@botname</code></span><span class="SemanticString"> + 特定指令，输入框的上方就会显示查询内容，你可以返回给用户文章类型、图片类型或者其他类型的查询信息。</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://core.telegram.org/bots/api#inline-mode">官网</a></span><span class="SemanticString">有更详细的内容。</span></span></p></div><pre id="https://www.notion.so/3218a4806e6440c9839877c224e3d2fa" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>@bot.inline
+async def inlinemode(iq):
+    results = [{
+            &#x27;type&#x27;: &#x27;article&#x27;,
+            &#x27;id&#x27;: str(index),
+            &#x27;title&#x27;: article[&#x27;title&#x27;],
+            &#x27;input_message_content&#x27;: { &#x27;message_text&#x27;: article[&#x27;title&#x27;]},
+            &#x27;description&#x27;: f&quot;这里是{article[&#x27;title&#x27;]}&quot;
+        } for index, article in enumerate(category)]
+    await iq.answer(results)
+</span></span></span></code></pre><div id="https://www.notion.so/3d6e9d2063314616aaaf33a785facfb5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">&lt;div align=&quot;center&quot;&gt;
+&lt;img src=&quot;</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://ww1.sinaimg.cn/large/006r0i4lgy1fr7au03whbj30jz0zkabu.jpg">http://ww1.sinaimg.cn/large/006r0i4lgy1fr7au03whbj30jz0zkabu.jpg</a></span><span class="SemanticString">&quot;  width=&quot;50%&quot; height=&quot;50%&quot;&gt;
+&lt;/div&gt;</span></span></p></div><div id="https://www.notion.so/6868c9efbbbd43ceaa05df0d4f2961cb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">我们设定当用户输入内联指令时，bot返回可以选择的图片种类，返回结果的类型是article类型，官方还提供了语音，图片，gif，视频，音频。表情等类型，你可以根据自己的需要进行选择。</span></span></p></div><h2 id="https://www.notion.so/22fc6773c77740cdb33a8b788a5448e6" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/22fc6773c77740cdb33a8b788a5448e6"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">爬虫机器人功能实现</span></span></h2><div id="https://www.notion.so/a7dd8f792f6348b1b15118207175cd93" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">我使用aiotg编写的机器人是用来抓取来自</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.gamersky.com/">游民星空</a></span><span class="SemanticString">的图片。</span></span></p></div><h3 id="https://www.notion.so/388f4c290db243e28289a06574c7aaae" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/388f4c290db243e28289a06574c7aaae"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">1. 爬虫功能</span></span></h3><div id="https://www.notion.so/03fad0181c764463b1b6fb1795327daf" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">爬虫功能的实现是用aiohttp发送web请求，使用beautifulsoup进行html解析，核心代码如下</span></span></p></div><pre id="https://www.notion.so/36fccb4dc7f348c2822d79538a9b2c40" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>import re
+import aiohttp
+from bs4 import BeautifulSoup
+
+
+def aioget(url):
+    return aiohttp.request(&#x27;GET&#x27;, url)
+
+
+def filter_img(tag):
+    if tag.name != &#x27;p&#x27;:
+        return False
+    try:
+        if tag.attrs[&#x27;align&#x27;] == &#x27;center&#x27;:
+            for child in tag.contents:
+                if child.name == &#x27;img&#x27; or child.name == &#x27;a&#x27;:
+                    return True
+        return False
+    except KeyError:
+        if &#x27;style&#x27; in tag.attrs:
+            return True
+        else:
+            return False
+
+
+async def fetch_img(url):
+    async with aioget(url) as resp:
+        resp_text = await resp.text()
+        content = BeautifulSoup(resp_text, &quot;lxml&quot;)
+        imgs = content.find(class_=&quot;Mid2L_con&quot;).findAll(filter_img)
+        results = []
+        for img in imgs:
+            try:
+                results.append({
+                    &#x27;src&#x27;:  img.find(&#x27;img&#x27;).attrs[&#x27;src&#x27;],
+                    &#x27;desc&#x27;: &#x27;\\n&#x27;.join(list(img.stripped_strings))
+                })
+            except AttributeError:
+                continue
+        return results
+</span></span></span></code></pre><div id="https://www.notion.so/d31241f74aa647d0928d6464ae6d247f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">我将aiohttp的get请求稍微包装了一下，简洁一些。html中元素的提取就不在赘述，就是找找html中的规律</span></span></p></div><h3 id="https://www.notion.so/df50bd454bed4a7c82c6375ec0fb7b4e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/df50bd454bed4a7c82c6375ec0fb7b4e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">2. 指令功能</span></span></h3><div id="https://www.notion.so/7979babd9b9847e6ba5f80d95e7af047" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">指令功能实现需要使用aiotg.bot.command装饰器进行命令注册，下面列出 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">/start</code></span><span class="SemanticString">的功能实现</span></span></p></div><pre id="https://www.notion.so/c74c0ae197d04b3cb0824e6293714616" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>@bot.command(r&quot;/start&quot;)
+async def list_category(chat: Chat, match):
+    kb, row = [], -1
+    for idx, item in enumerate(category[&quot;name&quot;]):
+        if idx % 2 == 0:
+            kb.append([])
+            row += 1
+        kb[row].append(item)
+    keyboard = {
+        &quot;keyboard&quot;: kb,
+        &quot;resize_keyboard&quot;: True
+    }
+    await chat.send_text(text=&quot;请选择你喜欢的图片类型&quot;, reply_markup=json.dumps(keyboard))
+</span></span></span></code></pre><div id="https://www.notion.so/1a3678886bc54259b937265edb786598" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">关于自定义键盘部分在上文中已经讲过，读者可以自己编码实现</span></span></p></div><h3 id="https://www.notion.so/95ab1405b2ac4ee4b249ceaf6f2cf91d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/95ab1405b2ac4ee4b249ceaf6f2cf91d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">3. callback功能</span></span></h3><div id="https://www.notion.so/fee9936289ea437aa34e7897dced4619" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/fd925541042244f399f266af7d40fd3f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">读者可以看到在消息上附有页面切换按钮，每个按钮会带着一个callbackdata，当点击按钮会调用相应的callback函数进行处理，这里点击下一页时会进行翻页。</span></span></p></div><div id="https://www.notion.so/c56d43c02cb34930b0d9f002a288149b" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/d5b25299a4cc4b1f8f4a9a71cefb43ec" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">看页面更新了，关于更新页面的实现在上面也讲到了如何进行消息更新。</span></span></p></div><pre id="https://www.notion.so/39918ddd7c114cdca65099f4e2001389" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>@bot.callback(r&quot;page-(?P&lt;name&gt;\\w+)-(?P&lt;page&gt;\\d+)&quot;)
+async def change_lists(chat: Chat, cq, match):
+    req_name = match.group(&#x27;name&#x27;)
+    page = match.group(&#x27;page&#x27;)
+    url = category[req_name]
+    text, markup = await format_message(req_name, url, page)
+    await chat.edit_text(message_id=chat.message[&#x27;message_id&#x27;], text=text, markup=markup)
+</span></span></span></code></pre><div id="https://www.notion.so/b0c535e523b34d22b5ea58f82c5131fe" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">也是使用装饰器进行回调函数注册，使用</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">chat.edit_text</code></span><span class="SemanticString">进行消息更新。</span></span></p></div><div id="https://www.notion.so/ca7b7b94e7ef46a78e9da847e3e5b224" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">callback功能也用在了图片的更新。点击下一页更新图片。</span></span></p></div><div id="https://www.notion.so/d573d5cae6344793ab8e57341063405a" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><h3 id="https://www.notion.so/b54c8332262548f99f56390a985a34cd" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/b54c8332262548f99f56390a985a34cd"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">4.内联请求模式功能</span></span></h3><div id="https://www.notion.so/7867260f52bb46b996294421872e6d94" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">当用户在输入框中输入</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">@botusername+指令</code></span><span class="SemanticString">时，会在输入框上显示查询内容。</span></span></p></div><div id="https://www.notion.so/32a4a9601a0d4d7a8b5dd013ab0e711b" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/9060309e3a864d679f165956697739d2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">当没有指令时，会显示一些能够查看的图片类型。</span></span></p></div><div id="https://www.notion.so/92da33f19cc043e6b390aca7c38b59c4" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/72c491c27d8a4faf896bca70e67b2ac8" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">当输入对应类型汉字的前几个字时，bot会匹配你想看的图片列表，并罗列出来</span></span></p></div><pre id="https://www.notion.so/242a77d858c04be7be215956c2aefc77" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>@bot.inline(r&quot;([\\u4e00-\\u9fa5]+)&quot;)
+async def inline_name(iq, match):
+    req = match.group(1)
+    req_name = match_category(req.strip(), category[&#x27;name&#x27;])
+    ptype = &#x27;G&#x27; if req_name == &quot;dynamic&quot; else &#x27;P&#x27;
+    if req_name is None:
+        return
+    results, _ = await fetch_lists(category[req_name])
+    c_results = [{
+            &#x27;type&#x27;: &#x27;article&#x27;,
+            &#x27;id&#x27;: str(index),
+            &#x27;title&#x27;: item[&#x27;title&#x27;],
+            &#x27;input_message_content&#x27;: {
+                &#x27;message_text&#x27;: &#x27;/&#x27; + ptype + item[&#x27;date&#x27;] + &#x27;_&#x27; + item[&#x27;key&#x27;]
+            },
+            &#x27;description&#x27;: item[&#x27;desc&#x27;]
+        } for index, item in enumerate(results)]
+    await iq.answer(c_results)
+</span></span></span></code></pre><h3 id="https://www.notion.so/aacb3d91bfd944ca930fe8c8ab403dbb" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/aacb3d91bfd944ca930fe8c8ab403dbb"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">redis缓存</span></span></h3><div id="https://www.notion.so/f9bac71128e04693a0be740ebcab7bdf" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">当发送给用户图片时，telegram会返回一个和图片对应的file_id, 当再次发送相同的图片时，只需要在调用send_photo时，将photo参数赋值为file_id即可，所以每次使用爬虫进行抓取图片时，将图片的fild_id存在redis中，用户请求图片时，如果图片之前已经抓取过，这时候只要从redis中取出file_id，再调用send_photo即可。</span></span></p></div></article>
+  <footer class="Footer">
+  <div>&copy; yangsoon の 自嗨 2019-2021</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
