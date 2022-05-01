@@ -596,7 +596,7 @@ pre.Code code {
 .File__Size {
   margin-left: 6px;
   color: var(--color-text-default-light);
-  font-size: 0.75em;
+  font-size: 0.5em;
 }
 
 /* Heading */
