@@ -127,7 +127,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
     parsePageId(block.id) === parsePageId(site.rootNotionPageId)
   const isBlogPost = block.type === 'page' && !isRootPage // && block.parent_table === 'collection'
   const showTableOfContents = !!isBlogPost
-  const minTableOfContentsItems = 3
+  const minTableOfContentsItems = 1
 
   const socialImage = mapNotionImageUrl(
     (block as PageBlock).format?.page_cover || config.defaultPageCover,
@@ -168,6 +168,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
       <PageHead site={site} />
 
       <Head>
+        <meta name="google-site-verification" content="_OJuJrMAK0_lxr0--eH6RZyMOn2Mg_zY1hDyBBKU8fI" />
         <script
           async
           src='https://www.googletagmanager.com/gtag/js?id=G-Y4TMBBH2RZ'

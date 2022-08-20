@@ -19,8 +19,8 @@ module.exports = {
   socialImageSubtitle: 'Cloud Native Developer',
 
   // social usernames (optional)
-  twitter: 'he_yi_hui',
-  github: 'yangsoonlx',
+  twitter: 'yangsoonlx',
+  github: 'yangsoon',
   linkedin: '',
 
   // default notion icon and cover images for site-wide consistency (optional)
