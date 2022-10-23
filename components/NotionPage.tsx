@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 import cs from 'classnames'
 import { PageBlock } from 'notion-types'
-import { formatDate, getBlockTitle, getPageProperty } from 'notion-utils'
+import { formatDate, getBlockTitle, getPageProperty, parsePageId } from 'notion-utils'
 import BodyClassName from 'react-body-classname'
 import { NotionRenderer } from 'react-notion-x'
 import TweetEmbed from 'react-tweet-embed'
@@ -18,9 +18,10 @@ import { mapImageUrl } from '@/lib/map-image-url'
 import { getCanonicalPageUrl, mapPageUrl } from '@/lib/map-page-url'
 import { searchNotion } from '@/lib/search-notion'
 import { useDarkMode } from '@/lib/use-dark-mode'
+import { ReactUtterances } from './ReactUtterances'
 
 import { Footer } from './Footer'
-import { GitHubShareButton } from './GitHubShareButton'
+// import { GitHubShareButton } from './GitHubShareButton'
 import { Loading } from './Loading'
 import { NotionPageHeader } from './NotionPageHeader'
 import { Page404 } from './Page404'
@@ -185,13 +186,27 @@ export const NotionPage: React.FC<types.PageProps> = ({
   const keys = Object.keys(recordMap?.block || {})
   const block = recordMap?.block?.[keys[0]]?.value
 
-  // const isRootPage =
-  //   parsePageId(block?.id) === parsePageId(site?.rootNotionPageId)
-  const isBlogPost =
-    block?.type === 'page' && block?.parent_table === 'collection'
+  const isRootPage =
+    parsePageId(block?.id) === parsePageId(site?.rootNotionPageId)
+  const isBlogPost = block?.type === 'page' && !isRootPage
 
   const showTableOfContents = !!isBlogPost
-  const minTableOfContentsItems = 3
+  const minTableOfContentsItems = 1
+
+  let comments: React.ReactNode = null
+  // only display comments and page actions on blog post pages
+  if (isBlogPost) {
+    if (config.utterancesGitHubRepo) {
+      comments = (
+        <ReactUtterances
+          repo={config.utterancesGitHubRepo}
+          issueMap='issue-term'
+          issueTerm='title'
+          theme={isDarkMode ? 'photon-dark' : 'github-light'}
+        />
+      )
+    }
+  }
 
   const pageAside = React.useMemo(
     () => (
@@ -233,8 +248,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   const socialImage = mapImageUrl(
     getPageProperty<string>('Social Image', block, recordMap) ||
-      (block as PageBlock).format?.page_cover ||
-      config.defaultPageCover,
+    (block as PageBlock).format?.page_cover ||
+    config.defaultPageCover,
     block
   )
 
@@ -278,10 +293,11 @@ export const NotionPage: React.FC<types.PageProps> = ({
         mapImageUrl={mapImageUrl}
         searchNotion={config.isSearchEnabled ? searchNotion : null}
         pageAside={pageAside}
+        pageFooter={comments}
         footer={footer}
       />
 
-      <GitHubShareButton />
+      {/* <GitHubShareButton /> */}
     </>
   )
 }
